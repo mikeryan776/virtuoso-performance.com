@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/drupal-8-migration-all-modules by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:23:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="Drupal 8 migration - all the modules" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="drupal-8-migration-all-modules.html" />
+<meta name="twitter:title" content="Drupal 8 migration - all the modules" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="Now that Drupal 8.0.0 is released, let&#039;s take a look at all the components of the Drupal migration ecosystem and where they stand now. To provide context to those familiar with migration under Drupal 7, I will show where the pieces came from. First, general migration support:
+
+FeatureD7D8D8 statusBasic migration frameworkmigrate (contrib)migrate (core), plus destination plugins in core modulesExperimentalGeneral-purpose drush commandsmigrate (contrib)migrate_tools (contrib)The most common commands (ms, mi, mr, etc.) are working" />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Drupal, Migrate" />
+<meta name="twitter:url" content="drupal-8-migration-all-modules.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="drupal-8-migration-all-modules.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>Drupal 8 migration - all the modules</title>
+    <link rel="stylesheet" href="../../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-mikeryan-drupal-8-migration-all-modules page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="137" role="article" about="/blog/mikeryan/drupal-8-migration-all-modules" typeof="schema:Article" class="node node--id-137 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">Drupal 8 migration - all the modules</span>
+</h1>  <span property="schema:name" content="Drupal 8 migration - all the modules" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:0" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2015-11-20T22:53:42+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Friday, November 20, 2015 - 04:53pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2015-11-20T22:53:42+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Now that <a href="https://www.drupal.org/8">Drupal 8.0.0</a> is released, let's take a look at all the components of the Drupal migration ecosystem and where they stand now. To provide context to those familiar with migration under Drupal 7, I will show where the pieces came from. First, general migration support:</p>
+
+<table border="1"><tbody><tr><td><strong>Feature</strong></td>
+			<td><strong>D7</strong></td>
+			<td><strong>D8</strong></td>
+			<td><strong>D8 status</strong></td>
+		</tr><tr><td>Basic migration framework</td>
+			<td><a href="https://www.drupal.org/project/migrate">migrate</a> (contrib)</td>
+			<td>migrate (core), plus destination plugins in core modules</td>
+			<td>Experimental</td>
+		</tr><tr><td>General-purpose drush commands</td>
+			<td>migrate (contrib)</td>
+			<td><a href="https://www.drupal.org/project/migrate_tools">migrate_tools</a> (contrib)</td>
+			<td>The most common commands (ms, mi, mr, etc.) are working</td>
+		</tr><tr><td>General-purpose UI</td>
+			<td>migrate_ui submodule of migrate (contrib)</td>
+			<td>migrate_tools (contrib)</td>
+			<td>Just basic display of migrations and their status so far</td>
+		</tr><tr><td>CSV source plugin</td>
+			<td>migrate (contrib)</td>
+			<td><a href="https://www.drupal.org/project/migrate_source_csv">migrate_source_csv</a> (contrib)</td>
+			<td>Working</td>
+		</tr><tr><td>XML source plugins</td>
+			<td>migrate (contrib)</td>
+			<td><a href="https://www.drupal.org/project/migrate_source_xml">migrate_source_xml</a> (contrib)</td>
+			<td>A basic initial implementation exists, still needs work</td>
+		</tr><tr><td>JSON source plugin</td>
+			<td>migrate (contrib)</td>
+			<td><a href="https://www.drupal.org/project/migrate_source_json">migrate_source_json</a> (contrib)</td>
+			<td>A basic initial implementation exists, still needs work</td>
+		</tr><tr><td>List source plugin</td>
+			<td>migrate (contrib)</td>
+			<td><a href="https://www.drupal.org/project/migrate_plus">migrate_plus</a> (contrib)?</td>
+			<td><a href="https://www.drupal.org/node/2608610">Currently assessing</a> how to architect this in D8 - most likely will be helper classes or traits in migrate_plus</td>
+		</tr><tr><td>Other source plugins</td>
+			<td>migrate (contrib)</td>
+			<td>Contrib</td>
+			<td>To be implemented as needed, by the people who need them</td>
+		</tr><tr><td>Migration groups</td>
+			<td>migrate (contrib)</td>
+			<td>migrate_plus (contrib)</td>
+			<td>Hopefully we'll finally <a href="https://www.drupal.org/node/2302307">get this into core</a> for 8.1</td>
+		</tr><tr><td>Basic programming examples</td>
+			<td>migrate_example submodule of migrate (contrib)</td>
+			<td>migrate_example submodule of migrate_plus (contrib)</td>
+			<td>Working but needs an <a href="https://www.drupal.org/node/2609280">image migration example</a></td>
+		</tr><tr><td>Advanced programming examples</td>
+			<td>migrate_example submodule of migrate (contrib)</td>
+			<td>migrate_example_advanced submodule of migrate_plus (contrib)</td>
+			<td>Skeletal at the moment</td>
+		</tr><tr><td>Migration support for contrib modules</td>
+			<td>Ideally in the contrib modules themselves - some legacy handlers are still in <a href="https://www.drupal.org/project/migrate_extras">migrate_extras</a></td>
+			<td>Contrib</td>
+			<td>Each contrib module is responsible for implementing its own destination plugins (for general migrations), plus migrations and source plugins for migrations/upgrades from another Drupal site</td>
+		</tr><tr><td>Migration from manifest files (lists of migrations with configuration overrides)</td>
+			<td>N/A</td>
+			<td><a href="https://www.drupal.org/project/migrate_manifest">migrate_manifest</a> (contrib)</td>
+			<td>Only supports template-based migrations from SQL sources</td>
+		</tr></tbody></table><p>And then, features specific to migrating from another Drupal site:</p>
+
+<table border="1"><tbody><tr><td><strong>Feature</strong></td>
+			<td><strong>D7</strong></td>
+			<td><strong>D8</strong></td>
+			<td><strong>D8 status</strong></td>
+		</tr><tr><td>Major Drupal version upgrade (drush command)</td>
+			<td>pm-update (in Drush itself)</td>
+			<td><a href="https://www.drupal.org/project/migrate_upgrade">migrate_upgrade</a> (contrib)</td>
+			<td>Working - to be moved to Drush itself (hopefully by Drupal 8.1.0)</td>
+		</tr><tr><td>Major Drupal version upgrade (UI)</td>
+			<td>/update.php</td>
+			<td>migrate_upgrade (contrib)</td>
+			<td>Working - to be <a href="https://www.drupal.org/node/2281691">moved to Drupal core</a> (hopefully by Drupal 8.1.0)</td>
+		</tr><tr><td>Framework for migration from Drupal 6 and 7.</td>
+			<td><a href="https://www.drupal.org/project/migrate_d2d">migrate_d2d</a> (contrib)</td>
+			<td>migrate_drupal (core), plus migrations and source/process plugins in core modules</td>
+			<td>Experimental. The D6 support is essentially complete; D7 is <a href="https://www.drupal.org/node/2456259">lacking support for some secondary core modules, file/image fields, etc.</a></td>
+		</tr><tr><td>Framework for migration from Drupal 5.</td>
+			<td>migrate_d2d (contrib)</td>
+			<td><a href="https://www.drupal.org/project/migrate_drupal_d5">migrate_drupal_d5</a> (contrib)</td>
+			<td>Very basic support for key core data (taxonomy, users, nodes). Not updated in a few months and probably needs rerolling for 8.0.0.</td>
+		</tr><tr><td>Framework for migration from Drupal 8</td>
+			<td>N/A</td>
+			<td>migrate_drupal_d8? (not yet created)</td>
+			<td><a href="https://www.drupal.org/node/2607524">Planned</a>. Most likely will be initially implemented in contrib, to be submitted to core in a later minor release.</td>
+		</tr><tr><td>Support for custom migrations from Drupal</td>
+			<td>migrate_d2d (contrib)</td>
+			<td>migrate_d2d (contrib)</td>
+			<td>Not yet begun</td>
+		</tr></tbody></table><p>Notes on the statuses above:</p>
+
+<ul><li>The migration support in core is currently marked "Experimental". This means there are still some holes to fill (particularly for upgrading from Drupal 7), and still some leeway to make backwards-compatibility-breaking changes for Drupal 8.1.</li>
+	<li>I say "Working" rather than "Supported" for a few things above because A. All of these components are dependent on the core framework which is still subject to change, and B. To this point none of this has had substantial real-world testing, so there are likely significant issues still to be addressed.</li>
+</ul><p>So, you may be asking yourself "what can I do today, and what modules do I need to do it?"</p>
+
+<h2>I want to upgrade from Drupal 6 or 7 to Drupal 8</h2>
+
+<p>You can <a href="https://www.drupal.org/upgrade/migrate">do this today</a> with <a href="https://www.drupal.org/project/migrate_upgrade">migrate_upgrade</a>. As stated above, the Drupal 6 migration path for core modules is pretty much complete. If you're looking at upgrading from Drupal 7, review the <a href="https://www.drupal.org/node/2456259">meta issue for Drupal 7 migrations</a> to see if any of the missing pieces are important to your site. See my previous blog posts for detailed run-throughs of performing the upgrade <a href="upgrading-to-drupal-8-using-ui.html">through the UI</a> or <a href="http://mikeryan.name/blog/mikeryan/upgrading-to-drupal-8-using-drush">with drush</a>.</p>
+
+<h2>I want to implement an upgrade path for my contributed or custom module</h2>
+
+<p>Unfortunately, <a href="https://www.drupal.org/node/2610062">documentation is lacking</a> at the moment to help module authors implement upgrade paths from previous Drupal versions - I hope to work with others on this (and also post to my blog) in the coming weeks. For today, the tl;dr is:</p>
+
+<ol><li>Contributed modules are no different from core modules when it comes to the upgrade path (with one small caveat below), so</li>
+	<li>Find the core module most similar to your module in terms of the kind of configuration and data it manages, and see how its upgrade path is implemented (specifically, look in its <code>migration_templates</code> and <code>src/Plugin/migrate directories</code>).</li>
+</ol><p>The one caveat is that for non-core modules, running the upgrade process through the UI will <a href="https://www.drupal.org/node/2568523">incorrectly report that no migration path is found for your module</a>. This is due to the fact that currently there is <a href="https://www.drupal.org/node/2569805">no automated way to identify the source module for a migration</a>, thus the UI is working from a hard-coded table of core migrations. This is a cosmetic issue only - your module's migration will still be run. I will also note that in terms of debugging your upgrade path, the <code>drush migrate-upgrade</code> command has a very handy <code>--configure-only</code> option, which runs the configuration portion of the upgrade (turning migration templates into migration configuration entities) without actually running the imports. When debugging a specific upgrade migration, I will use this option, then (with <a href="https://www.drupal.org/project/migrate_tools">migrate_tools</a> installed) import all the migrations previous to the one I'm testing. At this point I can do <code>drush sql-dump &gt;/tmp/backup.sql</code>. It's much faster to test the migration, tweak it, and restore the backup for another try than it is to go all the way back to the beginning.</p>
+
+<h2>I want to perform a custom migration from Drupal</h2>
+
+<p>Ultimately, there should be tools like the migrate_d2d UI in Drupal 7 to enable you to customize what you're importing and how it's mapped into your Drupal 8 installation - but that's going to take some time. At this point, the simplest approach is to run the <code>drush migrate-upgrade --configure-only</code> command to generate the migration configuration for a straight upgrade, export that configuration to <code>config/install</code> in a custom module, and edit the migration .yml files to suit your needs.</p>
+
+<h2>I want to perform a custom migration from not-Drupal</h2>
+
+<p>You'll need the <a href="https://www.drupal.org/project/migrate_tools">migrate_tools</a> (drush commands and basic UI for running and managing migrations) and <a href="https://www.drupal.org/project/migrate_plus">migrate_plus</a> (provides group functionality migrate_tools needs, plus examples) modules. In migrate_plus, open up <code>migrate_example/README.txt</code> and it will guide you through the basics of implementing SQL-based migrations. It's simpler than you think! If you're importing from source data not in an SQL database, there are <a href="https://www.drupal.org/project/migrate_source_csv">CSV</a>, <a href="https://www.drupal.org/project/migrate_source_xml">XML</a>, and <a href="https://www.drupal.org/project/migrate_source_json">JSON</a> source plugins available. It's still well worth going through migrate_example to understand the general structure of migrations - it's just that the configuration (and potential extension) of the source plugin will differ.</p>
+
+<h2>I want to help</h2>
+
+<p>Obviously, there's a lot left to do here, both in the core framework and in the contrib tools. Please, by all means, report any issues you find in the relevant issue queues, and feel free to submit patches to fix bugs or add additional features. At this stage, the best thing you can do (especially if you're not a developer) is test the upgrade path for your Drupal 6 or Drupal 7 site and report what you find. The diversity of Drupal sites in the wild is staggering - to get the upgrade path nailed down and fully supported in Drupal 8.1, we need a wide variety of sites to go through it.</p>
+</div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div><div class="field__item field__item--migrate">
+        <span class="field__item-wrapper"><a href="../../tags/migrate.html" property="schema:about" hreflang="en">Migrate</a></span>
+      </div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/137","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../../sites/default/files/js/js_IXXM0JyuKXLkx6vQcq8R_JR95o07Mkzej4e-E9tCYsg.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/drupal-8-migration-all-modules by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:23:01 GMT -->
+</html>

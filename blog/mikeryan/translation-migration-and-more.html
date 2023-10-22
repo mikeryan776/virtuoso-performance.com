@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/translation-migration-and-more by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:22:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="Translation migration and more" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="translation-migration-and-more.html" />
+<meta name="twitter:title" content="Translation migration and more" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="I’m running a bit behind, but I want to make it a practice to blog about each migration project I’m involved with (with each client’s permission, of course). Constructed examples are all well and good, but there’s nothing like real-world scenarios to give the flavor of using the migration framework in practice." />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Planet Drupal, Drupal" />
+<meta name="twitter:url" content="translation-migration-and-more.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="translation-migration-and-more.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>Translation migration and more</title>
+    <link rel="stylesheet" href="../../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-mikeryan-translation-migration-and-more page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="56" role="article" about="/blog/mikeryan/translation-migration-and-more" typeof="schema:Article" class="node node--id-56 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">Translation migration and more</span>
+</h1>  <span property="schema:name" content="Translation migration and more" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:0" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2016-08-15T17:46:38+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Monday, August 15, 2016 - 12:46pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2016-08-15T17:46:38+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p dir="ltr">I’m running a bit behind, but I want to make it a practice to blog about each migration project I’m involved with (with each client’s permission, of course). Constructed examples are all well and good, but there’s nothing like real-world scenarios to give the flavor of using the migration framework in practice. Where possible (again with the client’s permission), I will share the <a href="https://github.com/mikeryan776/d8-migrate-example-001">full migration implementation on GitHub</a>, so people can see not only code snippets illustrating particular points, but their full context.</p>
+
+<p dir="ltr">This spring I contracted with <a href="https://www.northstudio.com/">North Studio</a>, a web and mobile development shop based in British Columbia, to assist with the migration of their customer <a href="http://www.carlyle.com/">The Carlyle Group</a>’s multilingual site from Drupal 6 to Drupal 8. As happens more often than not when moving from one major version to another of Drupal, the opportunity was taken to refactor the site, rethinking some of the original site structure as well as taking advantage of the new Drupal 8 architecture. One aspect of restructuring was consolidating 26 content types into 8. At the time I joined the project, some of the new content types, and all of the taxonomy, had already been manually recreated in Drupal 8, and my responsibility was to develop automated migration of five remaining content types (four of them with translations), plus editorial user accounts.</p>
+
+<h2 dir="ltr">User migration - mapping roles</h2>
+
+<p dir="ltr">The user migration makes use of the <a href="http://cgit.drupalcode.org/drupal/tree/core/modules/user/migration_templates/d6_user.yml">core d6_user migration</a> almost verbatim - the crucial difference is that, as with content types, roles are being consolidated in the move to Drupal 8. In d6_user, roles are mapped 1-to-1 from Drupal 6:</p>
+
+<pre dir="ltr">
+roles:
+  plugin: migration
+  migration: d6_user_role
+  source: roles</pre>
+
+<p dir="ltr">In this project, the desired roles were already setup in the Drupal 8 site, and we used a static map to translate the Drupal 6 numeric role IDs to the corresponding Drupal 8 role configuration IDs, consolidating three different D6 roles into the D8 “manager” role.</p>
+
+<pre dir="ltr">
+roles:
+  plugin: static_map
+  source: roles
+  bypass: true
+  map:
+    4: manager             # content author
+    3: manager             # developer
+    6: manager             # html content author
+    16: media_room_manager # media room manager
+    11: translator         # translator</pre>
+
+<h2 dir="ltr">Files</h2>
+
+<p dir="ltr">As with users, the migration is mostly identical to the <a href="http://cgit.drupalcode.org/drupal/tree/core/modules/file/migration_templates/d6_file.yml">core d6_file migration</a>. The key difference in the file migration itself is that, because much of the content (including files) has already been moved to D8, we want to be sure that the automated file migration we’re implementing here only pulls the files that are referenced by the specific content types we’re migrating. We do this by <a href="https://github.com/mikeryan776/d8-migrate-example-001/blob/master/migrate_carlyle/src/Plugin/migrate/source/CarlyleFile.php">creating a source plugin</a> extending the <a href="http://cgit.drupalcode.org/drupal/tree/core/modules/file/src/Plugin/migrate/source/d6/File.php">core d6_file source plugin</a>, and overriding <code>prepareRow()</code> to ignore any file ID (fid) which is not in the field tables for those content types (by returning FALSE). Note that we could just as easily have done this by implementing <code><a href="https://api.drupal.org/api/drupal/core%21modules%21migrate%21migrate.api.php/function/hook_migrate_prepare_row/8.1.x">hook_migrate_prepare_row()</a></code>, or a subscriber to the <code>PREPARE_ROW</code> event provided by migrate_plus, and throwing <code><a href="https://api.drupal.org/api/drupal/core%21modules%21migrate%21src%21MigrateSkipRowException.php/class/MigrateSkipRowException/8.1.x">MigrateSkipRowException</a></code>. In a later post (for a later project) I will demonstrate the event subscription approach.</p>
+
+<p dir="ltr">The other side to this is populating file fields on nodes. We would be able to do this using the <a href="http://cgit.drupalcode.org/drupal/tree/core/modules/file/src/Plugin/migrate/process/d6/CckFile.php">core d6_cck_file process plugin</a> - but that has a hardcoded reference to the core d6_file migration. Therefore, we needed to define <a href="https://github.com/mikeryan776/d8-migrate-example-001/blob/master/migrate_carlyle/src/Plugin/migrate/process/CarlyleCckFile.php">our own carlyle_cck_file process plugin</a>, extending d6_cck_file to override create() and reference our own file migration (named, imaginatively enough, ‘file’).</p>
+
+<h2 dir="ltr">Nodes</h2>
+
+<h3 dir="ltr">Conversion of node references to taxonomy references</h3>
+
+<p dir="ltr">One aspect of the site refactoring was the conversion of some node types to vocabularies (and thus node references become taxonomy term references). For example, the former “industry” node type became an “industry” vocabulary. This vocabulary was already populated with all necessary terms when this migration project started - the challenge was to convert the node references. There were two elements to this:</p>
+
+<ol><li dir="ltr">
+	<p dir="ltr">A <code><a href="https://github.com/mikeryan776/d8-migrate-example-001/blob/master/migrate_carlyle/src/Plugin/migrate/source/CarlyleNode.php#L68">getTargetTitles()</a></code> method was added to a common source plugin class, <code><a href="https://github.com/mikeryan776/d8-migrate-example-001/blob/master/migrate_carlyle/src/Plugin/migrate/source/CarlyleNode.php">CarlyleNode</a></code>, which from a node reference field name would gather the node ID (nid) references in that source property, look up the title for each referenced node, and set the source property to the list of titles.</p>
+	</li>
+	<li dir="ltr">
+	<p dir="ltr">The migration configuration file mapped the field using the entity_lookup process plugin (provided in migrate_plus). This lookup enables one to populate a reference field by looking up the incoming source value against a given property of the destination field’s target type, and set the referenced entity ID.</p>
+	</li>
+</ol><p dir="ltr">So, given this field mapping:</p>
+
+<pre dir="ltr">
+field_industry:
+  plugin: entity_lookup
+  source: field_industry
+  ignore_case: true</pre>
+
+<p dir="ltr">The source property is initially populated by the core migration framework with the referenced node IDs on Drupal 6. In <code><a href="https://github.com/mikeryan776/d8-migrate-example-001/blob/master/migrate_carlyle/src/Plugin/migrate/source/CarlyleNode.php#L33">prepareRow()</a></code>, <code>getTargetTitles()</code> is invoked to convert those nids to node titles (which in the node-&gt;vocabulary conversion were used as the term names). Then, in the processing stage, the entity_lookup plugin queries the field_industry target vocabulary for terms with those names, returning the term IDs to populate the term references. The <code>ignore_case</code> setting, of course, makes sure case differences between the manually-created terms in D8 and the incoming values don't prevent us from making the match.</p>
+
+<h3 dir="ltr">Translations</h3>
+
+<p dir="ltr">The biggest challenge of this project was handling translated nodes. At the time of this project, migration of translations had not yet been implemented in core. The <a href="https://www.drupal.org/node/2225775">issue to implement this for Drupal 6</a> had become an epic, because the mechanism for storing node translations had changed completely - before Drupal 8, each translation was a separate node, referencing the parent node via a ‘tnid’ column in the node table. With Drupal 8, all versions of a piece of content are stored as a single node, with each revision containing all translations of the node as of the time of that revision (and a new translation introducing a new revision). Substantial progress had been made by others (particularly <a href="https://www.drupal.org/u/vasi">vasi</a>) on that patch at the time I needed the functionality here, but had run into the problem of properly setting the “default” language for the node (the language of the parent node in D6). For this to work, that parent node needs to be migrated before any of its translations are, and we simply could not come up with a clean way to do this within a single migration. <a href="https://www.drupal.org/node/2225775#comment-11222289">The solution I came up with</a> for the Carlyle project, on which the core solution was ultimately based, was to have separate migrations for the parent node and for its translations - by making the translation migration dependent on the parent node migration, we guaranteed things were created in the right order.</p>
+
+<p dir="ltr">I will note that the following notes, as well as the <a href="https://github.com/mikeryan776/d8-migrate-example-001">code on GitHub</a>, are not the code exactly as implemented for this project (which was basically the proof-of-concept for the core solution), but reflects the final solution committed to Drupal core as of 8.1.8 and later (and thus what you would use to implement your own translation migrations).</p>
+
+<p dir="ltr">Considering bio nodes, the <a href="https://github.com/mikeryan776/d8-migrate-example-001/blob/master/migrate_carlyle/config/install/migrate_plus.migration.node_bio.yml">node_bio migration</a> imports the parent nodes for each logical piece of content - nothing is special here to support translation, it’s a straight-forward node migration. The migration of bio node translations (<a href="https://github.com/mikeryan776/d8-migrate-example-001/blob/master/migrate_carlyle/config/install/migrate_plus.migration.node_bio_translation.yml">node_bio_translation</a>) is nearly identical to node_bio with the following differences:</p>
+
+<ol><li dir="ltr">
+	<p dir="ltr">The source plugin is flagged for translations:<br /><br /><code>source:<br />
+	  plugin: bio_node<br />
+	  node_type: bio<br />
+	  translations: true</code><br /><br />
+	This tells the node source plugin to import only translated nodes - i.e., those which have a tnid which is neither 0 nor identical to nid. When this is omitted, only untranslated nodes (tnid == 0) and parent nodes for translation (tnid == nid) are imported.</p>
+	</li>
+	<li dir="ltr">
+	<p dir="ltr">The nid is explicitly set to the nid of the D8 version of the original translation (which was migrated by node_bio):<br /><br /><code>nid:<br />
+	  plugin: migration<br />
+	  migration: node_bio<br />
+	  source: tnid</code><br /><br />
+	Note that the node_bio migration does not map nid - we cannot preserve the original nid in this case, because the destination site has manually-created content which would conflict with migrated nids.</p>
+	</li>
+	<li dir="ltr">
+	<p dir="ltr">The destination plugin is flagged for translations:<br /><br /><code>destination:<br />
+	  plugin: 'entity:node'<br />
+	  translations: true</code><br /><br />
+	This triggers some code to make sure that a translation is created on the node if the incoming language does not already exist on the node, and to add language as a destination key field to the map table for this migration.</p>
+	</li>
+</ol><h2 dir="ltr">Community contributions</h2>
+
+<p dir="ltr">The following community contributions were made in the course of this project.</p>
+
+<p dir="ltr"><a href="https://www.drupal.org/node/2225775">Migrate Drupal 6 core node translation to Drupal 8</a> - as noted above, this project was the proof-of-concept for the separate-translation-migration approach which became part of the solution in core. Several people contributed the code which made this solution a reality.</p>
+
+<p dir="ltr"><a href="https://www.drupal.org/node/2613178">default_value: null in static map skips empty rows</a> - For this project (specifically in the podcast node migration), we needed to have a lack of a match in a static_map plugin return null, preventing the subsequent entity_lookup plugin from running. There was a core bug preventing this from working properly, which I fixed.</p>
+
+<p dir="ltr"><a href="https://www.drupal.org/node/2714723">config-devel-import-one does not work with a .yml argument</a> - A question frequently asked in #drupal-migrate is how to get changes to a migration configuration entity in config/install to take effect, without uninstalling and re-enabling your module? Starting with this project I’ve been using the cdi1 command in the config_devel module to reload changes - well, once I fixed this little bug.</p>
+
+<p dir="ltr"><a href="https://www.drupal.org/node/2718375">Route collision reported when alias matches a different language</a> - The translation migration in this project triggered this pathauto bug. My diagnosis assisted in getting this fixed, and I also contributed some work on the tests.</p>
+</div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--planet-drupal">
+        <span class="field__item-wrapper"><a href="../../tags/planet-drupal.html" property="schema:about" hreflang="en">Planet Drupal</a></span>
+      </div><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/56","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../../sites/default/files/js/js_IXXM0JyuKXLkx6vQcq8R_JR95o07Mkzej4e-E9tCYsg.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/translation-migration-and-more by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:22:31 GMT -->
+</html>

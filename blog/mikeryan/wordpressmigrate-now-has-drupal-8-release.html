@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/wordpressmigrate-now-has-drupal-8-release by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:22:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="wordpress_migrate now has a Drupal 8 release" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="wordpressmigrate-now-has-drupal-8-release.html" />
+<meta name="twitter:title" content="wordpress_migrate now has a Drupal 8 release" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="So, last week the next arena for me to work on came up as XML/JSON source plugins (see my companion piece for more on that). My intention had been to hold off tackling wordpress_migrate until &quot;nailing down&quot; the XML parser plugin it depends on, but I decided that at least trying to prototype a WordPress migration would be a good test of the XML plugin." />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Drupal, Planet Drupal" />
+<meta name="twitter:url" content="wordpressmigrate-now-has-drupal-8-release.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="wordpressmigrate-now-has-drupal-8-release.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>wordpress_migrate now has a Drupal 8 release</title>
+    <link rel="stylesheet" href="../../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-mikeryan-wordpressmigrate-now-has-drupal-8-release page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="41" role="article" about="/blog/mikeryan/wordpressmigrate-now-has-drupal-8-release" typeof="schema:Article" class="node node--id-41 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">wordpress_migrate now has a Drupal 8 release</span>
+</h1>  <span property="schema:name" content="wordpress_migrate now has a Drupal 8 release" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:0" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2016-06-08T04:04:09+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Tuesday, June 7, 2016 - 11:04pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2016-06-08T04:04:09+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>So, last week the <a href="my-next-steps-for-drupal-8-migration.html">next arena for me to work on</a> came up as XML/JSON source plugins (see my <a href="drupal-8-plugins-for-xml-and-json-migrations.html">companion piece</a> for more on that). My intention had been to hold off tackling <a href="https://www.drupal.org/project/wordpress_migrate">wordpress_migrate</a> until "nailing down" the XML parser plugin it depends on, but I decided that at least trying to prototype a WordPress migration would be a good test of the XML plugin. The initial attempt was promising enough that I kept going... and going - we've now got a (very) basic <a href="https://www.drupal.org/project/wordpress_migrate/releases/8.x-3.x-dev">D8 dev release</a>!</p>
+
+<h2>The UI</h2>
+
+<p>The user interface works generally as it did under Drupal 7 - upload the XML file on the first page of a wizard, configure taxonomies, then content, then review. It's important to note that this UI is for <strong>configuring</strong> the WordPress migration process - it creates the migrations, which you can then run using <a href="https://www.drupal.org/project/migrate_tools">migrate_tools</a>.</p>
+
+<p>To begin, visit the migration dashboard at /admin/structure/migrate:</p>
+<img alt="Migration dashboard with WordPress option added" data-entity-type="file" data-entity-uuid="4a4a987c-d516-4c72-a500-b6a372d0622a" src="../../sites/default/files/inline-images/wordpress_migrate_step_0.png" class="align-center" /><p>Clicking "Add import from WordPress" starts the wizard, where you can upload your XML file:</p>
+<img alt="WordPress import - select data source" data-entity-type="file" data-entity-uuid="e689e4ab-2fb4-4145-bb00-0098e3357996" src="../../sites/default/files/inline-images/wordpress_migrate_step_1.png" class="align-center" /><p>Clicking Next provides options for handling authors:</p>
+<img alt="Authors" data-entity-type="file" data-entity-uuid="b06803a1-1a15-45b6-9603-3f542611e7f7" src="../../sites/default/files/inline-images/wordpress_migrate_step_2.png" class="align-center" /><p>Next you can select which Drupal vocabularies (if any) to use for your WordPress tags and categories:</p>
+<img alt="Vocabularies" data-entity-type="file" data-entity-uuid="d7bfa86e-b162-4485-8d5d-93944aadd4c0" src="../../sites/default/files/inline-images/wordpress_migrate_step_3.png" class="align-center" /><p>Then, choose the Drupal content types to use for WordPress posts and pages:</p>
+<img alt="Content" data-entity-type="file" data-entity-uuid="c8711cb6-5998-4302-a450-80275f60dbb4" src="../../sites/default/files/inline-images/wordpress_migrate_step_4.png" class="align-center" /><p>You may omit either one (actually, you could omit both if all you wanted to import were authors, tags and/or vocabularies!). Following that, for each content type you selected you can choose the Drupal text format to use for the body content:</p>
+<img alt="Posts - text format" data-entity-type="file" data-entity-uuid="11edabf7-4768-4cc6-a543-67732aea015e" src="../../sites/default/files/inline-images/wordpress_migrate_step_5.png" class="align-center" /><img alt="Pages - text format" data-entity-type="file" data-entity-uuid="91d0dc7b-2238-495f-a700-d94a63e76f81" src="../../sites/default/files/inline-images/wordpress_migrate_step_6.png" class="align-center" /><p>In the review step, you can choose the machine name of the migration group containing your WordPress migrations, and also a prefix added to each generated migration's original machine name (if you were to import multiple WordPress blogs into your site, choosing distinct values here will keep them straight).</p>
+<img alt="Review" data-entity-type="file" data-entity-uuid="b9fb3c97-0b7a-40f7-943a-58aa26e74c31" src="../../sites/default/files/inline-images/wordpress_migrate_step_7.png" class="align-center" /><p>When you click Finish, you are brought to the migration dashboard for your new group:</p>
+<img alt="WordPress import migration group" data-entity-type="file" data-entity-uuid="5d60d6ec-61ef-4ef8-a531-49192a70409f" src="../../sites/default/files/inline-images/wordpress_migrate_step_8.png" class="align-center" /><p><a href="https://www.drupal.org/node/2470882">Soon</a>, you should be able to run your migration from this dashboard - for now, you'll need to use drush (which, really, you <a href="https://www.drupal.org/node/1806824">should use anyway</a> for running migrations).</p>
+
+<h2>The drush command</h2>
+
+<p>Speaking of drush, you can configure your migrations through drush instead of stepping through the UI. Most of these options should be self-evident - do <code>drush help wordpress-migrate-configure</code> for more information.</p>
+
+<p><code>drush wordpress-migrate-generate private://wordpress/nimportable.wordpress.2016-06-02.xml --group-id=test --prefix=my_ --tag-vocabulary=tags --category-vocabulary=wordpress_categories --page-type=page --page-text-format=restricted_html --post-type=article --post-text-format=full_html</code></p>
+
+<p>Using drush for configuration has some advantages:</p>
+
+<ol><li>If you're testing the import process, particularly tweaking the settings, it's much quicker to reissue the command line (possibly with minor edits) than to step through the UI.</li>
+	<li>Scriptability!</li>
+	<li>If your WordPress site is large, uploading the XML through the UI may run into file upload limits or timeout issues - alternatively, you can copy the XML file directly to your server and configure the migration to point to where you put it.</li>
+</ol><h2>Ctools Wizard</h2>
+
+<p>This was my first time using the Ctools wizard API, and it's really easy to create step-by-step UIs - even dynamic ones (where not all the steps are determined up-front). Basically:</p>
+
+<ol><li>Set up two routes in example.routing.yml, one for the landing page of your wizard, and one to reflect the specific steps (containing a {step} token).</li>
+	<li>Create a class extending FormWizardBase.</li>
+	<li>Implement getRouteName(), returning the step route from above.</li>
+	<li>The key - implement getOperations() to tell the wizard what your steps are (and their form classes):</li>
+</ol><p><code>  public function getOperations($cached_values) {<br />
+    $steps = [<br />
+      'source_select' =&gt; [<br />
+        'form' =&gt; 'Drupal\wordpress_migrate_ui\Form\SourceSelectForm',<br />
+        'title' =&gt; $this-&gt;t('Data source'),<br />
+      ],<br />
+      'authors' =&gt; [<br />
+        'form' =&gt; 'Drupal\wordpress_migrate_ui\Form\AuthorForm',<br />
+        'title' =&gt; $this-&gt;t('Authors'),<br />
+      ],<br />
+      'vocabulary_select' =&gt; [<br />
+        'form' =&gt; 'Drupal\wordpress_migrate_ui\Form\VocabularySelectForm',<br />
+        'title' =&gt; $this-&gt;t('Vocabularies'),<br />
+      ],<br />
+      'content_select' =&gt; [<br />
+        'form' =&gt; 'Drupal\wordpress_migrate_ui\Form\ContentSelectForm',<br />
+        'title' =&gt; $this-&gt;t('Content'),<br />
+      ],<br />
+    ];<br />
+    // Dynamically add the content migration(s) that have been configured by<br />
+    // ContentSelectForm.<br />
+    if (!empty($cached_values['post']['type'])) {<br />
+      $steps += [<br />
+        'blog_post' =&gt; [<br />
+          'form' =&gt; 'Drupal\wordpress_migrate_ui\Form\ContentTypeForm',<br />
+          'title' =&gt; $this-&gt;t('Posts'),<br />
+          'values' =&gt; ['wordpress_content_type' =&gt; 'post'],<br />
+        ],<br />
+      ];<br />
+    }<br />
+    if (!empty($cached_values['page']['type'])) {<br />
+      $steps += [<br />
+        'page' =&gt; [<br />
+          'form' =&gt; 'Drupal\wordpress_migrate_ui\Form\ContentTypeForm',<br />
+          'title' =&gt; $this-&gt;t('Pages'),<br />
+          'values' =&gt; ['wordpress_content_type' =&gt; 'page'],<br />
+        ],<br />
+      ];<br />
+    }<br />
+    $steps += [<br />
+      'review' =&gt; [<br />
+        'form' =&gt; 'Drupal\wordpress_migrate_ui\Form\ReviewForm',<br />
+        'title' =&gt; $this-&gt;t('Review'),<br />
+        'values' =&gt; ['wordpress_content_type' =&gt; ''],<br />
+      ],<br />
+    ];<br />
+    return $steps;<br />
+  }</code></p>
+
+<p>Particularly note how the content-type-specific steps are added based on configuration set in the content_select step, and how they use the same form class with an argument passed to reflect the different content types they're handling.</p>
+
+<p>Your form classes should look pretty much like any other form classes, with one exception - you need to put the user's choices where the wizard can find them. For example, in the VocabularySelectForm class:</p>
+
+<p><code>  public function submitForm(array &amp;$form, FormStateInterface $form_state) {<br />
+    $cached_values = $form_state-&gt;getTemporaryValue('wizard');<br />
+    $cached_values['tag_vocabulary'] = $form_state-&gt;getValue('tag_vocabulary');<br />
+    $cached_values['category_vocabulary'] = $form_state-&gt;getValue('category_vocabulary');<br />
+    $form_state-&gt;setTemporaryValue('wizard', $cached_values);<br />
+  }</code></p>
+
+<h2>Next steps</h2>
+
+<p>Now, don't get too excited - wordpress_migrate is very basic at the moment, and doesn't yet support importing <a href="https://www.drupal.org/node/2742269">files</a> or <a href="https://www.drupal.org/node/2742311">comments</a>. I had a couple of people asking how they could help move this forward, which was difficult when there was nothing there yet - now that we have the foundation in place, it'll be much easier for people to pick off <a href="https://www.drupal.org/project/issues/wordpress_migrate?text=&amp;status=Open&amp;priorities=All&amp;categories=All&amp;version=8.x&amp;component=All">one little (or big;) bit</a> to work on. Having spent more time than I intended on this last week, I need to catch up in other areas so won't be putting much more time into wordpress_migrate immediately, but I'm hoping I can come back to it in a couple of weeks to find a few community patches to review and commit.</p></div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div><div class="field__item field__item--planet-drupal">
+        <span class="field__item-wrapper"><a href="../../tags/planet-drupal.html" property="schema:about" hreflang="en">Planet Drupal</a></span>
+      </div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/41","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../../sites/default/files/js/js_IXXM0JyuKXLkx6vQcq8R_JR95o07Mkzej4e-E9tCYsg.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/wordpressmigrate-now-has-drupal-8-release by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:22:40 GMT -->
+</html>

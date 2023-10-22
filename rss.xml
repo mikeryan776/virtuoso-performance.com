@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:schema="http://schema.org/" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" version="2.0" xml:base="https://virtuoso-performance.com/rss.xml">
+  <channel>
+    <title>Virtuoso Performance (archived) - MIGRATE ALL THE THINGS!</title>
+    <link>https://virtuoso-performance.com/rss.xml</link>
+    <description/>
+    <language>en</language>
+    
+    <item>
+  <title>Soong 0.7.0 released</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/soong-070-released</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Soong 0.7.0 released&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2019-07-05T21:05:10+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Friday, July 5, 2019 - 04:05pm&lt;/span&gt;
+</description>
+  <pubDate>Fri, 05 Jul 2019 21:05:10 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">154 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/mikeryan/soong-070-released#comments</comments>
+    </item>
+<item>
+  <title>Soong 0.6.0 released</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/soong-060-released</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Soong 0.6.0 released&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2019-05-01T20:40:18+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Wednesday, May 1, 2019 - 03:40pm&lt;/span&gt;
+</description>
+  <pubDate>Wed, 01 May 2019 20:40:18 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">153 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/mikeryan/soong-060-released#comments</comments>
+    </item>
+<item>
+  <title>Soong 0.5.2 released</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/soong-052-released</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Soong 0.5.2 released&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2019-04-08T18:49:43+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Monday, April 8, 2019 - 01:49pm&lt;/span&gt;
+</description>
+  <pubDate>Mon, 08 Apr 2019 18:49:43 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">152 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/mikeryan/soong-052-released#comments</comments>
+    </item>
+<item>
+  <title>Update on Soong ETL</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/update-soong-etl</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Update on Soong ETL&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2019-02-26T17:26:01+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Tuesday, February 26, 2019 - 11:26am&lt;/span&gt;
+</description>
+  <pubDate>Tue, 26 Feb 2019 17:26:01 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">151 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/mikeryan/update-soong-etl#comments</comments>
+    </item>
+<item>
+  <title>Announcing the Soong project - developing a general-purpose ETL framework</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/announcing-soong-project-developing-general-purpose-etl-framework</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Announcing the Soong project - developing a general-purpose ETL framework&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2019-01-22T20:10:33+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Tuesday, January 22, 2019 - 02:10pm&lt;/span&gt;
+</description>
+  <pubDate>Tue, 22 Jan 2019 20:10:33 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">150 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/mikeryan/announcing-soong-project-developing-general-purpose-etl-framework#comments</comments>
+    </item>
+<item>
+  <title>Drupal file migrations: The s3fs module</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/drupal-file-migrations-s3fs-module</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Drupal file migrations: The s3fs module&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2019-01-09T19:56:19+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Wednesday, January 9, 2019 - 01:56pm&lt;/span&gt;
+</description>
+  <pubDate>Wed, 09 Jan 2019 19:56:19 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">149 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/mikeryan/drupal-file-migrations-s3fs-module#comments</comments>
+    </item>
+<item>
+  <title>Migrating from an OAuth2 authenticated JSON feed</title>
+  <link>https://virtuoso-performance.com/blog/vpadmin/migrating-oauth2-authenticated-json-feed</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Migrating from an OAuth2 authenticated JSON feed&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-06-04T15:24:26+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Monday, June 4, 2018 - 10:24am&lt;/span&gt;
+</description>
+  <pubDate>Mon, 04 Jun 2018 15:24:26 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">148 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/vpadmin/migrating-oauth2-authenticated-json-feed#comments</comments>
+    </item>
+<item>
+  <title>Disabling functionality temporarily during migration</title>
+  <link>https://virtuoso-performance.com/blog/vpadmin/disabling-functionality-temporarily-during-migration</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Disabling functionality temporarily during migration&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-05-31T15:25:45+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Thursday, May 31, 2018 - 10:25am&lt;/span&gt;
+</description>
+  <pubDate>Thu, 31 May 2018 15:25:45 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">147 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/vpadmin/disabling-functionality-temporarily-during-migration#comments</comments>
+    </item>
+<item>
+  <title>Configuring migrations via a form</title>
+  <link>https://virtuoso-performance.com/blog/vpadmin/configuring-migrations-form</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Configuring migrations via a form&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-05-23T02:29:19+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Tuesday, May 22, 2018 - 09:29pm&lt;/span&gt;
+</description>
+  <pubDate>Wed, 23 May 2018 02:29:19 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">146 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/vpadmin/configuring-migrations-form#comments</comments>
+    </item>
+<item>
+  <title>Importing specific fields with overwrite_properties</title>
+  <link>https://virtuoso-performance.com/blog/vpadmin/importing-specific-fields-overwriteproperties</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Importing specific fields with overwrite_properties&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-05-15T15:50:15+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Tuesday, May 15, 2018 - 10:50am&lt;/span&gt;
+</description>
+  <pubDate>Tue, 15 May 2018 15:50:15 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">145 at https://virtuoso-performance.com</guid>
+    <comments>https://virtuoso-performance.com/blog/vpadmin/importing-specific-fields-overwriteproperties#comments</comments>
+    </item>
+
+  </channel>
+</rss>

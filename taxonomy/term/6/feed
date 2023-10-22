@@ -1,0 +1,1614 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:schema="http://schema.org/" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" version="2.0" xml:base="https://virtuoso-performance.com/tags/planet-drupal">
+  <channel>
+    <title>Planet Drupal</title>
+    <link>https://virtuoso-performance.com/tags/planet-drupal</link>
+    <description/>
+    <language>en</language>
+    
+    <item>
+  <title>Announcing the Soong project - developing a general-purpose ETL framework</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/announcing-soong-project-developing-general-purpose-etl-framework</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Announcing the Soong project - developing a general-purpose ETL framework&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2019-01-22T20:10:33+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Tuesday, January 22, 2019 - 02:10pm&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;I'd like to invite members of the open-source community, particularly (but not exclusively) those involved with PHP, to join in designing and developing a general-purpose &lt;a href="https://en.wikipedia.org/wiki/Extract,_transform,_load"&gt;ETL &lt;/a&gt;framework for data migration. The vendor name for packaging components of this project is &lt;a href="https://packagist.org/?tags=soong"&gt;soong&lt;/a&gt;, and git repos for existing components are under the &lt;a href="https://gitlab.com/soongetl"&gt;GitLab account "soongetl"&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Note: Finally having finished composition of this lengthy monologue, it's clear to me that it's very ambitious (some might say arrogant) of me to write with the expectation that this will grow into a large and robust open-source ecosystem. Very well - it is ambitious, and the effort may very well fall flat on its face. C'est la vie...&lt;/p&gt;
+
+&lt;h2&gt;Who am I?&lt;/h2&gt;
+
+&lt;p&gt;I'm &lt;a href="https://www.drupal.org/u/mikeryan"&gt;Mike Ryan&lt;/a&gt; - a lot of people in the Drupal community know me, but not so much the wider open-source community. &lt;a href="https://virtuoso-performance.com/blog/mikeryan/boston-drupal-meetup"&gt;Almost eleven years ago&lt;/a&gt; at a Drupal meetup in Boston, amongst general agreement that everyone hates to do data migration, &lt;a href="https://www.drupal.org/u/moshe-weitzman"&gt;Moshe Weitzman&lt;/a&gt; looked across the table at me and said "there's an opportunity here." Since then data migration into Drupal has been the primary focus of my professional life, first in partnership with Moshe, then as an &lt;a href="https://www.acquia.com/"&gt;Acquia&lt;/a&gt; employee and finally as a &lt;a href="https://virtuoso-performance.com"&gt;solo consultant&lt;/a&gt;. Over the years I've created several migration-related contrib modules for Drupal, was part of the team integrating migration into Drupal core for D8, and have been involved in dozens of real-world migration projects.&lt;/p&gt;
+
+&lt;h2&gt;Why am I doing this?&lt;/h2&gt;
+
+&lt;h3&gt;I think we can do better&lt;/h3&gt;
+
+&lt;p&gt;Just within Drupal, the migration framework can be improved:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;Each step of Drupal migration support has been a port of the previous - from the hook-based Drupal 6 version, to the inheritence-and-composition model in Drupal 7, to the plugin-based system in Drupal 8, technical debt has accumulated. I've wanted for a while to start over with a clean slate - given my experience (and others), what would we do differently starting from scratch? Can we step back and re-examine the assumptions we've been carrying forward?&lt;/li&gt;
+	&lt;li&gt;At a specific technical level, the biggest itch I've wanted to scratch is decoupling the components. Within the migration system as it is in D8 today, pretty much every component knows everything about every other component. At one point we had a destination plugin which was using some of the migration's source plugin configuration - that one made my eye twitch!&lt;/li&gt;
+	&lt;li&gt;There's also the coupling of the migration system with Drupal - in particular, migration classes *are* Drupal plugins (i.e., their interfaces extend PluginInspectionInterface) rather than being *managed by* Drupal plugins. I would like to see migration classes be all about migration, rather than worry about being plugins as well. And once the basic migration classes are no longer Drupal plugins, then it's a small step to them being entirely independent of Drupal...&lt;/li&gt;
+&lt;/ol&gt;&lt;h3&gt;The larger PHP community&lt;/h3&gt;
+
+&lt;p&gt;With Drupal 8, we’ve often talked about “getting off the island” in terms of benefiting from much fine PHP work done outside of the Drupal community. We haven’t talked so much about going in the opposite direction - making our own fine work available for use beyond Drupal. To my knowledge, the only published example of this so far is Kris Vanderwater (&lt;a href="https://www.drupal.org/u/eclipsegc"&gt;EclipseGC&lt;/a&gt;) with the &lt;a href="https://github.com/EclipseGc/Plugins"&gt;plugin library&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Likewise, we Drupal developers don’t have a monopoly on good migration ideas - by moving the general-purpose aspects of migration into a separate open source project, we have the opportunity to benefit from new ideas and new talent.&lt;/p&gt;
+
+&lt;h3&gt;The community we build&lt;/h3&gt;
+
+&lt;p&gt;The major key to success for any large open-source project like this is a thriving community. After seeing open-source projects like Drupal grow organically - and face growing pains as they find themselves dealing with community problems reactively rather than proactively - if a community does form around this project, I would like to establish a supportive and welcoming tone from the beginning.&lt;/p&gt;
+
+&lt;p&gt;Diversity in particular remains an issue in the tech industry in general, and open-source especially - and a lack of diversity is difficult to correct after the fact. In building a community around this framework, my hope is that we draw a diverse set of developers in the beginning, in the hopes that seeding the garden well will be, if not self-sustaining, at least more sustainable. How to do that, I'm not certain - a concerted outreach effort could easily end up looking like Pokemon Go, searching for unique creatures to collect. Apart from starting with a good &lt;a href="https://www.contributor-covenant.org/version/1/4/code-of-conduct"&gt;Code of Conduct&lt;/a&gt;, I'm open to suggestions!&lt;/p&gt;
+
+&lt;p&gt;Another aspect of community-building is providing opportunities for relative novices (whether new to open-source development, new to PHP, or new to migration). The proposed architecture involves myriad small, well-focused packages - an extractor here, a set of related transformers there, integrations for specific frameworks and APIs... Individual transformers, in particular, will generally be very simple. This ecosystem thus will provide ample opportunities for novices to gain experience with mentorship and also establish an online presence.&lt;/p&gt;
+
+&lt;p&gt;Now, all that being said, what about &lt;a href="https://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community"&gt;The Ethics of Unpaid Labor and the OSS Community&lt;/a&gt; (also see the &lt;a href="https://twitter.com/drnikki/status/1084831226081402880"&gt;recent Twitter discussion&lt;/a&gt; in the Drupal community)? In reaching out to underrepresented groups and to novices, we are reaching out to the people who have the least ability to work on open source for free. One way to ameliorate this effect may be to explicitly try to draw in students - whether in formal programs or teaching themselves software development - who will benefit from some free practical education and mentorship. Down the road, if this framework does start being adopted in real-world applications, we can look at ways to get sponsorships for people who maintain projects within the ecosystem. At any rate, as the community here grows I expect &lt;a href="https://gitlab.com/soongetl/architecture/issues/9"&gt;this will be an ongoing conversation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Selfishness&lt;/h3&gt;
+
+&lt;p&gt;Yes, I'm willing to cop to selfish reasons to pursue this.&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;Simple ego: I'm proud of the work I've done on migration in Drupal, and think it can be useful on a larger stage. Being old enough to see retirement on the horizon, I admit I'm thinking of this as my magnum opus - the last major contribution I make to open source. I would love to leave behind a significant piece of quality software with a vital community behind it.&lt;/li&gt;
+	&lt;li&gt;Money: I've done fine as a Drupal data migration specialist. I hope to do better by expanding my market beyond Drupal, working on a wider variety of migration projects. Yes, retirement is on the horizon but, given earlier attempts at consulting which went less well than my "migration period" has, my funds put that horizon farther out than I'd like...&lt;/li&gt;
+&lt;/ol&gt;&lt;h2&gt;What's done so far?&lt;/h2&gt;
+
+&lt;p&gt;Early last year I started playing around with a proof-of-concept in a single repo, getting a single basic ETL migration scenario running with a decoupled class structure based on the basic architecture of the Drupal migration system. Much of the work after getting the initial POC running was figuring out appropriate boundaries between components, and gradually introducing features beyond the most basic ones I started with. And then breaking pieces out into separate source repos, and figuring out those boundaries.&lt;/p&gt;
+
+&lt;h2&gt;My role&lt;/h2&gt;
+
+&lt;p&gt;This will certainly change according to the number and skills of contributors who join into this effort (assuming there are some!), but what I'm aiming for in terms of my own role:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;Primary architect of version 1 of Soong. This would mean being the primary maintainer of architecture documentation and the &lt;a href="https://gitlab.com/soongetl/soong"&gt;repository of central interfaces/base classes&lt;/a&gt;. Per "selfishness" above - I have an architectural vision I want to see brought to fruition. Others may take it in different directions after that, but V1 is mine! tl;dr - I don't want to be &lt;a href="https://en.wikipedia.org/wiki/Benevolent_dictator_for_life"&gt;BDFL&lt;/a&gt;; I do want to be BDF1.&lt;/li&gt;
+	&lt;li&gt;Community leader. Per "community" above, I have a vision for building a diverse and vibrant open-source community from the ground up. Unlike the technical architecture, however, this plays less to my strengths, so I will be happy to defer as better-suited people show leadership in the community.&lt;/li&gt;
+	&lt;li&gt;Mentorship. I'd like to help people up their development skills, their open-source involvement, and their understanding of the pits and perils of data migration.&lt;/li&gt;
+&lt;/ol&gt;&lt;h2&gt;Why did it take me so long?&lt;/h2&gt;
+
+&lt;p&gt;After having it in the back of my head for a few years, I finally started creating repos and putting my thoughts into actual interfaces and classes several months ago. Why did I wait until now to share my work with the larger community? I certainly felt seen when I read this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://twitter.com/jessfraz/status/1063425181509652481"&gt;https://twitter.com/jessfraz/status/1063425181509652481&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Frankly, there's an element of imposter syndrome here - I wanted to be sure I wasn't exposing any dumb ideas! Well, enough of that - instead, I now stipulate that you will find dumb things I did here, and ask that you help smartify them.&lt;/p&gt;
+
+&lt;h2&gt;The architecture itself&lt;/h2&gt;
+
+&lt;p&gt;There's a ways to go &lt;a href="https://gitlab.com/soongetl/architecture/blob/master/architecture/index.md"&gt;documenting the architecture&lt;/a&gt; as it is currently implemented in &lt;a href="https://gitlab.com/soongetl/soong"&gt;soong/soong&lt;/a&gt;, but right now it broadly looks like this:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;A Task accepts configuration defining a migration process, and implements operations - most notably &lt;strong&gt;migrate&lt;/strong&gt;, but it may also support other operations like &lt;strong&gt;rollback&lt;/strong&gt;, &lt;strong&gt;status&lt;/strong&gt;, &lt;strong&gt;analyze&lt;/strong&gt;, … The following steps describe the &lt;strong&gt;migrate&lt;/strong&gt; operation.&lt;/li&gt;
+	&lt;li&gt;The task constructs the configured Extractor, which obtains data from a source such as a SQL query, a CSV file, an XML/JSON API, etc.&lt;/li&gt;
+	&lt;li&gt;Iterating over the extractor returns one DataRecord (collection of named DataProperty instances) at a time containing source data. The task creates an empty DataRecord representing the destination data.&lt;/li&gt;
+	&lt;li&gt;The task configuration defines a transform pipeline keyed by destination property names. For each of these properties, a sequence of one or more Transformer classes with corresponding configuration is invoked to determine the destination property value - usually, the first one will be configured to accept one or more source property names, and the results will be fed to subsequent transformers, with the final result assigned to the named property in the destination DataRecord.&lt;/li&gt;
+	&lt;li&gt;The destination DataRecord is passed to the configured Loader to be loaded into the destination store - a SQL database, a CSV file, etc.&lt;/li&gt;
+	&lt;li&gt;If an optional KeyMap is configured within the task, it is used to store the mapping from the source record's unique key to the destination record's unique key. This enables keyed relationships to be maintained even if keys change when migrating, as well as enabling rollback.&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;To try out a couple of working demos, &lt;code&gt;git clone git@gitlab.com:soongetl/soong.git&lt;/code&gt; and follow the README.&lt;/p&gt;
+
+&lt;h2&gt;Initial technical priorities&lt;/h2&gt;
+
+&lt;ol&gt;&lt;li&gt;One of those infamous hard problems in computer science is naming things. Before we go too far, &lt;a href="https://gitlab.com/soongetl/architecture/issues?label_name%5B%5D=Naming"&gt;let's figure out how best to name things&lt;/a&gt; - I think Extractor/Transformer/Loader are pretty solid, but let's discuss whether other components (like &lt;a href="https://gitlab.com/soongetl/architecture/issues/1"&gt;Task&lt;/a&gt;) could use better names. Also, let's decide what naming conventions for implementations should look like - e.g., should CSV extractor and loader classes both be named CSV (or for that matter, Csv) with namespaces alone distinguishing them, or should they be CSVExtractor and CSVLoader?&lt;/li&gt;
+	&lt;li&gt;The initial architecture, as I've said before, comes from my narrow experience in Drupal. I'm sure there are plenty of other good migration ideas out there - maybe there's even a package I've missed that's good enough that this effort would better be directed towards improving it rather than starting from scratch. I did do some research last year and did not find any PHP ETL packages that appeared to have wide adoption or as much flexibility, but with more eyes on it (eyes that have seen more beyond Drupal than I have) &lt;a href="https://gitlab.com/soongetl/architecture/issues/7"&gt;let's see if we can do a thorough review of prior art and see if there are some good ideas which may influence this effort&lt;/a&gt;. And let's look beyond PHP as well - are there ETL frameworks written in other object-oriented languages which may provide some architectural inspiration?&lt;/li&gt;
+	&lt;li&gt;Review the &lt;a href="https://gitlab.com/soongetl/skeleton"&gt;boilerplate for Soong code repos&lt;/a&gt; (based on &lt;a href="https://github.com/thephpleague/skeleton"&gt;https://github.com/thephpleague/skeleton&lt;/a&gt;) - let's go over what we've got there (especially the code of conduct and contributing guidelines).&lt;/li&gt;
+	&lt;li&gt;Test all the things! Before adding new stuff, we need to add tests for the existing components, and set up automated testing on Gitlab.&lt;/li&gt;
+&lt;/ol&gt;&lt;h2&gt;Technical goals&lt;/h2&gt;
+
+&lt;ol&gt;&lt;li&gt;For V1, require PHP 7.1 and leverage strict type checking. I expect future versions to require PHP 7.4 and leverage typed object properties.&lt;/li&gt;
+	&lt;li&gt;The central interface package &lt;a href="https://gitlab.com/soongetl/soong"&gt;soong/soong&lt;/a&gt; ideally should not depend on anything other than &lt;a href="https://www.php-fig.org/psr/"&gt;PSR interfaces&lt;/a&gt;. It should be approached as if it were a PSR itself - a completely general interface for ETL functionality not dependent on any non-standard interfaces.&lt;/li&gt;
+&lt;/ol&gt;&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Again, I know I am getting way ahead of myself here by imagining an active open-source community will quickly spring up here. I have talked to Drupal people about my ideas on occasion, and I expect there will be some interest there, but I very much hope other open-source developers can join this effort and provide different perspectives. I do believe strongly that a standard ETL library with a core of simple standard interfaces (making a simple move-my-stuff-from-here-to-there application a breeze) plus the flexibility to build complex systems to handle many types of data will be extremely valuable across many domains.&lt;/p&gt;
+
+&lt;p&gt;If I may try your patience a bit longer - I've spent a substantial portion of my time since my last contract pulling these thoughts together, and I am now in need of paid work (&lt;a href="https://virtuoso-performance.com/contact"&gt;contact me&lt;/a&gt; if you need some data migration done!). I may fantasize about being sponsored to work fulltime on Soong, or be hopeful there's someone with a project that they think will benefit from Soong and thus I can make progress here in the course of solving their migration problem. Realistically, my next contract (or employment) most likely will not involve Soong development, so once I'm working I won't have as much time to manage this project - let's hope plenty of people join in to pick up my slack!&lt;/p&gt;
+
+&lt;p&gt;If you've made it this far, thank you for your time and I look forward to your merge requests!&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--php"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/php" property="schema:about" hreflang="en"&gt;PHP&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--migration"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migration" property="schema:about" hreflang="en"&gt;Migration&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--soong"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/soong" property="schema:about" hreflang="en"&gt;Soong&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"&gt;&lt;h3 class="field__label"&gt;Use the Twitter thread below to comment on this post:&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item"&gt;&lt;div data-oembed-url="https://twitter.com/VirtPerformance/status/1087805171621679104"&gt;
+&lt;div style="max-width:480px;margin:auto;"&gt;&lt;!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. --&gt;
+&lt;blockquote align="center" class="twitter-tweet" data-dnt="true"&gt;
+&lt;p dir="ltr" lang="und" xml:lang="und" xml:lang="und"&gt;&lt;a href="https://t.co/0uVJ13t8md"&gt;https://t.co/0uVJ13t8md&lt;/a&gt;&lt;/p&gt;
+— Virtuoso Performance (@VirtPerformance) &lt;a href="https://twitter.com/VirtPerformance/status/1087805171621679104?ref_src=twsrc%5Etfw"&gt;January 22, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Tue, 22 Jan 2019 20:10:33 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">150 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Drupal file migrations: The s3fs module</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/drupal-file-migrations-s3fs-module</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Drupal file migrations: The s3fs module&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2019-01-09T19:56:19+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Wednesday, January 9, 2019 - 01:56pm&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;A recent project gave me the opportunity to familiarize myself with the Drupal 8 version of the &lt;a href="https://www.drupal.org/project/s3fs"&gt;S3 File System (s3fs) module&lt;/a&gt; (having used the D7 version briefly in the distant past). This module provides an &lt;code&gt;s3://&lt;/code&gt; stream wrapper for files stored in an S3 bucket, allowing them to be used as seamlessly as locally stored public and private files. First we present the migrations and some of the plugins implemented to support import of files stored on S3 - below we will go into some of the challenges we faced.&lt;/p&gt;
+
+&lt;p&gt;Our client was already storing video files in an S3 bucket, and it was decided that for the Drupal site we would also store image files there. The client handled bulk uploading of images to an "&lt;code&gt;image&lt;/code&gt;" folder within the bucket, using the same (relative) paths as those stored for the images in the legacy database. Thus, for migration we did not need to physically copy files around (the bane of many a media migration!) - we "merely" needed to create the appropriate entities in Drupal pointing at the S3 location of the files.&lt;/p&gt;
+
+&lt;p&gt;The following examples are modified from the committed code - to obfuscate the client/project, and to simplify so we focus on the subject at hand.&lt;/p&gt;
+
+&lt;h2&gt;Image migrations&lt;/h2&gt;
+
+&lt;h3&gt;Gallery images&lt;/h3&gt;
+
+&lt;p&gt;In the legacy database all gallery images were stored in a table named &lt;code&gt;asset_metadata&lt;/code&gt;, which is structured very much like Drupal's &lt;code&gt;file_managed&lt;/code&gt; table, with the file paths in an &lt;code&gt;asset_path&lt;/code&gt; column. The file migration looked like this:&lt;/p&gt;
+
+&lt;pre&gt;
+id: acme_image
+source:
+  plugin: acme
+process:
+  filename:
+    plugin: callback
+    callable: basename
+    source: asset_path
+  uri:
+    # Construct the S3 URI - see implementation below.
+    plugin: acme_s3_uri
+    source: asset_path
+  # Source data created/last_modified fields are YYYY-MM-DD HH:MM:SS - convert
+  # them to the classic UNIX timestamps Drupal loves. Oh, and they're optional,
+  # so when empty leave them empty and let Drupal set them to the current time.
+  created:
+    -
+      plugin: skip_on_empty
+      source: created
+      method: process
+    -
+      plugin: callback
+      callable: strtotime
+  changed:
+    -
+      plugin: skip_on_empty
+      source: last_modified
+      method: process
+    -
+      plugin: callback
+      callable: strtotime
+destination:
+  plugin: entity:file
+&lt;/pre&gt;
+
+&lt;p&gt;Because we also needed to construct the S3 uris in places besides the &lt;code&gt;acme_s3_uri&lt;/code&gt; process plugin, we implemented the construction in a trait which cleans up some inconsistencies and prepends the image location:&lt;/p&gt;
+
+&lt;pre&gt;
+trait AcmeMakeS3Uri {
+  /**
+   * Turn a legacy image path into an S3 URI.
+   *
+   * @param string $value
+   *
+   * @return string
+   */
+  protected function makeS3Uri($value) {
+     // Some have leading tabs.
+     $value = trim($value);
+     // Path fields are inconsistent about leading slashes.
+     $value = ltrim($value, '/');
+     // Sometimes they contain doubled-up slashes.
+     $value = str_replace('//', '/', $value);
+     return 's3://image/' . $value;
+  }
+}
+&lt;/pre&gt;
+
+&lt;p&gt;So, the process plugin in the image migration above uses the trait to construct the URI, and verifies that the file is actually in S3 - if not, we skip it. See the Challenges and Contributions section below for more on the &lt;code&gt;s3fs_file&lt;/code&gt; table.&lt;/p&gt;
+
+&lt;pre&gt;
+/**
+ * Turn a legacy image path into an S3 URI.
+ *
+ * @MigrateProcessPlugin(
+ *   id = "acme_s3_uri"
+ * )
+ */
+class AcmeS3Uri extends ProcessPluginBase {
+  use AcmeMakeS3Uri;
+ 
+  /**
+   * {@inheritdoc}
+   */
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+    $uri = $this-&gt;makeS3Uri($value);
+  // For now, skip any images not cached by s3fs.
+  $s3_uri = \Drupal::database()-&gt;select('s3fs_file', 's3')
+    -&gt;fields('s3', ['uri'])
+    -&gt;condition('uri', $uri)
+    -&gt;execute()
+    -&gt;fetchField();
+    if (!$s3_uri) {
+      throw new MigrateSkipRowException("$uri missing from s3fs_file table");
+    }
+    return $uri;
+  }
+}
+&lt;/pre&gt;
+
+&lt;p&gt;The above creates the file entities - next, we need to create the media entities that reference the files above via entity reference fields (and add other fields). These media entities are then referenced from content entities.&lt;/p&gt;
+
+&lt;pre&gt;
+id: acme_image_media
+source:
+  plugin: acme
+process:
+  # For the media "name" property - displayed at /admin/content/media - our
+  # first choice is the image caption, followed by the "event_name" field in
+  # our source table. If necessary, we fall back to the original image path.
+  name:
+    -
+      # Produces an array containing only the non-empty values.
+      plugin: callback
+      callable: array_filter
+      source:
+        - caption
+        - event_name
+        - asset_path
+    -
+      # From the array, pass on the first value as a scalar.
+      plugin: callback
+      callable: current
+    -
+      # Some captions are longer than the name property length.
+      plugin: substr
+      length: 255
+  # Entity reference to the image - convert the source ID to Drupal's file ID.
+  field_media_image/target_id:
+    plugin: migration_lookup
+    migration: acme_image
+    source: id
+  # Use the name we computed above as the alt text.
+  field_media_image/alt: '@name'
+  # We need to explicitly set the image dimensions in the field's width/height
+  # subfields (more on this below under Challenges and Contributions). Note that in
+  # the process pipeline you can effectively create temporary fields which can be
+  # used later in the pipeline - just be sure they won't conflict with
+  # anything that might be used within the Drupal entity.
+  _uri:
+    plugin: acme_s3_uri
+    source: asset_path
+  _image_dimensions:
+    plugin: acme_image_dimensions
+    source: '@_uri'
+  field_media_image/width: '@_image_dimensions/width'
+  field_media_image/height: '@_image_dimensions/height'
+  caption: caption
+destination:
+  plugin: entity:media
+  default_bundle: image
+migration_dependencies:
+  required:
+    - acme_image
+&lt;/pre&gt;
+
+&lt;h3&gt;Other images&lt;/h3&gt;
+
+&lt;p&gt;The gallery images have their own metadata table - but, there are many other images which are simply stored as paths in content tables (in some cases, there are multiple such path fields in a single table). One might be tempted to deal with these in process plugins in the content migrations - creating the file and media entities on the fly - but that would be, well, ugly. Instead we implemented a drush command, run before our migration tasks, to canonicalize and gather those paths into a single table, which then feeds the &lt;code&gt;acme_image_consolidated&lt;/code&gt; and &lt;code&gt;acme_image_media_consolidated&lt;/code&gt; migrations (which end up being simpler versions of &lt;code&gt;acme_image&lt;/code&gt; and &lt;code&gt;acme_image_media&lt;/code&gt;, since "&lt;code&gt;path&lt;/code&gt;" is the only available source field).&lt;/p&gt;
+
+&lt;pre&gt;
+function drush_acme_migrate_gather_images() {
+  // Key is legacy table name, value is list of image path columns to migrate.
+  $table_fields = [
+    'person' =&gt; [
+      'profile_picture_path',
+      'left_standing_path',
+      'right_standing_path',
+    ],
+    'event' =&gt; [
+      'feature_image',
+      'secondary_feature_image',
+    ],
+    'subevent' =&gt; [
+      'generated_medium_thumbnail',
+    ],
+    'news_article' =&gt; [
+      'thumbnail',
+    ]
+  ];
+  $legacy_db = Database::getConnection('default', 'migrate');
+  // Create the table if necessary.
+  if (!$legacy_db-&gt;schema()-&gt;tableExists('consolidated_image_paths')) {
+    $table = [
+      'fields' =&gt; [
+         'path' =&gt; [
+          'type' =&gt; 'varchar',
+          'length' =&gt; 191,    // Longest known path is 170.
+          'not null' =&gt; TRUE,
+         ]
+      ],
+      'primary key' =&gt; ['path'],
+    ];
+    $legacy_db-&gt;schema()-&gt;createTable('consolidated_image_paths', $table);
+    drush_print('Created consolidated_image_paths table');
+  }
+  $max = 0;
+  foreach ($table_fields as $table =&gt; $field_list) {
+    drush_print("Gathering paths from $table");
+    $count = 0;
+    $query = $legacy_db-&gt;select($table, 't')
+      -&gt;fields('t', $field_list);
+    foreach ($query-&gt;execute() as $row) {
+      // Iterate the image path columns returned in the row.
+      foreach ($row as $path) {
+        if ($path) {
+          $len = strlen($path);
+          if ($len &gt; $max) $max = $len;
+          $path = str_replace('//', '/', $path);
+          $count++;
+          $legacy_db-&gt;merge('consolidated_image_paths')
+            -&gt;key('path', $path)
+            -&gt;execute();
+        }
+      }
+    }
+    // Note we will end up with far fewer rows in the table due to duplication.
+    drush_print("$count paths added from $table");
+  }
+  drush_print("Maximum path length is $max");
+}
+&lt;/pre&gt;
+
+&lt;h2&gt;Video migrations&lt;/h2&gt;
+
+&lt;p&gt;The legacy database contained a &lt;code&gt;media&lt;/code&gt; table referencing videos tagged with three different types - internal, external, and embedded. "Internal" videos were those stored in S3 with a relative path in the &lt;code&gt;internal_url&lt;/code&gt; column; "external" videos (most on client-specific domains, but with some Youtube domains as well) had a full URL in the &lt;code&gt;external_url&lt;/code&gt; column; and "embedded" videos were with a very few exceptions Youtube videos with the Youtube ID in the &lt;code&gt;embedded_id&lt;/code&gt; column. It was decided that we would migrate the internal and Youtube videos, ignoring the rest of the external/embedded videos. Here we focus on the internal (S3-based) videos.&lt;/p&gt;
+
+&lt;pre&gt;
+id: acme_video
+source:
+  plugin: acme_internal_video
+  constants:
+    s3_prefix: s3://
+process:
+  _trimmed_url:
+    # Since the callback process plugin only permits a single source value to be
+    # passed to the specified PHP function, we have a custom plugin which enables us
+    # to pass a character list to be trimmed.
+    plugin: acme_trim
+    source: internal_url
+    trim_type: left
+    charlist: /
+  uri:
+    -
+      plugin: concat
+      source:
+        - constants/s3_prefix
+        - '@_trimmed_url'
+    -
+      # Make sure the referenced file actually exists in S3 (does a simple query on
+      # the s3fs_file table, throwing MigrateSkipRowException if missing).
+      plugin: acme_skip_missing_file
+  fid:
+    # This operates much like migrate_plus's entity_lookup, to return an existing
+    # entity ID based on arbitrary properties. The purpose here is if the file URI
+    # is already in file_managed, point the migrate map table to the existing file
+    # entity - otherwise, a new file entity will be created.
+    plugin: acme_load_by_properties
+    entity_type: file
+    properties: uri
+    source: '@uri'
+    default_value: NULL
+  filename:
+    plugin: callback
+    callable: basename
+    source: '@uri'
+destination:
+  plugin: entity:file
+&lt;/pre&gt;
+
+&lt;p&gt;The media entity migration is pretty straightforward:&lt;/p&gt;
+
+&lt;pre&gt;
+id: acme_video_media
+source:
+  plugin: acme_internal_video
+  constants:
+    true: 1
+process:
+  status: published
+  name: title
+  caption: caption
+  # The source column media_date is YYYY-MM-DD HH:DD:SS format - the Drupal field is
+  # configured as date-only, so the source value must be truncated to YYYY-MM-DD.
+  date:
+    -
+      plugin: skip_on_empty
+      source: media_date
+      method: process
+    -
+      plugin: substr
+      length: 10
+  field_media_video/0/target_id:
+    -
+      plugin: migration_lookup
+      migration: acme_video
+      source: id
+      no_stub: true
+    -
+      # If we haven't migrated a file entity, skip this media entity.
+      plugin: skip_on_empty
+      method: row
+  field_media_video/0/display: constants/true
+  field_media_video/0/description: caption
+destination:
+  plugin: entity:media
+  default_bundle: video
+migration_dependencies:
+  required:
+    - acme_video
+&lt;/pre&gt;
+
+&lt;p&gt;Did I mention that we needed to create a node for each video, linking to related content of other types? Here we go:&lt;/p&gt;
+
+&lt;pre&gt;
+id: acme_video_node
+source:
+  plugin: acme_internal_video
+  constants:
+    text_format: formatted
+    url_prefix: http://www.acme.com/media/
+    s3_prefix: s3://image/
+process:
+  title: title
+  status: published
+  teaser/value: caption
+  teaser/format: constants/text_format
+  length:
+    # Converts HH:MM:SS to integer seconds. Left as an exercise to the reader.
+    plugin: acme_video_length
+    source: duration
+  video:
+    plugin: migration_lookup
+    migration: acme_video_media
+    source: id
+    no_stub: true
+  # Field to preserve the original URL.
+  old_url:
+    plugin: concat
+    source:
+      - constants/url_prefix
+      - url_name
+  _trimmed_thumbnail:
+    plugin: acme_trim
+    trim_type: left
+    charlist: '/'
+    source: thumbnail
+  teaser_image:
+    -
+      plugin: skip_on_empty
+      source: '@_trimmed_thumbnail'
+      method: process
+    -
+      # Form the URI as stored in file_managed.
+      plugin: concat
+      source:
+        - constants/s3_prefix
+        - '@_trimmed_thumbnail'
+    -
+      # Look up the fid.
+      plugin: acme_load_by_properties
+      entity_type: file
+      properties: uri
+    -
+      # Find the media entity referencing that fid.
+      plugin: acme_load_by_properties
+      entity_type: media
+      properties: field_media_image
+  # Note that for each of these entity reference fields, we skipped some content,
+  # so need to make sure stubs aren't created for the missing content. Also note
+  # that the source fields here are populated in a PREPARE_ROW event.
+  related_people:
+    plugin: migration_lookup
+    migration: acme_people
+    source: related_people
+    no_stub: true
+  related_events:
+    plugin: migration_lookup
+    migration: acme_event
+    source: related_events
+    no_stub: true
+  tag_keyword:
+    plugin: migration_lookup
+    migration: acme_keyword
+    source: keyword_ids
+    no_stub: true
+destination:
+  plugin: entity:node
+  default_bundle: video
+migration_dependencies:
+  required:
+    - acme_image_media
+    - acme_video_media
+    - acme_people
+    - acme_event
+    - acme_keyword
+&lt;/pre&gt;
+
+&lt;h2&gt;Auditing missing files&lt;/h2&gt;
+
+&lt;p&gt;A useful thing to know (particularly with the client incrementally populating the S3 bucket with image files) is what files are referenced in the legacy tables but not actually in the bucket. Below is a drush command we threw together to answer that question - it will query each legacy image or video path field we're using, construct the &lt;code&gt;s3://&lt;/code&gt; version of the path, and look it up in the &lt;code&gt;s3fs_file&lt;/code&gt; table to see if it exists in S3.&lt;/p&gt;
+
+&lt;pre&gt;
+/**
+ * Find files missing from S3.
+ */
+function drush_acme_migrate_missing_files() {
+  $legacy_db = Database::getConnection('default', 'migrate');
+  $drupal_db = Database::getConnection();
+  $table_fields = [
+    [
+      'table_name' =&gt; 'asset_metadata',
+      'url_column' =&gt; 'asset_path',
+      'date_column' =&gt; 'created',
+    ],
+    [
+      'table_name' =&gt; 'media',
+      'url_column' =&gt; 'internal_url',
+      'date_column' =&gt; 'media_date',
+    ],
+    [
+      'table_name' =&gt; 'person',
+      'url_column' =&gt; 'profile_picture_path',
+      'date_column' =&gt; 'created',
+    ],
+    // … on to 9 more columns among three more tables...
+  ];
+ 
+  $header = 'uri,legacy_table,legacy_column,date';
+  drush_print($header);
+  foreach ($table_fields as $table_info) {
+    $missing_count = 0;
+    $total_count = 0;
+    $table_name = $table_info['table_name'];
+    $url_column = $table_info['url_column'];
+    $date_column = $table_info['date_column'];
+    $query = $legacy_db-&gt;select($table_name, 't')
+      -&gt;fields('t', [$url_column])
+      -&gt;isNotNull($url_column)
+      -&gt;condition($url_column, '', '&lt;&gt;');
+    if ($table_name == 'media') {
+      $query-&gt;condition('type', 'INTERNALVIDEO');
+    }
+    if ($table_name == 'people') {
+      // This table functions much like Drupal's node table.
+      $query-&gt;innerJoin('publishable_entity', 'pe', 't.id=pe.id');
+      $query-&gt;fields('pe', [$date_column]);
+    }
+    else {
+      $query-&gt;fields('t', [$date_column]);
+    }
+    $query-&gt;distinct();
+    foreach ($query-&gt;execute() as $row) {
+      $path = trim($row-&gt;$url_column);
+      if ($path) {
+        $total_count++;
+        // Paths are inconsistent about leading slashes.
+        $path = ltrim($path, '/');
+        // Sometimes they have doubled-up slashes.
+        $path = str_replace('//', '/', $path);
+        if ($table_name == 'media') {
+          $s3_path = 's3://' . $path;
+        }
+        else {
+          $s3_path = 's3://image/' . $path;
+        }
+        $s3 = $drupal_db-&gt;select('s3fs_file', 's3')
+          -&gt;fields('s3', ['uri'])
+          -&gt;condition('uri', $s3_path)
+          -&gt;execute()
+            -&gt;fetchField();
+        if (!$s3) {
+          $output_row = "$s3_path,$table_name,$url_column,{$row-&gt;$date_column}";
+          drush_print($output_row);
+          $missing_count++;
+        }
+      }
+    }
+    drush_log("$missing_count of $total_count files missing in $table_name column $url_column", 'ok');
+  }
+}
+&lt;/pre&gt;
+
+&lt;h2&gt;Challenges and contributions&lt;/h2&gt;
+
+&lt;p&gt;The s3fs module's primary use case is where the configured S3 bucket is used only by the Drupal site, and populated directly by file uploads through Drupal - our project was an outlier in terms of having all files in the S3 bucket first, and in sheer volume. A critical piece of the implementation is the &lt;code&gt;s3fs_file&lt;/code&gt; table, which caches metadata for all files in the bucket so Drupal rarely needs to access the bucket itself other than on file upload (since file URIs are converted to direct S3 URLs when rendering, web clients go directly to S3 to fetch files, not through Drupal). In our case, the client had an existing S3 bucket which contained all the video files (and more) used by their legacy site, and to which they bulk uploaded image files directly so we did not need to do this during migration. The module does have an &lt;code&gt;s3fs-refresh-cache&lt;/code&gt; command to populate the &lt;code&gt;s3fs_file&lt;/code&gt; table from the current bucket contents, but we did have to deal with some issues around the cache table.&lt;/p&gt;
+
+&lt;h3&gt;Restriction on URI lengths&lt;/h3&gt;
+
+&lt;p&gt;As soon as we started trying to use &lt;code&gt;drush s3fs-refresh-cache&lt;/code&gt;, we ran into the existing issue &lt;a href="https://www.drupal.org/project/s3fs/issues/2823409"&gt;&lt;u&gt;Getting Exception 'PDOException'SQLSTATE[22001] When Running drush s3fs-refresh-cache&lt;/u&gt;&lt;/a&gt; - URIs in the bucket longer than the 255-character length of &lt;code&gt;s3fs_file&lt;/code&gt;'s &lt;code&gt;uri&lt;/code&gt; column. The exception aborted the refresh entirely, and because the refresh operation generates a temporary version of the table from scratch, then swaps it for the "live" table, the exception prevented &lt;strong&gt;any&lt;/strong&gt; file metadata from being refreshed if there was one overflowing URI. I submitted a &lt;a href="https://www.drupal.org/project/s3fs/issues/2823409#comment-12666192"&gt;&lt;u&gt;patch implementing the simplest workaround&lt;/u&gt;&lt;/a&gt; - just generating a message and ignoring overly-long URIs. Discussion continues around an alternate approach, but we used my patch in our project.&lt;/p&gt;
+
+&lt;h3&gt;Lost primary key&lt;/h3&gt;
+
+&lt;p&gt;So, once we got the cache refresh to work, we found serious performance problems. We had stumbled on an existing issue, &lt;a href="https://www.drupal.org/project/s3fs/issues/2972251"&gt;&lt;u&gt;"s3fs_file" table has no primary key&lt;/u&gt;&lt;/a&gt;. I tracked down the cause - because the uri column is 255 characters long, with InnoDB it cannot be indexed when using a multibyte collation such as utf8_general_ci. And Drupal core has a bug, &lt;a href="https://www.drupal.org/project/drupal/issues/2193059"&gt;&lt;u&gt;DatabaseSchema_mysql::createTableSql() can't set table collation&lt;/u&gt;&lt;/a&gt;, preventing the setting of the utf8_bin collation directly in the table schema. The s3fs module works around that bug when creating the s3fs_file table at install time by altering the collation after table creation - but the cache refresh created a new cache table using only the schema definition and did not pick up the altered collation. Thus, only people like us who used cache refresh would lose the index, and those with more modest bucket sizes might never even notice. My patch to apply the collation (later refined by &lt;a href="https://www.drupal.org/u/jansete"&gt;&lt;u&gt;jansete&lt;/u&gt;&lt;/a&gt;) was committed to the s3fs module.&lt;/p&gt;
+
+&lt;h3&gt;Scalability of cache refresh&lt;/h3&gt;
+
+&lt;p&gt;As the client loaded more and more images into the bucket, &lt;code&gt;drush s3fs-refresh-cache&lt;/code&gt; started running out of memory. Our bucket was quite large (1.7 million files at last count), and the refresh function gathered &lt;strong&gt;all&lt;/strong&gt; file metadata in memory before writing it to the database. I &lt;a href="https://www.drupal.org/project/s3fs/issues/2986407"&gt;&lt;u&gt;submitted a patch&lt;/u&gt;&lt;/a&gt; to chunk the metadata to the db within the loop, which has been committed to the module.&lt;/p&gt;
+
+&lt;h3&gt;Image dimensions&lt;/h3&gt;
+
+&lt;p&gt;Once there were lots of images in S3 to migrate, the image media migrations were running excruciatingly slowly. I quickly guessed and confirmed that they were accessing the files directly from S3, and then (less quickly) stepped through the debugger to find the reason - the image fields needed the image width and height, and since this data wasn't available from the source database to be directly mapped in the migration, it went out and fetched the S3 image to get the dimensions itself. This was, of course, necessary - but given that migrations were being repeatedly run for testing on various environments, there was no reason to do it repeatedly. Thus, we introduced an image dimension cache table to capture the width and height the first time we imported an image, and any subsequent imports of that image only needed to get the cached dimensions.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;code&gt;acme_image_media&lt;/code&gt; migration above, we use this process plugin which takes the image URI and returns an array with width and height keys populated with the cached values if present, and NULL if the dimensions are not yet cached:&lt;/p&gt;
+
+&lt;pre&gt;
+/**
+ * Fetch cached dimensions for an image path (purportedly) in S3.
+ *
+ * @MigrateProcessPlugin(
+ *   id = "acme_image_dimensions"
+ * )
+ */
+class AcmeImageDimensions extends ProcessPluginBase {
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+    $dimensions = Database::getConnection('default', 'migrate')
+      -&gt;select('s3fs_image_cache', 's3')
+      -&gt;fields('s3', ['width', 'height'])
+      -&gt;condition('uri', $value)
+      -&gt;execute()
+      -&gt;fetchAssoc();
+    if (empty($dimensions)) {
+      return ['width' =&gt; NULL, 'height' =&gt; NULL];
+    }
+    return $dimensions;
+  }
+}
+&lt;/pre&gt;
+
+&lt;p&gt;If the dimensions were empty, when the media entity was saved Drupal core fetched the image from S3 and the width and height were saved to the image field table. We then caught the migration &lt;code&gt;POST_ROW_SAVE&lt;/code&gt; event to cache the dimensions:&lt;/p&gt;
+
+&lt;pre&gt;
+class AcmeMigrateSubscriber implements EventSubscriberInterface {
+  public static function getSubscribedEvents() {
+    $events[MigrateEvents::POST_ROW_SAVE] = 'import';
+    return $events;
+  }
+ 
+  public function import(MigratePostRowSaveEvent $event) {
+    $row = $event-&gt;getRow();
+    // For image media, if width/height have been freshly obtained, cache them.
+    if (strpos($event-&gt;getMigration()-&gt;id(), 'image_media') &gt; 0) {
+      // Note that this "temporary variable" was populated in the migration as a
+      // width/height array, using the acme_image_dimensions process plugin.
+      $original_dimensions = $row-&gt;getDestinationProperty('_image_dimensions');
+      // If the dimensions are populated, everything's find and all of this is skipped.
+      if (empty($original_dimensions['width'])) {
+        // Find the media entity ID.
+        $destination_id_values = $event-&gt;getDestinationIdValues();
+        if (is_array($destination_id_values)) {
+          $destination_id = reset($destination_id_values);
+          // For performance, cheat and look directly at the table instead of doing
+          // an entity query.
+          $dimensions = Database::getConnection()
+            -&gt;select('media__field_media_image', 'msi')
+            -&gt;fields('msi', ['field_media_image_width', 'field_media_image_height'])
+            -&gt;condition('entity_id', $destination_id)
+            -&gt;execute()
+            -&gt;fetchAssoc();
+          // If we have dimensions, cache them.
+          if ($dimensions &amp;&amp; !empty($dimensions['field_media_image_width'])) {
+            $uri = $row-&gt;getDestinationProperty('_uri');
+            Database::getConnection('default', 'migrate')
+              -&gt;merge('s3fs_image_cache')
+              -&gt;key('uri', $uri)
+              -&gt;fields([
+                'width' =&gt; $dimensions['field_media_image_width'],
+                'height' =&gt; $dimensions['field_media_image_height'],
+              ])
+              -&gt;execute();
+          }
+        }
+      }
+    }
+  }
+}
+&lt;/pre&gt;
+
+&lt;h3&gt;Safely testing with the bucket&lt;/h3&gt;
+
+&lt;p&gt;Another problem with the size of our bucket was that it was too large to economically make and maintain a separate copy to use for development and testing. So, we needed to use the single bucket - but of course, the videos in it were being used in the live site, so it was critical not to mess with them. We decided to use the live bucket with credentials allowing us to read and add files to the bucket, but not delete them - this would permit us to test uploading files through the admin interface, and most importantly from a migration standpoint access the files, but not do any damage. Worst-case scenario would be the inability to clean out test files, but writing a cleanup tool after the fact to clear any extra files out would be simple enough. Between this, and the fact that images were in a separate folder in the bucket (and we weren't doing any uploads of videos, simply migrating references to them), the risk of using the live bucket was felt to be acceptable. At first, though, the client was having trouble finding credentials that worked as we needed. As a short-term workaround, I implemented &lt;a href="https://www.drupal.org/project/s3fs/issues/2984268"&gt;a configuration option for the s3fs module to disable deletion in the stream wrapper&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Investigating the permissions issues with my own test bucket, trying to add the bare minimum permissions needed for reading and writing objects, I arrived at a point where migration worked as desired, and deletion was prevented - but uploading files to the bucket through Drupal silently failed. There was an &lt;a href="https://www.drupal.org/project/s3fs/issues/2987225"&gt;&lt;u&gt;existing issue&lt;/u&gt;&lt;/a&gt; in the s3fs queue but it had not been diagnosed. I finally figured out the cause (Slack comment - "God, the layers of middleware I had to step through to find the precise point of death…") - by default, objects are private when uploaded to S3, and you need to explicitly set &lt;code&gt;public-read&lt;/code&gt; in the ACL. Which the s3fs module does - but, to do this requires the PutObjectAcl policy, which I had not set (I've suggested the s3fs validator could &lt;a href="https://www.drupal.org/project/s3fs/issues/2987225#comment-12716111"&gt;&lt;u&gt;detect and warn of this situation&lt;/u&gt;&lt;/a&gt;). Adding that policy enabled everything to work; once the client applied the necessary policies we were in business…&lt;/p&gt;
+
+&lt;p&gt;… for a while. The use of a single bucket became a problem once front-end developers began actively testing with image styles, and we were close enough to launch to enable deletion so image styles could be flushed when changed. The derivatives for S3 images are themselves stored in S3 - and with people generating derivatives in different environments, the &lt;code&gt;s3fs_file&lt;/code&gt; table in any given environment (in particular the "live" environment on Pantheon, where the eventual production site was taking shape) became out of sync with the actual contents of S3. In particular, if styles were generated in the live environment then flushed in another environment, the live cache table would still contain entries for the derived styles (thus the site would generate URLs to them) even though they didn't actually exist in S3 - thus, no derived images would render. To address this, we had each environment set the s3fs &lt;code&gt;root_folder&lt;/code&gt; option so they would each have their own sandbox - developers could then work on image styles at least with files they uploaded locally for testing, although their environments would not then see the "real" files in the bucket.&lt;/p&gt;
+
+&lt;p&gt;We discussed more permanent alternatives and &lt;a href="https://www.drupal.org/u/seanb"&gt;&lt;u&gt;Sean Blommaert&lt;/u&gt;&lt;/a&gt; put forth &lt;a href="https://www.drupal.org/project/s3fs/issues/3005501"&gt;&lt;u&gt;some suggestions in the s3fs issue queue&lt;/u&gt;&lt;/a&gt; - ultimately (after site launch) we found there is &lt;a href="https://www.drupal.org/project/s3fs_file_proxy_to_s3"&gt;&lt;u&gt;an existing (if minimally maintained) module extending stage_file_proxy&lt;/u&gt;&lt;/a&gt;. I will most certainly work with this module on any future projects using s3fs.&lt;/p&gt;
+
+&lt;h2&gt;The tl;dr - lessons learned&lt;/h2&gt;
+
+&lt;p&gt;To summarize the things to keep in mind if planning on using s3fs in your Drupal project:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;Install the &lt;a href="https://www.drupal.org/project/s3fs_file_proxy_to_s3"&gt;&lt;u&gt;s3fs_file_proxy_to_s3 module&lt;/u&gt;&lt;/a&gt; first thing, and make sure all environments have it enabled and configured.&lt;/li&gt;
+	&lt;li&gt;Make sure the credentials you use for your S3 bucket have the PutObjectAcl permission - this is non-obvious but essential if you are to publicly serve files from S3.&lt;/li&gt;
+	&lt;li&gt;Watch your URI lengths - if the &lt;code&gt;s3://…&lt;/code&gt; form of the URI is &gt; 255 characters, it won't work (Drupal's file_managed table has a 255-character limit). When using image styles, the effective limit is significantly lower due to folders added to the path.&lt;/li&gt;
+	&lt;li&gt;With image fields which reference images stored in S3, if you don't have width and height to set on the field at entity creation time, you'll want to implement a caching solution similar to the above.&lt;/li&gt;
+&lt;/ol&gt;&lt;h2&gt;Acknowledgements&lt;/h2&gt;
+
+&lt;p&gt;Apart from the image style issues, most of the direct development detailed above was mine, but as on any project thoughts were bounced off the team, project managers handled communication with the client, testers provided feedback, etc. Thanks to the whole team, particularly &lt;a href="https://www.drupal.org/u/seanb"&gt;&lt;u&gt;Sean Blommaert&lt;/u&gt;&lt;/a&gt; (image styles, post feedback), &lt;a href="https://www.drupal.org/u/kgthompson"&gt;&lt;u&gt;Kevin Thompson&lt;/u&gt;&lt;/a&gt; (client communications), and &lt;a href="https://tag1consulting.com/blog/access-control"&gt;&lt;u&gt;Karoly Negyesi&lt;/u&gt;&lt;/a&gt; (post feedback).&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--migration"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migration" property="schema:about" hreflang="en"&gt;Migration&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--php"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/php" property="schema:about" hreflang="en"&gt;PHP&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"&gt;&lt;h3 class="field__label"&gt;Use the Twitter thread below to comment on this post:&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item"&gt;&lt;div data-oembed-url="https://twitter.com/VirtPerformance/status/1083090522158387200"&gt;
+&lt;div style="max-width:320px;margin:auto;"&gt;&lt;!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. --&gt;
+&lt;blockquote align="center" class="twitter-tweet" data-dnt="true"&gt;
+&lt;p dir="ltr" lang="und" xml:lang="und" xml:lang="und"&gt;&lt;a href="https://t.co/erY3Gvhd97"&gt;https://t.co/erY3Gvhd97&lt;/a&gt;&lt;/p&gt;
+— Virtuoso Performance (@VirtPerformance) &lt;a href="https://twitter.com/VirtPerformance/status/1083090522158387200?ref_src=twsrc%5Etfw"&gt;January 9, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt; &lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Wed, 09 Jan 2019 19:56:19 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">149 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Migrating from an OAuth2 authenticated JSON feed</title>
+  <link>https://virtuoso-performance.com/blog/vpadmin/migrating-oauth2-authenticated-json-feed</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Migrating from an OAuth2 authenticated JSON feed&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-06-04T15:24:26+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Monday, June 4, 2018 - 10:24am&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Continuing with techniques from the “Acme” project, another ongoing feed I implemented was import from a JSON feed protected by OAuth2 authentication into “doctor” nodes. Let’s look first at the community contributions we needed to implement this.&lt;/p&gt;
+
+&lt;h2&gt;Community contributions&lt;/h2&gt;
+
+&lt;p dir="ltr"&gt;&lt;a href="https://www.drupal.org/node/2761489"&gt;Provide authentication plugins to HTTP fetcher&lt;/a&gt; - &lt;a href="https://www.drupal.org/u/moshe-weitzman"&gt;Moshe Weitzman&lt;/a&gt; had already suggested (and provided a patch for) adding basic and digest authentication to the HTTP fetcher plugin. I broadened the scope to add an Authentication plugin type, and implemented an OAuth2 authentication plugin.&lt;/p&gt;
+
+&lt;p dir="ltr"&gt;&lt;a href="https://www.drupal.org/node/2640514"&gt;Implement xpath-like selectors for the JSON parser&lt;/a&gt; - The JSON parser, from &lt;a href="https://www.drupal.org/u/karens"&gt;Karen Stevenson’s&lt;/a&gt; original JSON source plugin, used a numeric depth to retrieve data elements. The JSON feed we had here did not work with that approach, because at the top level in addition to the array containing our data was another array (and the depth approach would draw from both arrays). Implementing a means to select fields with a /-separated syntax made this much more flexible.&lt;/p&gt;
+
+&lt;h2 dir="ltr"&gt;Project implementation&lt;/h2&gt;
+
+&lt;p dir="ltr"&gt;So, let’s look at the &lt;a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/config/install/migrate_plus.migration.doctor.yml#L4"&gt;source plugin implementation&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+source:
+  plugin: url
+  # We want to reimport any doctors whose source data has changed.
+  track_changes: true
+  # Counting the available records requires fetching the whole feed - cache the
+  # counts to minimize overhead.
+  cache_counts: true
+  # Until &lt;a href="https://www.drupal.org/project/drupal/issues/2751829"&gt;https://www.drupal.org/project/drupal/issues/2751829&lt;/a&gt; is fixed, this
+  # should be used in conjunction with cache_counts in most cases. It was not
+  # strictly necessary in this project because this was the only cached ‘url’
+  # source plugin.
+  cache_key: doctor
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  item_selector: /providers
+  # Note that the source .yml file does not contain the urls, or half the
+  # authentication configuration - these are merged in using the configuration
+  # UI (see &lt;a href="http://virtuoso-performance.com/blog/mikeryan/configuring-migrations-form"&gt;http://virtuoso-performance.com/blog/mikeryan/configuring-migrations-form&lt;/a&gt;).
+  # We present sample values here so you can see what the complete configuration
+  # looks like.
+  # The endpoint from which the data itself is fetched.
+  urls: &lt;a href="https://kservice.example2.com/providers"&gt;https://kservice.example2.com/providers&lt;/a&gt;
+  # The http fetcher plugin calls the authentication plugin (if present),
+  # which accepts plugin-specific configuration and returns the appropriate
+  # authentication headers to add to the HTTP request.
+  authentication:
+    # migrate_plus also has ‘basic’ and ‘digest’ authentication plugins.
+    plugin: oauth2
+    # The grant type used by the feed (other grant types supported in theory,
+    # but untested, are authorization_code, password, refresh_token, and
+    # urn:ietf:params:oauth:grant-type:jwt-bearer.
+    grant_type: client_credentials
+    # The base URI for retrieving the token (provided through the UI).
+    base_uri: &lt;a href="https://kservice.example2.com"&gt;https://kservice.example2.com&lt;/a&gt;
+    # The relative URL for retrieving the token.
+    token_url: /oauth2/token
+    # The client ID for the service (provided through the UI).
+    client_id: default_client_id
+    # The client secret for the service (provided through the UI).
+    client_secret: abcdef12345678&lt;/pre&gt;
+
+&lt;p dir="ltr"&gt;The ids and fields configuration operate as they do with other JSON and XML feeds &lt;a href="http://virtuoso-performance.com/blog/mikeryan/drupal-8-plugins-xml-and-json-migrations"&gt;I’ve blogged about&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--migration"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migration" property="schema:about" hreflang="en"&gt;Migration&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--php"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/php" property="schema:about" hreflang="en"&gt;PHP&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"&gt;&lt;h3 class="field__label"&gt;Use the Twitter thread below to comment on this post:&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item"&gt;&lt;div data-oembed-url="https://twitter.com/VirtPerformance/status/1003660849955901440"&gt;
+&lt;div style="max-width:320px;margin:auto;"&gt;&lt;!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. --&gt;
+&lt;blockquote align="center" class="twitter-tweet" data-dnt="true"&gt;
+&lt;p dir="ltr" lang="und" xml:lang="und" xml:lang="und"&gt;&lt;a href="https://t.co/KJzBIauuVG"&gt;https://t.co/KJzBIauuVG&lt;/a&gt;&lt;/p&gt;
+— Virtuoso Performance (@VirtPerformance) &lt;a href="https://twitter.com/VirtPerformance/status/1003660849955901440?ref_src=twsrc%5Etfw"&gt;June 4, 2018&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt; &lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Mon, 04 Jun 2018 15:24:26 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">148 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Disabling functionality temporarily during migration</title>
+  <link>https://virtuoso-performance.com/blog/vpadmin/disabling-functionality-temporarily-during-migration</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Disabling functionality temporarily during migration&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-05-31T15:25:45+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Thursday, May 31, 2018 - 10:25am&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Continuing with techniques from the “Acme” project, the location content type had an &lt;a href="https://www.drupal.org/project/address"&gt;address field&lt;/a&gt; and a &lt;a href="https://www.drupal.org/project/geofield"&gt;geofield&lt;/a&gt;, with field_geofield configured to automatically determine latitude and longitude from the associated field_address - a fact I was initially unaware of. Our source data contained latitude and longitude already, which I mapped directly in the migration:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+ field_geofield:
+   plugin: geofield_latlon
+   source:
+     - latitude
+     - longitude&lt;/pre&gt;
+
+&lt;p&gt;However, testing location migrations by repeatedly running the import, I soon started getting messages from Google Maps API that my daily quota had been exceeded, and quickly tracked down the integration with field_address. Clearly, the calls out to Google Maps were both unnecessary and hazardous - how to prevent them? Fortunately, the migration system provides events which fire before and after each migration is executed. So, &lt;a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/src/EventSubscriber/GeoFieldConfigurator.php#L24"&gt;we subscribe to MigrateEvents::PRE_IMPORT&lt;/a&gt; to save the current settings and disable the external call:&lt;/p&gt;
+
+&lt;pre&gt;
+public function onMigrationPreImport(MigrateImportEvent $event) {
+   if ($event-&gt;getMigration()-&gt;id() == 'location') {
+     $fields = \Drupal::entityTypeManager()-&gt;getStorage('field_config')-&gt;loadByProperties(['field_name' =&gt; 'field_geofield']);
+     if ($fields) {
+        /** @var \Drupal\field\Entity\FieldConfig $field */
+        if ($field = $fields['node.location.field_geofield']) {
+         $this-&gt;originalSettings = $field-&gt;getThirdPartySettings('geocoder_field');
+         $field-&gt;setThirdPartySetting('geocoder_field', 'method', 'none');
+         $field-&gt;save();
+        }
+     }
+   }
+ }&lt;/pre&gt;
+
+&lt;p&gt;And we subscribe to MigrateEvents::POST_IMPORT to restore the original settings:&lt;/p&gt;
+
+&lt;pre&gt;
+ public function onMigrationPostImport(MigrateImportEvent $event) {
+   if ($event-&gt;getMigration()-&gt;id() == 'location') {
+     $fields = \Drupal::entityTypeManager()-&gt;getStorage('field_config')-&gt;loadByProperties(['field_name' =&gt; 'field_geofield']);
+     if ($fields) {
+       /** @var \Drupal\field\Entity\FieldConfig $field */
+        if ($field = $fields['node.location.field_geofield']) {
+         foreach ($this-&gt;originalSettings as $key =&gt; $value) {
+           $field-&gt;setThirdPartySetting('geocoder_field', $key, $value);
+         }
+         $field-&gt;save();
+        }
+     }
+   }
+ }&lt;/pre&gt;
+
+&lt;p&gt;The thoughtful reader may note a risk here - what if someone were adding or editing a location node while this were running? The geofield would not be populated from the address field. In this case, this is not a problem - this is a one-time bulk migration (and no one should be making changes on a production website at such a time). In cases involving an ongoing feed where the feed data is used as-is on the Drupal site, it would also not be a problem, although if there were a practice of manually editing imported content there would be some risk.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--migration"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migration" property="schema:about" hreflang="en"&gt;Migration&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--php"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/php" property="schema:about" hreflang="en"&gt;PHP&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"&gt;&lt;h3 class="field__label"&gt;Use the Twitter thread below to comment on this post:&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item"&gt;&lt;div data-oembed-url="https://twitter.com/VirtPerformance/status/1002211649632206854"&gt;
+&lt;div style="max-width:320px;margin:auto;"&gt;&lt;!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. --&gt;
+&lt;blockquote align="center" class="twitter-tweet" data-dnt="true"&gt;
+&lt;p dir="ltr" lang="und" xml:lang="und" xml:lang="und"&gt;&lt;a href="https://t.co/TRqRsWJPlA"&gt;https://t.co/TRqRsWJPlA&lt;/a&gt;&lt;/p&gt;
+— Virtuoso Performance (@VirtPerformance) &lt;a href="https://twitter.com/VirtPerformance/status/1002211649632206854?ref_src=twsrc%5Etfw"&gt;May 31, 2018&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt; &lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Thu, 31 May 2018 15:25:45 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">147 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Configuring migrations via a form</title>
+  <link>https://virtuoso-performance.com/blog/vpadmin/configuring-migrations-form</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Configuring migrations via a form&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-05-23T02:29:19+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Tuesday, May 22, 2018 - 09:29pm&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Frequently, there may be parts of a migration configuration which shouldn’t be hard-coded into your YAML file - some configuration may need to be changed periodically, some may vary according to environment (for example, a dev environment may access a dev or test API endpoint, while prod needs to access a production endpoint), or you may need a password or other credentials to access a secure endpoint (or for a database source which you can’t put into settings.php). You may also need to upload a data file for input into your migration. If you are implementing your migrations as configuration entities (a feature provided by the &lt;a href="https://www.drupal.org/project/migrate_plus"&gt;migrate_plus module&lt;/a&gt;), all this is fairly straightforward - migration configuration entities may easily be loaded, modified, and saved based on form input, &lt;a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/src/Form/MigrationConfigurationForm.php"&gt;implemented in a standard form class&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Uploading data files&lt;/h2&gt;
+
+&lt;p&gt;For this project, while other CSV source files were static enough to go into the migration module itself, we needed to periodically update the blog data during the development and launch process. A file upload field is set up in the normal way:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+$form['acme_blog_file'] = [
+ '#type' =&gt; 'file',
+ '#title' =&gt; $this-&gt;t('Blog data export file (CSV)'),
+ '#description' =&gt; $this-&gt;t('Select an exported CSV file of blog data. Maximum file size is @size.',
+   ['@size' =&gt; format_size(file_upload_max_size())]),
+];&lt;/pre&gt;
+
+&lt;p&gt;And saved to the public file directory in the normal way:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+$all_files = $this-&gt;getRequest()-&gt;files-&gt;get('files', []);
+if (!empty($all_files['acme_blog_file'])) {
+ $validators = ['file_validate_extensions' =&gt; ['csv']];
+ if ($file = file_save_upload('acme_blog_file', $validators, 'public://', 0)) {&lt;/pre&gt;
+
+&lt;p&gt;So, once we’ve got the file in place, we need to point the migration at it. We load the blog migration, retrieve its source configuration, set the path to the uploaded file, and save it back to active configuration storage.&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+   $blog_migration = Migration::load('blog');
+   $source = $blog_migration-&gt;get('source');
+   $source['path'] = $file-&gt;getFileUri();
+   $blog_migration-&gt;set('source', $source);
+   $blog_migration-&gt;save();
+   drupal_set_message($this-&gt;t('File uploaded as @uri.', ['@uri' =&gt; $file-&gt;getFileUri()]));
+   }
+ else {
+   drupal_set_message($this-&gt;t('File upload failed.'));
+ }
+}&lt;/pre&gt;
+
+&lt;p&gt;It’s important to understand that &lt;code&gt;get()&lt;/code&gt; and &lt;code&gt;set()&lt;/code&gt; only operate directly on top-level configuration keys - we can’t simply do something like &lt;code&gt;$blog_migration-&gt;set(‘source.path’, $file-&gt;getFileUri())&lt;/code&gt;, so we need to retrieve the whole source configuration array, and set the whole array back on the entity.&lt;/p&gt;
+
+&lt;h2&gt;Endpoints and credentials&lt;/h2&gt;
+
+&lt;p&gt;The endpoint and credentials for our event service are configurable through the same webform. Note that we obtain the current values from the event migration configuration entity to prepopulate the form:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+$event_migration = Migration::load('event');
+$source = $event_migration-&gt;get('source');
+if (!empty($source['urls'])) {
+ if (is_array($source['urls'])) {
+   $default_value = reset($source['urls']);
+ }
+ else {
+   $default_value = $source['urls'];
+ }
+}
+else {
+ $default_value = 'http://services.example.com/CFService.asmx?wsdl';
+}
+
+$form['acme_event'] = [
+ '#type' =&gt; 'details',
+ '#title' =&gt; $this-&gt;t('Event migration'),
+ '#open' =&gt; TRUE,
+];
+
+$form['acme_event']['event_endpoint'] = [
+ '#type' =&gt; 'textfield',
+ '#title' =&gt; $this-&gt;t('CF service endpoint for retrieving event data'),
+ '#default_value' =&gt; $default_value,
+];
+
+$form['acme_event']['event_clientid'] = [
+ '#type' =&gt; 'textfield',
+ '#title' =&gt; $this-&gt;t('Client ID for the CF service'),
+ '#default_value' =&gt; @$source['parameters']['clientId'] ?: 1234,
+];
+
+$form['acme_event']['event_password'] = [
+ '#type' =&gt; 'password',
+ '#title' =&gt; $this-&gt;t('Password for the CF service'),
+ '#default_value' =&gt; @$source['parameters']['clientCredential']['Password'] ?: '',
+];&lt;/pre&gt;
+
+&lt;p&gt;In &lt;code&gt;submitForm()&lt;/code&gt;, we again load the migration configuration, insert the form values, and save:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+$event_migration = Migration::load('event');
+$source = $event_migration-&gt;get('source');
+$source['urls'] = $form_state-&gt;getValue('event_endpoint');
+$source['parameters'] = [
+ 'clientId' =&gt; $form_state-&gt;getValue('event_clientid'),
+ 'clientCredential' =&gt; [
+   'ClientID' =&gt; $form_state-&gt;getValue('event_clientid'),
+   'Password' =&gt; $form_state-&gt;getValue('event_password'),
+ ],
+ 'startDate' =&gt; date('m-d-Y'),
+];
+
+$event_migration-&gt;set('source', $source);
+$event_migration-&gt;save();
+drupal_set_message($this-&gt;t('Event migration configuration saved.'));&lt;/pre&gt;
+
+&lt;p&gt;Note that we also reset the startDate value while we’re at it (see the previous &lt;a href="http://virtuoso-performance.com/blog/mikeryan/drupal-8-migration-soap-api"&gt;SOAP blog post&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--migration"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migration" property="schema:about" hreflang="en"&gt;Migration&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--php"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/php" property="schema:about" hreflang="en"&gt;PHP&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"&gt;&lt;h3 class="field__label"&gt;Use the Twitter thread below to comment on this post:&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item"&gt;&lt;div data-oembed-url="https://twitter.com/VirtPerformance/status/998933771964600320"&gt;
+&lt;div style="max-width:320px;margin:auto;"&gt;&lt;!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. --&gt;
+&lt;blockquote align="center" class="twitter-tweet" data-dnt="true"&gt;
+&lt;p dir="ltr" lang="en" xml:lang="en" xml:lang="en"&gt;Configuring migrations via a form &lt;a href="https://t.co/EZTiUKBazX"&gt;https://t.co/EZTiUKBazX&lt;/a&gt;&lt;/p&gt;
+— Virtuoso Performance (@VirtPerformance) &lt;a href="https://twitter.com/VirtPerformance/status/998933771964600320?ref_src=twsrc%5Etfw"&gt;May 22, 2018&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt; &lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Wed, 23 May 2018 02:29:19 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">146 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Importing specific fields with overwrite_properties</title>
+  <link>https://virtuoso-performance.com/blog/vpadmin/importing-specific-fields-overwriteproperties</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Importing specific fields with overwrite_properties&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-05-15T15:50:15+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Tuesday, May 15, 2018 - 10:50am&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;While I had planned to stretch out my posts related to the &lt;a href="http://virtuoso-performance.com/blog/mikeryan/drupal-8-migration-soap-api"&gt;"Acme" project&lt;/a&gt;, there are currently some people with &lt;a href="https://www.drupal.org/project/drupal/issues/2949564"&gt;questions&lt;/a&gt; about using &lt;a href="https://api.drupal.org/api/drupal/core%21modules%21migrate%21src%21Plugin%21migrate%21destination%21EntityContentBase.php/class/EntityContentBase/8.5.x"&gt;overwrite_properties&lt;/a&gt; - so, I've moved this post forward.&lt;/p&gt;
+
+&lt;p&gt;By default, migration treats the source data as the &lt;a href="https://en.wikipedia.org/wiki/System_of_record"&gt;system of record&lt;/a&gt; - that is, when reimporting previously-imported records, the expectation is to completely replace the destination side with fresh source data, discarding any interim changes which might have been made on the destination side. However, sometimes, when updating you may want to only pull specific fields from the source, leaving others (potentially manually-edited) intact. We had this situation with the event feed - in particular, the titles received from the feed may need to be edited for the public site. To achieve that, we used the overwrite_properties property on the &lt;a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/config/install/migrate_plus.migration.event.yml"&gt;destination plugin&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+destination:
+  plugin: 'entity:node'
+  overwrite_properties:
+    - 'field_address/address_line1'
+    - 'field_address/address_line2'
+    - 'field_address/locality'
+    - 'field_address/administrative_area'
+    - 'field_address/postal_code'
+    - field_start_date
+    - field_end_date
+    - field_instructor
+    - field_location_name
+    - field_registration_price
+    - field_remaining_spots
+    - field_synchronized_title&lt;/pre&gt;
+
+&lt;p&gt;When overwrite_properties is present, nothing changes when importing a new entity - but, if the destination entity already exists, the existing entity is loaded, and only the fields and properties enumerated in overwrite_properties will be, well, overwritten. In our example, note in particular field_synchronized_title - on initial import, both the regular node title and this field are populated from ClassName, but on updates only field_synchronized_title receives any changes in ClassName. This prevents any unexpected changes to the public title, but does make the canonical title from the feed available should an editor care to review and decide whether to modify the public title to reflect any changes.&lt;/p&gt;
+
+&lt;p&gt;Now, in this case we are creating the entities initially through this migration, and thus we know via the map table when a previously-migrated entity is being updated and thus overwrite_properties should be applied. Another use case is when the entire purpose of your migration is to update specific fields on pre-existing entities (i.e., not created by this migration). In this case, you need to map the IDs of the entities that are to be updated, otherwise the migration will simply create new entities. So, if you had a "nid_to_update" property in your source data, you would include&lt;/p&gt;
+
+&lt;pre&gt;
+process:
+  nid: nid_to_update&lt;/pre&gt;
+
+&lt;p&gt;in your migration configuration. The destination plugin will then load that existing node, and only alter the specified overwrite_properties in it.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--migration"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migration" property="schema:about" hreflang="en"&gt;Migration&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--php"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/php" property="schema:about" hreflang="en"&gt;PHP&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"&gt;&lt;h3 class="field__label"&gt;Use the Twitter thread below to comment on this post:&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item"&gt;&lt;div data-oembed-url="https://twitter.com/VirtPerformance/status/996418011400720385"&gt;
+&lt;div style="max-width:320px;margin:auto;"&gt;&lt;!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. --&gt;
+&lt;blockquote align="center" class="twitter-tweet"&gt;
+&lt;p dir="ltr" lang="en" xml:lang="en" xml:lang="en"&gt;Importing specific fields with overwrite_properties &lt;a href="https://t.co/0H3W1Ll0ts"&gt;https://t.co/0H3W1Ll0ts&lt;/a&gt;&lt;/p&gt;
+— Virtuoso Performance (@VirtPerformance) &lt;a href="https://twitter.com/VirtPerformance/status/996418011400720385?ref_src=twsrc%5Etfw"&gt;May 15, 2018&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt; &lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Tue, 15 May 2018 15:50:15 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">145 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Drupal 8 migration from a SOAP API</title>
+  <link>https://virtuoso-performance.com/blog/vpadmin/drupal-8-migration-soap-api</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Drupal 8 migration from a SOAP API&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-05-15T15:12:00+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Tuesday, May 15, 2018 - 10:12am&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;&lt;a href="https://virtuoso-performance.com/blog/mikeryan/back-saddle-again-drupalcon-nashville"&gt;Returning from my sabbatical&lt;/a&gt;, as promised I’m catching up on blogging about previous projects. For one such project, I was contracted by &lt;a href="https://www.acquia.com/"&gt;Acquia&lt;/a&gt; to provide migration assistance to a client of theirs [redacted, but let’s call them &lt;a href="https://www.youtube.com/watch?v=QHDO78QfLbEr9yA9Dcvga9u6F9pnY8bA"&gt;Acme&lt;/a&gt;]. This project involved some straightforward node migrations from CSV files, but more interestingly required implementing two ongoing feeds to synchronize external data periodically - one a SOAP feed, and the other a JSON feed protected by OAuth-based authentication. There were a number of other interesting techniques employed on this project which I think may be broadly useful and haven’t previously blogged about - all-in-all, there was enough to write about on this project that rather than compose one big epic post, I’m going to break things down in a series of posts, spread out over several days so as not to spam &lt;a href="https://www.drupal.org/planet"&gt;Planet Drupal&lt;/a&gt;. In this first post of the sequence, I’ll cover migration from &lt;a href="https://en.wikipedia.org/wiki/SOAP"&gt;SOAP&lt;/a&gt;. The full custom migration module for this project is on &lt;a href="https://gitlab.com/mikeryan/d8-migrate-example-002"&gt;Gitlab&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A key requirement of the Acme project was to implement an ongoing feed, representing classes (the kind people attend in person, not the PHP kind), from a SOAP API to “event” nodes in Drupal. The first step, of course, was to develop (in migrate_plus) a parser plugin to handle SOAP feeds, based on PHP’s &lt;a href="http://php.net/manual/en/class.soapclient.php"&gt;SoapClient class&lt;/a&gt;. This class exposes functions of the web service as class methods which may be directly invoked. In &lt;a href="https://en.wikipedia.org/wiki/Web_Services_Description_Language"&gt;WSDL&lt;/a&gt; mode (the default, and the only mode this plugin currently supports), it can also report the signatures of the methods it supports (via &lt;a href="http://php.net/manual/en/soapclient.getfunctions.php"&gt;__getFunctions()&lt;/a&gt;) and the data structures passed as parameters and returned as results (via &lt;a href="http://php.net/manual/en/soapclient.gettypes.php"&gt;__getTypes()&lt;/a&gt;). WSDL allows our plugin to do introspection and saves the need for some explicit configuration (in particular, it can automatically determine the property to be returned from within the response).&lt;/p&gt;
+
+&lt;p&gt;migrate_example_advanced (a submodule of &lt;a href="https://www.drupal.org/project/migrate_plus"&gt;migrate_plus&lt;/a&gt;) demonstrates a simple example of how to use the SOAP parser plugin - the .yml is well-documented, so please &lt;a href="http://cgit.drupalcode.org/migrate_plus/tree/migrate_example_advanced/config/install/migrate_plus.migration.weather_soap.yml"&gt;review that&lt;/a&gt; for a general introduction to the configuration. Here’s the &lt;a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/config/install/migrate_plus.migration.event.yml"&gt;basic source configuration&lt;/a&gt; for this specific project:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+source:
+  plugin: url
+  # To remigrate any changed events.
+  track_changes: true 
+  data_fetcher_plugin: http # Ignored - SoapClient does the fetching itself.
+  data_parser_plugin: soap
+  # The method to invoke via the SOAP API.
+  function: GetClientSessionsByClientId
+  # Within the response, the object property containing the list of events.
+  item_selector: SessionBOLExternal
+  # Indicates that the response will be in the form of a PHP object.
+  response_type: object
+  # You won’t find ‘urls’ and ‘parameters’ in the source .yml file (they are inserted
+  # by a web UI - the subject of a future post), but for demonstration purposes
+  # this is what they might look like.
+  urls: &lt;a href="http://services.example.com/CFService.asmx?wsdl"&gt;http://services.example.com/CFService.asmx?wsdl&lt;/a&gt;
+  parameters:
+    clientId: 1234
+    clientCredential:
+      ClientID: 1234
+      Password: service_password
+    startDate: 08-31-2016
+  # Unique identifier for each event (section) to be imported, composed of 3 columns.
+  ids:
+    ClassID:
+      type: integer
+    SessionID:
+      type: integer
+    SectionID:
+      type: integer
+  fields:
+    -
+      name: ClientSessionID
+      label: Session ID for the client
+      selector: ClientSessionID
+    ...&lt;/pre&gt;
+
+&lt;p&gt;Of particular note is the three-part source ID defined here. The way this data is structured, a “class” contains multiple “sessions”, which each have multiple “sections” - the sections are the instances that have specific dates and times, which we need to import into event nodes, and we need all three IDs to uniquely identify each unique section.&lt;/p&gt;
+
+&lt;p&gt;Not all of the data we need for our event nodes is in the session feed, unfortunately - we want to capture some of the class-level data as well. So, while, the base migration uses the SOAP parser plugin to get the session rows to migrate, we need to fetch the related data at run time by making direct SOAP calls ourselves. We do this in our subscriber to the PREPARE_ROW event - this event is dispatched after the source plugin has obtained the basic data per its configuration, and gives us an opportunity to retrieve further data to add to the canonical source row before it enters the processing pipeline. I won’t go into detail on how that data is retrieved since it isn’t relevant to general migration principles, but the idea is since all the class data is not prohibitively large, and multiple sessions may reference the same class data, we fetch it all on the first source row processed and cache it for reference by subsequent rows.&lt;/p&gt;
+
+&lt;h2&gt;Community contributions&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href="https://www.drupal.org/node/2726443"&gt;SOAP Source plugin&lt;/a&gt; - Despite the title (from the original feature request), it was implemented as a parser plugin.&lt;/p&gt;
+
+&lt;h2&gt;Altering migration configuration at import time - the PRE_IMPORT event&lt;/h2&gt;
+
+&lt;p&gt;Our event feed permits filtering by the event start date - by passing a ‘startDate’ parameter in the format 12-31-2016 to the SOAP method, the feed will only return events starting on or after that date. At any given point in time we are only interested in future events, and don’t want to waste time retrieving and processing past events. To optimize this, we want the startDate parameter in our source configuration to be today’s date each time we run the migration. We can do this by subscribing to the PRE_IMPORT event.&lt;/p&gt;
+
+&lt;p&gt;In &lt;a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/acme_migrate.services.yml"&gt;acme_migrate.services.yml&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+services:
+ ...
+ acme_migrate.update_event_filter:
+   class: Drupal\acme_migrate\EventSubscriber\UpdateEventFilter
+   tags:
+     - { name: event_subscriber }&lt;/pre&gt;
+
+&lt;p&gt;In &lt;a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/src/EventSubscriber/UpdateEventFilter.php"&gt;UpdateEventFilter.php&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+class UpdateEventFilter implements EventSubscriberInterface {
+
+ /**
+  * {@inheritdoc}
+  */
+ public static function getSubscribedEvents() {
+    $events[MigrateEvents::PRE_IMPORT] = 'onMigrationPreImport';
+    return $events;
+ }&lt;/pre&gt;
+
+&lt;p&gt;The migration system dispatches the PRE_IMPORT event before the actual import begins executing. At that point, we can insert the desired date filter into the migration configuration entity and save it:&lt;/p&gt;
+
+&lt;pre dir="ltr"&gt;
+ /**
+  * Set the event start date filter to today.
+  *
+  * @param \Drupal\migrate\Event\MigrateImportEvent $event
+  * The import event.
+  */
+ public function onMigrationPreImport(MigrateImportEvent $event) {
+   // $event-&gt;getMigration() returns the migration *plugin*.
+   if ($event-&gt;getMigration()-&gt;id() == 'event') {
+     // Migration::load() returns the migration *entity*.
+     $event_migration = Migration::load('event');
+     $source = $event_migration-&gt;get('source');
+     $source['parameters']['startDate'] = date('m-d-Y');
+     $event_migration-&gt;set('source', $source);
+     $event_migration-&gt;save();
+   }
+ }&lt;/pre&gt;
+
+&lt;p&gt;Note that the entity get() and set() functions only operate directly on top-level configuration properties - we can’t get and set, for example ‘source.parameters.startDate’ directly. We need to retrieve the entire source configuration, modify our one value within it, and set the entire source configuration back on the migration.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--migration"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migration" property="schema:about" hreflang="en"&gt;Migration&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--php"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/php" property="schema:about" hreflang="en"&gt;PHP&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"&gt;&lt;h3 class="field__label"&gt;Use the Twitter thread below to comment on this post:&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item"&gt;&lt;div data-oembed-url="https://twitter.com/VirtPerformance/status/996408039086481408"&gt;
+&lt;div style="max-width:320px;margin:auto;"&gt;&lt;!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. --&gt;
+&lt;blockquote align="center" class="twitter-tweet"&gt;
+&lt;p dir="ltr" lang="en" xml:lang="en" xml:lang="en"&gt;Drupal 8 migration from a SOAP API &lt;a href="https://t.co/hf8LGiATsh"&gt;https://t.co/hf8LGiATsh&lt;/a&gt;&lt;/p&gt;
+— Virtuoso Performance (@VirtPerformance) &lt;a href="https://twitter.com/VirtPerformance/status/996408039086481408?ref_src=twsrc%5Etfw"&gt;May 15, 2018&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Tue, 15 May 2018 15:12:00 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">144 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Back in the saddle again - at DrupalCon Nashville</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/back-saddle-again-drupalcon-nashville</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Back in the saddle again - at DrupalCon Nashville&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2018-05-11T16:06:11+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Friday, May 11, 2018 - 11:06am&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;h3&gt;Return to action&lt;/h3&gt;
+
+&lt;p&gt;Those of you with an interest in Drupal migration may have noticed my absence in the last several months. A confluence of things led me to take a break from the Drupal community: a bout of physical exhaustion (initially diagnosed as Lyme disease, and then ¯\_(ツ)_/¯); professional exhaustion managing the D8 migration core initiative and maintaining a few contrib modules on top of paid contracts; and emotional exhaustion from the community drama of early last year. I was, frankly, depressed - whether it was more a product of the exhaustion or an underlying contributor to the exhaustion (actually, probably both in a feedback loop), I needed to deal with it. Fortunately, my contract work had been going well enough that I could afford to take a sabbatical for a while (although perhaps not for quite as long as I did😬).&lt;/p&gt;
+
+&lt;p&gt;Pro tip: engaging with the real world helps a lot. In my case, my wife and I had moved to &lt;a href="https://en.wikipedia.org/wiki/Southern_Illinois"&gt;Southern Illinois&lt;/a&gt;, where we didn’t know anyone, four years ago. While I haven’t exactly been housebound - we attend many local events, eat out at the local restaurants, hike in the &lt;a href="https://www.fs.usda.gov/shawnee"&gt;Shawnee National Forest&lt;/a&gt;, etc. - I wasn’t really engaged with the local community. In the last several months, however, I’ve volunteered (and now become a board member) at the &lt;a href="https://www.facebook.com/Thehistoriclibertytheater/"&gt;Liberty Theater&lt;/a&gt; - making popcorn and selling concessions at many events, as well as building them a new website (to be launched soon - on WordPress, sorry Drupal folks!) and proposing and running their first &lt;a href="https://www.gofundme.com/liberty-marquee"&gt;GoFundMe campaign&lt;/a&gt;. I’ve also been playing guitar and bass in weekly jam sessions at our &lt;a href="https://www.mollyspint.com/"&gt;favorite brewpub&lt;/a&gt;, and I took the lead in rebooting the series when the original organizer took a sabbatical himself. &lt;a href="https://www.youtube.com/watch?v=fAUIOCGftNU"&gt;I’m feeling much better now&lt;/a&gt; - &lt;a href="https://www.youtube.com/watch?v=K9q70zCJYBc"&gt;it’s good to be back&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;What next?&lt;/h3&gt;
+
+&lt;p&gt;Number one - I’m open for contracts again, please let me know if you have some migration work that needs to be done! Drupal shops, I’m happy to subcontract and let you focus on design and site-building while I get your clients’ data moved over into their new site.&lt;/p&gt;
+
+&lt;p&gt;Contribution-wise, I’m keeping my eyes on the migration-related issue queues and helping out a bit where I can, but I’m not going to take on nearly as much as I had before. I’ll probably budget, say, one half-day a week for this for the time being.&lt;/p&gt;
+
+&lt;p&gt;I had a couple of overly-ambitious, everything-but-the-kitchen-sink blog posts covering various migration techniques in the works when I stepped aside - I’ll try to extract some of the best bits into smaller and more targeted posts.&lt;/p&gt;
+
+&lt;p&gt;Finally, I wasn’t completely idle technically during my sabbatical - I took the time to play around with a few different ideas (some migration-related, some not). I’m pursuing one avenue in particular - more on that soon!&lt;/p&gt;
+
+&lt;h3&gt;DrupalCon Nashville&lt;/h3&gt;
+
+&lt;p&gt;I procrastinated on making a final decision about attending DrupalCon this year. Just at the point I finally committed to going, I got a lucky break when I saw &lt;a href="https://www.qed42.com/"&gt;QED42&lt;/a&gt; &lt;a href="https://twitter.com/qed42/status/980782337154691072"&gt;tweet they had a spare ticket&lt;/a&gt; and snatched it up (thanks again, for the ticket and for the &lt;a href="https://cdn.dribbble.com/users/200689/screenshots/4460127/giveaway_teaser.jpg"&gt;beautiful shirt&lt;/a&gt;!).&lt;/p&gt;
+
+&lt;p&gt;As always, it was good to catch up face-to-face with so many Drupalists - especially this year, when I haven’t been active online. Among many others, I had some quality time with Dries, which I haven’t had since I was at Acquia, talking about some of my tech efforts above. And borrowing his hat:&lt;/p&gt;
+
+&lt;div data-oembed-url="https://twitter.com/mikeryan776/status/983855837801340928"&gt;
+&lt;div style="max-width:320px;margin:auto;"&gt;&lt;!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. --&gt;
+&lt;blockquote align="center" class="twitter-tweet"&gt;
+&lt;p dir="ltr" lang="en" xml:lang="en" xml:lang="en"&gt;Dries let me wear his hat (and took the picture) &lt;a href="https://t.co/VqbrN0bdi2"&gt;pic.twitter.com/VqbrN0bdi2&lt;/a&gt;&lt;/p&gt;
+— Mike Ryan (@mikeryan776) &lt;a href="https://twitter.com/mikeryan776/status/983855837801340928?ref_src=twsrc%5Etfw"&gt;April 10, 2018&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;With camps and cons in recent years, while the tech sessions are most enticing on first glance, they generally cover things I can learn best by digging in and doing back in my home office. So, I tend to attend more “soft” sessions - those focusing on community and self-care. This time, that included (among others) &lt;a href="https://events.drupal.org/nashville2018/sessions/you-matter-more-cause"&gt;You Matter More Than The Cause&lt;/a&gt; (&lt;a href="https://www.drupal.org/u/eaton"&gt;Jeff Eaton&lt;/a&gt;) and &lt;a href="https://events.drupal.org/nashville2018/sessions/growing-our-tribes-creating-sustainable-micro-communities-drupal-and-how-you"&gt;Growing Our Tribes: Creating Sustainable Micro-Communities in Drupal and how you can help&lt;/a&gt; (&lt;a href="https://www.drupal.org/u/svettes"&gt;Shannon Vettes&lt;/a&gt;). Eaton’s talk in particular spoke to me (I could have used it a year earlier!) - the expectations that volunteers of a valued community have of each other, and of themselves, can chew them up. I felt badly about “abandoning” the migration initiative as we approached core stability, but I had to step away. &lt;a href="https://youtu.be/oHFzwBTCNgM?t=18m24s"&gt;Eaton says&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;If a cause can’t live without you suffering for it, then that cause may just deserve to die.&lt;/blockquote&gt;
+
+&lt;p&gt;Fortunately, the migration initiative did not deserve to die - &lt;a href="https://www.drupal.org/u/heddn"&gt;heddn&lt;/a&gt; and &lt;a href="https://www.drupal.org/u/quietone"&gt;quietone&lt;/a&gt; and many other contributors &lt;a href="https://www.drupal.org/blog/big-steps-for-migrations-in-drupal-850"&gt;got the migrate module to stability&lt;/a&gt;, and are well on the way to adding migrate_drupal to the stable modules list. Yay!&lt;/p&gt;
+
+&lt;p&gt;Main takeaway: &lt;a href="https://youtu.be/oHFzwBTCNgM?t=18m39s"&gt;“You are not consumable fuel.”&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I did make it to a couple tech sessions, though, notably &lt;a href="https://events.drupal.org/nashville2018/sessions/entities-301-entities-elsewhere"&gt;Entities 301 - Entities Elsewhere&lt;/a&gt; (&lt;a href="https://www.drupal.org/u/rlnorthcutt"&gt;Ron Northcutt&lt;/a&gt;). This was about leveraging swapping storage backends to represent external data as native Drupal entities. This was of particular interest to me, since while we normally think of the Drupal migration system as a means of importing external data into the Drupal database, it should be recognized that the architecture permits us to design destination plugins which write to an external source - another database, or PUT operations on a RESTful API (no, I haven’t yet had occasion to write such a destination plugin). But, if you were to define an entity type using external storage, you wouldn’t have to do anything special to use migration to populate these entities - just use the general purpose entity plugin:&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;code&gt;destination:&lt;/code&gt;
+&lt;code&gt;  plugin: entity:my_remote_entity_type &lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;One more thing…&lt;/h3&gt;
+
+&lt;p&gt;Thinking about online engagement, and also about security (like the occasional emergence of -geddons that take advantage of potentially any open form submissions), I had an idea - why not use Twitter as my commenting system? I.e., embed the tweet promoting a post at the bottom of that post, and people can comment by replying to the tweet.&lt;/p&gt;
+
+&lt;p&gt;Advantages:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;I can now disable account creation and comment creation on my site (I’m leaving the comment module in place here for the sake of past comments), improving my site security.&lt;/li&gt;
+	&lt;li&gt;Commenters don’t have to worry about my site’s security if they’re only engaging with Twitter.&lt;/li&gt;
+	&lt;li&gt;Vetting user accounts and reviewing comments for spam are now Twitter’s problems, not mine.&lt;/li&gt;
+	&lt;li&gt;More visibility for commenters - their responses to my blog post will be seen by a lot more people on their Twitter feed (more of whom are predisposed to hear what they want to say) than they would on my blog site.&lt;/li&gt;
+	&lt;li&gt;More visibility for me - other people’s responses on Twitter will help bring attention to my blog posts.&lt;/li&gt;
+	&lt;li&gt;In practice, these days when you tweet a post you’ve made, you’re likely to get more discussion about it on Twitter than you do on your site anyway. Why split the threads?&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;&lt;span&gt;Disadvantages:&lt;/span&gt;&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;This would exclude comments by people without a Twitter account. I don’t think this will have a big impact on my lightly-visited blog, but this would be more of an issue with higher-traffic sites trying to be all-inclusive.&lt;/li&gt;
+	&lt;li&gt;Replies would not be visible on the blog page. I don’t think this is a big deal, at least for my site. And, there could be a module for that!&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;For now, I’m doing this manually with a text field below the body using the &lt;a href="https://www.drupal.org/project/ckeditor_media_embed"&gt;ckeditor_media_embed module&lt;/a&gt; - publish the blog post, publish the tweet, add the tweet to the blog post. If this approach to comments seems to work well in practice, it would be nice to have a module that adds a field to the node form for the text you want in the tweet and at publish time creates the tweet and links to it from the post automatically, virtually eliminating the window where the two aren’t in sync.&lt;/p&gt;
+
+&lt;p&gt;Thoughts? Reply to the tweet below!&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupalcon"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupalcon" property="schema:about" hreflang="en"&gt;Drupalcon&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"&gt;&lt;h3 class="field__label"&gt;Use the Twitter thread below to comment on this post:&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item"&gt;&lt;div data-oembed-url="https://twitter.com/VirtPerformance/status/994971895224307714"&gt;
+&lt;div style="max-width:320px;margin:auto;"&gt;&lt;!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. --&gt;
+&lt;blockquote align="center" class="twitter-tweet"&gt;
+&lt;p dir="ltr" lang="en" xml:lang="en" xml:lang="en"&gt;Back in the saddle again - at DrupalCon Nashville &lt;a href="https://t.co/ZIAVaOfeXL"&gt;https://t.co/ZIAVaOfeXL&lt;/a&gt;&lt;/p&gt;
+— Virtuoso Performance (@VirtPerformance) &lt;a href="https://twitter.com/VirtPerformance/status/994971895224307714?ref_src=twsrc%5Etfw"&gt;May 11, 2018&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt; &lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Fri, 11 May 2018 16:06:11 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">143 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Thoughts on the Drupal community</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/thoughts-drupal-community</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Thoughts on the Drupal community&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2017-03-27T15:47:57+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Monday, March 27, 2017 - 10:47am&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p dir="ltr"&gt;&lt;span&gt;I did make &lt;/span&gt;&lt;a href="http://buytaert.net/comment/131486#comment-131486"&gt;&lt;span&gt;one comment on Dries’ blog&lt;/span&gt;&lt;/a&gt;&lt;span&gt; in the immediate aftermath of learning about the situation which is roiling the Drupal community, but since then have taken some time to listen and ponder. The community is in deep pain now, and many of us are reacting to that pain with anger. Trust is in short supply. Healing seems nearly impossible.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p dir="ltr"&gt;&lt;span&gt;We need to start from compassion for all involved. The pain is deepest for those in the middle. &lt;/span&gt;&lt;a href="https://www.garfieldtech.com/blog/tmi-outing"&gt;&lt;span&gt;Larry has already expressed his pain eloquently&lt;/span&gt;&lt;/a&gt;&lt;span&gt; - I know losing the Drupal community would cut me deeply, and pragmatically this is a major blow to his career as well. But, let’s also consider Drupal leadership - Dries, the &lt;/span&gt;&lt;a href="https://www.drupal.org/association"&gt;&lt;span&gt;Drupal Association&lt;/span&gt;&lt;/a&gt;&lt;span&gt;, the &lt;/span&gt;&lt;a href="https://www.drupal.org/governance/community-working-group"&gt;&lt;span&gt;Community Working Group&lt;/span&gt;&lt;/a&gt;&lt;span&gt;. Regardless of whether we agree with their decision, I see no reason to believe it was done arbitrarily or with malice. Reaching such a decision against someone who has given so much to the community over the years must have been extraordinarily difficult, and the fact that this decision seems to have eroded much of the community’s trust in them is surely agonizing.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p dir="ltr"&gt;&lt;span&gt;We need to recognize and address the asymmetries in this situation. The power in the relationship is unbalanced - Drupal leadership has an ability to affect Larry’s life profoundly that is not reflected. On the other hand, the information is also unbalanced - Larry is able to say what he chooses publicly, but the Drupal leadership has a responsibility to maintain confidentiality. Yes, “confidentiality” can be used as a smokescreen - but there really is a legitimate need to respect it - to protect those who gave evidence to the CWG, and to protect Larry himself from public accusations without public evidence. Transparency and confidentiality are at odds, and it is exceedingly difficult to find a “perfect” balance between them.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p dir="ltr"&gt;&lt;span&gt;That all being said, and recognizing that the information I have is incomplete, my main thoughts on the three parties involved:&lt;/span&gt;&lt;/p&gt;
+
+&lt;ol&gt;&lt;li dir="ltr"&gt;
+	&lt;p dir="ltr"&gt;&lt;span&gt;The impression Larry’s blog post leaves is that his dismissal was primarily due to BDSM/Gorean practices in individual personal relationships (that certainly appears to be the main takeaway in much of the criticism online). On the other hand, statements from the other side suggest it may have had more to do with broader statements of belief (and commitment to living that belief totally) which seem in conflict with the Drupal community’s values (although it’s difficult for me to be sure of whether they were meant to be taken literally in the real world, or as a form of cosplay - as portrayal of a Gorean character). Just to be clear - although I strongly disagree with some statements I saw, as long as they were not reflected in Larry’s behavior within the Drupal community I don’t see standing to dismiss him (except, perhaps, from representation to the PHP community if it seemed like it might diminish his effectiveness in that role). But, if this was indeed the main issue presented to Larry, I would have liked to see him address it head-on. He does deal with it somewhat in the section “&lt;/span&gt;&lt;em&gt;Larry is a proponent for the enslavement of women!&lt;/em&gt;&lt;span&gt;”, but the section title itself looks like an exaggeration of the actual accusation, and it is down at the bottom of the accusations he addresses, de-emphasizing it.&lt;/span&gt;&lt;/p&gt;
+	&lt;/li&gt;
+	&lt;li dir="ltr"&gt;
+	&lt;p dir="ltr"&gt;&lt;span&gt;I think Drupal leadership needs to tilt the balance at least a little more towards transparency. The community does need to better understand broadly why Larry was dismissed. Dries’ post stated “I did this because it came to my attention that he holds views that are in opposition with the values of the Drupal project”. This suggests that the primary reason for the dismissal was those statements outside of Drupal - I (and many others) feel that what happens outside of the Drupal community, should stay outside of the Drupal community. Then, the DA stated “We want to be clear that the decision to remove Larry's DrupalCon session and track chair role was not because of his private life or personal beliefs... Our decision was based on confidential information conveyed in private by many sources.” This contradicts Dries’ original statement, which is concerning. It also fails to address the central concern many people have - did Larry do or say anything &lt;/span&gt;within&lt;span&gt; the Drupal community?&lt;/span&gt;&lt;/p&gt;
+	&lt;/li&gt;
+	&lt;li dir="ltr"&gt;
+	&lt;p dir="ltr"&gt;&lt;span&gt;I don’t think the Drupal community has acquitted itself well here. The immediate outpouring has been based on one point of view - admittedly, there is little hard information otherwise, but we should all be slower to react when we know we don’t have all the facts, and lead off with questions rather than diatribes. One thing to be concerned about is that the one-sided onslaught is likely to discourage expressions that disagree with the crowd - anyone who might agree with the Drupal leadership’s decision, or who might know of some concrete reasons they may have made that decision, has reason to fear speaking up. I’m thinking here of &lt;/span&gt;&lt;a href="https://en.wikipedia.org/wiki/Gamergate_controversy"&gt;&lt;span&gt;GamerGate&lt;/span&gt;&lt;/a&gt;&lt;span&gt;. No, I’m not saying the people criticizing the decision are like the GamerGaters - but what I am saying is that, given that the center of this controversy is around beliefs and statements that look an awful lot like misogyny, and that much of the rhetoric has carried a whiff of torches and pitchforks, I would not be at all surprised if women (and feminists of all gender identities) felt good reason to fear a GamerGate-like backlash if they did speak up. We need to leave more room for all voices and not flood the space unilaterally.&lt;/span&gt;&lt;/p&gt;
+	&lt;/li&gt;
+&lt;/ol&gt;&lt;p dir="ltr"&gt;&lt;span&gt;So, where do we go from here? In reverse order,&lt;/span&gt;&lt;/p&gt;
+
+&lt;ol&gt;&lt;li dir="ltr"&gt;
+	&lt;p dir="ltr"&gt;&lt;span&gt;The Drupal community is certainly Internet-savvy - we’ve all seen so many cases where based on one piece of information the flamers descend without waiting for fact-checking, the other side of the story, etc. We need to jerk our knees a little more slowly. We need to recognize we don’t have (and will never have) all the information, and the fact that we won’t have it is not in and of itself proof that the decisions of Dries/DA/CWG were wrong.&lt;/span&gt;&lt;/p&gt;
+	&lt;/li&gt;
+	&lt;li dir="ltr"&gt;
+	&lt;p dir="ltr"&gt;&lt;span&gt;Drupal leadership does need to tell us more, and I think it can be done without violating confidentiality. Simply put - did Larry’s dismissal involve anything he did within the Drupal community? If they say it did, I for one, am willing to accept it and move on - I’m not in a position to know the specifics (nor should I be), but I recognize this as a legitimate exercise of authority, even if I don’t know if I would have voted the same way if I had seen the evidence. If, on the other hand, this is based purely on statements and actions outside of the Drupal community, it’s important for all of us in the Drupal community to understand that - we all need to know if the DA and CWG will hold us accountable for our online presence outside of Drupal. On that score, I’ve created a separate Twitter account for my Drupal and professional communications under my DBA, &lt;/span&gt;&lt;a href="https://twitter.com/VirtPerformance"&gt;&lt;span&gt;Virtuoso Performance&lt;/span&gt;&lt;/a&gt;&lt;span&gt;. To be fair, I’ve considered doing this anyway just in terms of work/life balance, but now it seems all the more important to keep things separate.&lt;/span&gt;&lt;/p&gt;
+	&lt;/li&gt;
+	&lt;li dir="ltr"&gt;
+	&lt;p dir="ltr"&gt;&lt;s&gt;&lt;span&gt;I know it’s a lot to ask - actually, I know that it’s too much to ask and don’t actually expect it, but in the interests of symmetry I’m putting it out there… It would be great if Larry could share (without violating the confidentiality of anyone involved - redacting names and details) precisely what he was told were the specific charges that led to his dismissal. We’re not going to get any specifics from the Drupal leadership side - he’s the only person who can provide us with any hard information. Again, I don’t expect this - Larry has suffered more than anyone here, and has already really put himself out there. &lt;/span&gt;&lt;/s&gt;&lt;span&gt;Edit: &lt;a href="https://www.garfieldtech.com/blog/tmi-part-2"&gt;Larry has now responded with more information&lt;/a&gt;, which I will take some time to review before making further comment.&lt;/span&gt;&lt;/p&gt;
+	&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;&lt;span&gt;Ultimately, while this is a painful episode in Drupal’s history, I hope we can find a way to get through it and come out the other side with a better understanding of each other, and rebuild trust within the community.&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;
+    &lt;h2 class="comment-field__title h3"&gt;Comments&lt;/h2&gt;
+    &lt;a id="comment-21"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/21" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/21#comment-21" class="permalink" rel="bookmark" hreflang="en"&gt;sad -- a structural isse&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1490646171"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;John_B (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Monday, March 27, 2017 - 02:03pm  &lt;span property="schema:dateCreated" content="2017-03-27T19:03:56+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;It is all very sad. You focus on Larry's situation, which is the immediate concern. You also mention Dries's situation. It is remarkable how well, most of the time, he has discharged the duties of having a final say over both social and technical decisions, chair of DA, and a leading role in Acquia, and done so in a community noted for openness. What your post does not cover is the extent to which it is fair to place such great responsbilities and powers, and potentially conflicting interests, on the shoulders of one man. Indeed, in happier times Larry's name might have been one of those which would spring to mind as a person who could step up to the plate and share some of those powers and duties. He is the one person who has started a debate specifically about the power stucture in the issue queues, albeit in the direction of calling for more rather than less top-down power. However the issue with Larry is eventually resolved, the power structure may need review in order to take some of the pressure off Dries's broad shoulders.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=21&amp;1=default&amp;2=en&amp;3=" token="Ggjh53CjBkn-negFdWrONd_yCijxV8Mb1wMgJ0wJqUw"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;a id="comment-26"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/26" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/26#comment-26" class="permalink" rel="bookmark" hreflang="en"&gt;A very decent, reasonable…&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1490646160"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Jonathan (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Monday, March 27, 2017 - 02:21pm  &lt;span property="schema:dateCreated" content="2017-03-27T19:21:32+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;A very decent, reasonable and sober analysis Mike - and thankyou for that, level-headedness makes the world  better plCW&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=26&amp;1=default&amp;2=en&amp;3=" token="EmVUnj3z2YTfN-OcyU4E9A4MBsv14xGvLjouZVdNTnc"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;a id="comment-31"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/31" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/31#comment-31" class="permalink" rel="bookmark" hreflang="en"&gt;Puppets&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1490709563"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Tony (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Tuesday, March 28, 2017 - 12:12am  &lt;span property="schema:dateCreated" content="2017-03-28T05:12:12+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;DA and CWG are puppets for Dries. They help to give community the illusion of independent power distribution. In reality, there is no such thing. Those entities are not powerful, nor independent; not at all. Dries just drives the project and the community wherever he wants to, whenever he wants to, however he wants to. After all, he needs to protect his Acquia investment. I witnessed more than once, Dries making decisions, against community's strong will, to ride the project in accordance with Acquia's future goals and plans.&lt;/p&gt;
+&lt;p&gt;This witch hunt is bullshit all around. I read comments from some people like Dries should forgive Larry. Where as, Dries should ask forgiveness from Larry and from the community. &lt;/p&gt;
+&lt;p&gt;One another bullshit is protecting the privacy of the reporters, who supposedly brought evidence. Nobody talks about how these reporters intrude Larry's privacy to collect information about his personal life. Why now these reporters are under protection rather than being penalized because of what they did.&lt;/p&gt;
+&lt;p&gt;Too much crap. Whichever angle I approach, it just stinks. I don't trust Dries and his DA. I am sure he had a different agenda under this decision.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=31&amp;1=default&amp;2=en&amp;3=" token="TfcTym3RFCv7pWBG63bLKLLzNEB5pc2ByBwJiCZUDr4"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;div class="indented"&gt;&lt;a id="comment-36"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/36" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/36#comment-36" class="permalink" rel="bookmark" hreflang="en"&gt;Sigh&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1490711771"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Tuesday, March 28, 2017 - 09:26am  &lt;span property="schema:dateCreated" content="2017-03-28T14:26:06+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;p class="comment__parent visually-hidden"&gt;In reply to &lt;a href="https://virtuoso-performance.com/comment/31#comment-31" class="permalink" rel="bookmark" hreflang="en"&gt;Puppets&lt;/a&gt; by &lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Tony (not verified)&lt;/span&gt;&lt;/p&gt;&lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;So, this is exactly what I'm talking about.&lt;/p&gt;
+
+&lt;p&gt;The entire controversy is about rushing to judgment. It appears (based on what little we know, which is almost entirely based on what Larry has told us) as if the DA and Dries had an initial reaction of revulsion to Gorean philosophy that Larry had posted online, and that first impression limited his ability to defend himself. No, on second thought - it seems to have limited their ability to listen to him, and perhaps more importantly, to consider the wider impact on the community.&lt;/p&gt;
+
+&lt;p&gt;Larry then was the first to bring this to the public, presenting his side of the conflict. I don't doubt he's being honest in his own understanding, but inevitably the story he presents is colored by his own perspective, and the strong emotions he's feeling. That narrative, both because it was the first one out there, and because it fits a broader narrative of distrust in institutions (and especially resistance to a particular despot-wannabee), has caught fire - and has been accepted uncritically by too many people in the Drupal community. The torches have been lit and pitchforks distributed.&lt;/p&gt;
+
+&lt;p&gt;I, for one, refuse to judge anyone. I have neither the information nor the wisdom to declare one side "right" and the other side "wrong". I can only hope (and work to help) the Drupal community learn from this experience, to heal from it, and to be prepared to better deal with these kinds of conflicts when (not if) they occur again.&lt;/p&gt;
+
+&lt;p&gt;Mike&lt;/p&gt;
+
+&lt;p&gt;P.S. Am I the only one who feels like we're in the first act of a Drupal remake of &lt;a href="https://en.wikipedia.org/wiki/Rashomon_effect"&gt;Rashomon&lt;/a&gt;?&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=36&amp;1=default&amp;2=en&amp;3=" token="p5cbrQ-JXGqnV8y40KOWbSfElb2H2M3H6m4sKApSohQ"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;a id="comment-56"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/56" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/56#comment-56" class="permalink" rel="bookmark" hreflang="en"&gt;Troll factory. You clearly…&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1491401298"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Anonymous (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Monday, April 3, 2017 - 02:12pm  &lt;span property="schema:dateCreated" content="2017-04-03T19:12:38+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;p class="comment__parent visually-hidden"&gt;In reply to &lt;a href="https://virtuoso-performance.com/comment/31#comment-31" class="permalink" rel="bookmark" hreflang="en"&gt;Puppets&lt;/a&gt; by &lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Tony (not verified)&lt;/span&gt;&lt;/p&gt;&lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Troll factory. You clearly don't know much about the Drupal project (or other major open source projects for that matter which have similar governance). Dries created the project, is BDFL (look it up), created the DA and CWG, his company Acquia is hurt not helped by this - and here you are complaining that Dries drives the project and talking nonsense about this having something to do with Acquia.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=56&amp;1=default&amp;2=en&amp;3=" token="V1Qu_29upv6yDqy15gnEIfgDsb3NNBTcwTZyVhh4JBc"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;/div&gt;&lt;a id="comment-41"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/41" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/41#comment-41" class="permalink" rel="bookmark" hreflang="en"&gt;Great post&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1490794684"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Thomas Seidl (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Wednesday, March 29, 2017 - 05:46am  &lt;span property="schema:dateCreated" content="2017-03-29T10:46:26+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Great post, Mike, thanks a lot for sharing your thoughts!&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=41&amp;1=default&amp;2=en&amp;3=" token="A0mMZoJGsihZPNFFHICIThJQIiBjCGLmlqY3bTfE61U"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;a id="comment-46"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/46" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/46#comment-46" class="permalink" rel="bookmark" hreflang="en"&gt;Problems with trying to be too rational&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1490963467"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Yautja_cetanu (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Thursday, March 30, 2017 - 08:06pm  &lt;span property="schema:dateCreated" content="2017-03-31T01:06:46+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;I think there is a problem, which you mentioned in your blog post, that the power relationships between Dries and Crell are so unbalanced that it is very difficult to be balanced in this situation. The reality is that Dries has a great deal of power and Crell has next to no power if it isn't for the mob of people supporting him.&lt;/p&gt;
+&lt;p&gt;Because Crell's only power is a mob of people supporting him, if people are too reasonable and willing to give the benefit of the doubt to Dries there risks turning this into a long drawn out process that means Dries will "win" by just waiting it out. Unfortunately if you are too "reasonable" then you end up really taking the side of Dries and the power structures in the status quo. Until the current power structures give up some of their power (Public trial, willingless to discuss it in public, a descision to look into the Crell situation again, etc) the only response if you care about justice for Crell is to just rage about it for a while, or boycott, etc.&lt;/p&gt;
+&lt;p&gt;One of the reasons why democracies in real life are so powerful is they allow these kinds of controversies to pass without violence or coercion. But Drupal is not a democracy, Dries is leader for life and so to some degree a violent (though not physically violent) response is the only one that could actually work given that there is nothing in place for Crell to be welcomed back if it turns out he was mistreated.&lt;/p&gt;
+&lt;p&gt;Similarly the same is true for Chx. He has been banned and that is it. There is no public appeals process that can garentee fairness, there are no elections he could try and win to change things by changing the hearts and minds of the community, its just over. Chx could only ever get unbanned by the powers that be just changing their mind randomly or a mass movement of angry irrationally sounding people.&lt;/p&gt;
+&lt;p&gt;(Although really if you look at the comments on the blogs I think most people are quite reasonable in this community on both sides. The vast majority of angry mindless responses I've seen has come on sites like reddit or the comments sections of non-drupal websites and by people who are clearly not drupal people because they tend to also talk about never touching drupal)&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=46&amp;1=default&amp;2=en&amp;3=" token="gedjSAkNeSxUx8t2wJaPnNQFELS_DwaigcB_qfBpLRs"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;a id="comment-51"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/51" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/51#comment-51" class="permalink" rel="bookmark" hreflang="en"&gt;Complete baloney - and spoken like a true vanilla&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1491401311"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Bradley D. Thornton (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Sunday, April 2, 2017 - 06:03pm  &lt;span property="schema:dateCreated" content="2017-04-02T23:03:11+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Well, thank you, but no thanks. No one needs to apologize for their life choices here, in being who they are and living their life in that fashion.&lt;/p&gt;
+&lt;p&gt;What doesn't occur to many folks is that in the lifestyle, all participants are willing and seek to particpate in their respective roles - there's no one-sidedness here, but this is beyond the comprehension of a nilla so I won't waste my time on showing you that as fair and balanced as you think you are, you only demonstrate your passive bigotry in making that attempt.&lt;/p&gt;
+&lt;p&gt;The right thing is for Dries, Klaus, and their little brown-nosing crony's to step down and leave.&lt;/p&gt;
+&lt;p&gt;Or maybe we (the community of truly inclusive people) should take this time to fork Drupal.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=51&amp;1=default&amp;2=en&amp;3=" token="UmDD8Q93a6A9HrLqGvT8E46Xb88_Ut-oRvYt9jsKbrk"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;/section&gt;</description>
+  <pubDate>Mon, 27 Mar 2017 15:47:57 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">66 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>The Drupal (migration) expert is in at MidCamp</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/drupal-migration-expert-midcamp</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;The Drupal (migration) expert is in at MidCamp&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2017-03-27T14:55:43+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Monday, March 27, 2017 - 09:55am&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;&lt;a href="https://www.midcamp.org/"&gt;MidCamp&lt;/a&gt; is imminent, and I'm proud to announce that Virtuoso Performance (i.e., me!) is sponsoring a &lt;a href="https://www.midcamp.org/drupal-expert-virtuoso-performance"&gt;"Drupal Expert Is In" session&lt;/a&gt; Saturday April 1 at 1pm. I'll be in the main room (120) to answer your Drupal 8 migration questions, help you get through any tricky plugin issues, and demonstrate how to approach migration problems. The plan is to make this an open session - to allow anyone interested in Drupal 8 migration to sit around the campfire and learn from each other's issues.&lt;/p&gt;
+
+&lt;p&gt;Migrate all the things!&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--planet-drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/planet-drupal" property="schema:about" hreflang="en"&gt;Planet Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Mon, 27 Mar 2017 14:55:43 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">61 at https://virtuoso-performance.com</guid>
+    </item>
+
+  </channel>
+</rss>

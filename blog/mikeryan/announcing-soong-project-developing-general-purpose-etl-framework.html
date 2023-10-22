@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/announcing-soong-project-developing-general-purpose-etl-framework by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:20:55 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="Announcing the Soong project - developing a general-purpose ETL framework" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="announcing-soong-project-developing-general-purpose-etl-framework.html" />
+<meta name="twitter:description" content="Announcing the Soong ETL framework for data migration" />
+<meta name="twitter:title" content="Announcing the Soong project - developing a general-purpose ETL framework" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="I&#039;d like to invite members of the open-source community, particularly (but not exclusively) those involved with PHP, to join in designing and developing a general-purpose ETL framework for data migration. The vendor name for packaging components of this project is soong, and git repos for existing components are under the GitLab account &quot;soongetl&quot;." />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Drupal, Planet Drupal, PHP, Migration, Soong" />
+<meta name="twitter:url" content="announcing-soong-project-developing-general-purpose-etl-framework.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="announcing-soong-project-developing-general-purpose-etl-framework.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>Announcing the Soong project - developing a general-purpose ETL framework</title>
+    <link rel="stylesheet" href="../../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-mikeryan-announcing-soong-project-developing-general-purpose-etl-framework page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="150" role="article" about="/blog/mikeryan/announcing-soong-project-developing-general-purpose-etl-framework" typeof="schema:Article" class="node node--id-150 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">Announcing the Soong project - developing a general-purpose ETL framework</span>
+</h1>  <span property="schema:name" content="Announcing the Soong project - developing a general-purpose ETL framework" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:0" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2019-01-22T20:10:33+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Tuesday, January 22, 2019 - 02:10pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2019-01-22T20:10:33+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>I'd like to invite members of the open-source community, particularly (but not exclusively) those involved with PHP, to join in designing and developing a general-purpose <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load">ETL </a>framework for data migration. The vendor name for packaging components of this project is <a href="https://packagist.org/?tags=soong">soong</a>, and git repos for existing components are under the <a href="https://gitlab.com/soongetl">GitLab account "soongetl"</a>.</p>
+
+<p>Note: Finally having finished composition of this lengthy monologue, it's clear to me that it's very ambitious (some might say arrogant) of me to write with the expectation that this will grow into a large and robust open-source ecosystem. Very well - it is ambitious, and the effort may very well fall flat on its face. C'est la vie...</p>
+
+<h2>Who am I?</h2>
+
+<p>I'm <a href="https://www.drupal.org/u/mikeryan">Mike Ryan</a> - a lot of people in the Drupal community know me, but not so much the wider open-source community. <a href="boston-drupal-meetup.html">Almost eleven years ago</a> at a Drupal meetup in Boston, amongst general agreement that everyone hates to do data migration, <a href="https://www.drupal.org/u/moshe-weitzman">Moshe Weitzman</a> looked across the table at me and said "there's an opportunity here." Since then data migration into Drupal has been the primary focus of my professional life, first in partnership with Moshe, then as an <a href="https://www.acquia.com/">Acquia</a> employee and finally as a <a href="../../index.html">solo consultant</a>. Over the years I've created several migration-related contrib modules for Drupal, was part of the team integrating migration into Drupal core for D8, and have been involved in dozens of real-world migration projects.</p>
+
+<h2>Why am I doing this?</h2>
+
+<h3>I think we can do better</h3>
+
+<p>Just within Drupal, the migration framework can be improved:</p>
+
+<ol><li>Each step of Drupal migration support has been a port of the previous - from the hook-based Drupal 6 version, to the inheritence-and-composition model in Drupal 7, to the plugin-based system in Drupal 8, technical debt has accumulated. I've wanted for a while to start over with a clean slate - given my experience (and others), what would we do differently starting from scratch? Can we step back and re-examine the assumptions we've been carrying forward?</li>
+	<li>At a specific technical level, the biggest itch I've wanted to scratch is decoupling the components. Within the migration system as it is in D8 today, pretty much every component knows everything about every other component. At one point we had a destination plugin which was using some of the migration's source plugin configuration - that one made my eye twitch!</li>
+	<li>There's also the coupling of the migration system with Drupal - in particular, migration classes *are* Drupal plugins (i.e., their interfaces extend PluginInspectionInterface) rather than being *managed by* Drupal plugins. I would like to see migration classes be all about migration, rather than worry about being plugins as well. And once the basic migration classes are no longer Drupal plugins, then it's a small step to them being entirely independent of Drupal...</li>
+</ol><h3>The larger PHP community</h3>
+
+<p>With Drupal 8, we’ve often talked about “getting off the island” in terms of benefiting from much fine PHP work done outside of the Drupal community. We haven’t talked so much about going in the opposite direction - making our own fine work available for use beyond Drupal. To my knowledge, the only published example of this so far is Kris Vanderwater (<a href="https://www.drupal.org/u/eclipsegc">EclipseGC</a>) with the <a href="https://github.com/EclipseGc/Plugins">plugin library</a>.</p>
+
+<p>Likewise, we Drupal developers don’t have a monopoly on good migration ideas - by moving the general-purpose aspects of migration into a separate open source project, we have the opportunity to benefit from new ideas and new talent.</p>
+
+<h3>The community we build</h3>
+
+<p>The major key to success for any large open-source project like this is a thriving community. After seeing open-source projects like Drupal grow organically - and face growing pains as they find themselves dealing with community problems reactively rather than proactively - if a community does form around this project, I would like to establish a supportive and welcoming tone from the beginning.</p>
+
+<p>Diversity in particular remains an issue in the tech industry in general, and open-source especially - and a lack of diversity is difficult to correct after the fact. In building a community around this framework, my hope is that we draw a diverse set of developers in the beginning, in the hopes that seeding the garden well will be, if not self-sustaining, at least more sustainable. How to do that, I'm not certain - a concerted outreach effort could easily end up looking like Pokemon Go, searching for unique creatures to collect. Apart from starting with a good <a href="https://www.contributor-covenant.org/version/1/4/code-of-conduct">Code of Conduct</a>, I'm open to suggestions!</p>
+
+<p>Another aspect of community-building is providing opportunities for relative novices (whether new to open-source development, new to PHP, or new to migration). The proposed architecture involves myriad small, well-focused packages - an extractor here, a set of related transformers there, integrations for specific frameworks and APIs... Individual transformers, in particular, will generally be very simple. This ecosystem thus will provide ample opportunities for novices to gain experience with mentorship and also establish an online presence.</p>
+
+<p>Now, all that being said, what about <a href="https://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community">The Ethics of Unpaid Labor and the OSS Community</a> (also see the <a href="https://twitter.com/drnikki/status/1084831226081402880">recent Twitter discussion</a> in the Drupal community)? In reaching out to underrepresented groups and to novices, we are reaching out to the people who have the least ability to work on open source for free. One way to ameliorate this effect may be to explicitly try to draw in students - whether in formal programs or teaching themselves software development - who will benefit from some free practical education and mentorship. Down the road, if this framework does start being adopted in real-world applications, we can look at ways to get sponsorships for people who maintain projects within the ecosystem. At any rate, as the community here grows I expect <a href="https://gitlab.com/soongetl/architecture/issues/9">this will be an ongoing conversation</a>.</p>
+
+<h3>Selfishness</h3>
+
+<p>Yes, I'm willing to cop to selfish reasons to pursue this.</p>
+
+<ol><li>Simple ego: I'm proud of the work I've done on migration in Drupal, and think it can be useful on a larger stage. Being old enough to see retirement on the horizon, I admit I'm thinking of this as my magnum opus - the last major contribution I make to open source. I would love to leave behind a significant piece of quality software with a vital community behind it.</li>
+	<li>Money: I've done fine as a Drupal data migration specialist. I hope to do better by expanding my market beyond Drupal, working on a wider variety of migration projects. Yes, retirement is on the horizon but, given earlier attempts at consulting which went less well than my "migration period" has, my funds put that horizon farther out than I'd like...</li>
+</ol><h2>What's done so far?</h2>
+
+<p>Early last year I started playing around with a proof-of-concept in a single repo, getting a single basic ETL migration scenario running with a decoupled class structure based on the basic architecture of the Drupal migration system. Much of the work after getting the initial POC running was figuring out appropriate boundaries between components, and gradually introducing features beyond the most basic ones I started with. And then breaking pieces out into separate source repos, and figuring out those boundaries.</p>
+
+<h2>My role</h2>
+
+<p>This will certainly change according to the number and skills of contributors who join into this effort (assuming there are some!), but what I'm aiming for in terms of my own role:</p>
+
+<ol><li>Primary architect of version 1 of Soong. This would mean being the primary maintainer of architecture documentation and the <a href="https://gitlab.com/soongetl/soong">repository of central interfaces/base classes</a>. Per "selfishness" above - I have an architectural vision I want to see brought to fruition. Others may take it in different directions after that, but V1 is mine! tl;dr - I don't want to be <a href="https://en.wikipedia.org/wiki/Benevolent_dictator_for_life">BDFL</a>; I do want to be BDF1.</li>
+	<li>Community leader. Per "community" above, I have a vision for building a diverse and vibrant open-source community from the ground up. Unlike the technical architecture, however, this plays less to my strengths, so I will be happy to defer as better-suited people show leadership in the community.</li>
+	<li>Mentorship. I'd like to help people up their development skills, their open-source involvement, and their understanding of the pits and perils of data migration.</li>
+</ol><h2>Why did it take me so long?</h2>
+
+<p>After having it in the back of my head for a few years, I finally started creating repos and putting my thoughts into actual interfaces and classes several months ago. Why did I wait until now to share my work with the larger community? I certainly felt seen when I read this:</p>
+
+<p><a href="https://twitter.com/jessfraz/status/1063425181509652481">https://twitter.com/jessfraz/status/1063425181509652481</a></p>
+
+<p>Frankly, there's an element of imposter syndrome here - I wanted to be sure I wasn't exposing any dumb ideas! Well, enough of that - instead, I now stipulate that you will find dumb things I did here, and ask that you help smartify them.</p>
+
+<h2>The architecture itself</h2>
+
+<p>There's a ways to go <a href="https://gitlab.com/soongetl/architecture/blob/master/architecture/index.md">documenting the architecture</a> as it is currently implemented in <a href="https://gitlab.com/soongetl/soong">soong/soong</a>, but right now it broadly looks like this:</p>
+
+<ol><li>A Task accepts configuration defining a migration process, and implements operations - most notably <strong>migrate</strong>, but it may also support other operations like <strong>rollback</strong>, <strong>status</strong>, <strong>analyze</strong>, … The following steps describe the <strong>migrate</strong> operation.</li>
+	<li>The task constructs the configured Extractor, which obtains data from a source such as a SQL query, a CSV file, an XML/JSON API, etc.</li>
+	<li>Iterating over the extractor returns one DataRecord (collection of named DataProperty instances) at a time containing source data. The task creates an empty DataRecord representing the destination data.</li>
+	<li>The task configuration defines a transform pipeline keyed by destination property names. For each of these properties, a sequence of one or more Transformer classes with corresponding configuration is invoked to determine the destination property value - usually, the first one will be configured to accept one or more source property names, and the results will be fed to subsequent transformers, with the final result assigned to the named property in the destination DataRecord.</li>
+	<li>The destination DataRecord is passed to the configured Loader to be loaded into the destination store - a SQL database, a CSV file, etc.</li>
+	<li>If an optional KeyMap is configured within the task, it is used to store the mapping from the source record's unique key to the destination record's unique key. This enables keyed relationships to be maintained even if keys change when migrating, as well as enabling rollback.</li>
+</ol><p>To try out a couple of working demos, <code>git clone git@gitlab.com:soongetl/soong.git</code> and follow the README.</p>
+
+<h2>Initial technical priorities</h2>
+
+<ol><li>One of those infamous hard problems in computer science is naming things. Before we go too far, <a href="https://gitlab.com/soongetl/architecture/issues?label_name%5B%5D=Naming">let's figure out how best to name things</a> - I think Extractor/Transformer/Loader are pretty solid, but let's discuss whether other components (like <a href="https://gitlab.com/soongetl/architecture/issues/1">Task</a>) could use better names. Also, let's decide what naming conventions for implementations should look like - e.g., should CSV extractor and loader classes both be named CSV (or for that matter, Csv) with namespaces alone distinguishing them, or should they be CSVExtractor and CSVLoader?</li>
+	<li>The initial architecture, as I've said before, comes from my narrow experience in Drupal. I'm sure there are plenty of other good migration ideas out there - maybe there's even a package I've missed that's good enough that this effort would better be directed towards improving it rather than starting from scratch. I did do some research last year and did not find any PHP ETL packages that appeared to have wide adoption or as much flexibility, but with more eyes on it (eyes that have seen more beyond Drupal than I have) <a href="https://gitlab.com/soongetl/architecture/issues/7">let's see if we can do a thorough review of prior art and see if there are some good ideas which may influence this effort</a>. And let's look beyond PHP as well - are there ETL frameworks written in other object-oriented languages which may provide some architectural inspiration?</li>
+	<li>Review the <a href="https://gitlab.com/soongetl/skeleton">boilerplate for Soong code repos</a> (based on <a href="https://github.com/thephpleague/skeleton">https://github.com/thephpleague/skeleton</a>) - let's go over what we've got there (especially the code of conduct and contributing guidelines).</li>
+	<li>Test all the things! Before adding new stuff, we need to add tests for the existing components, and set up automated testing on Gitlab.</li>
+</ol><h2>Technical goals</h2>
+
+<ol><li>For V1, require PHP 7.1 and leverage strict type checking. I expect future versions to require PHP 7.4 and leverage typed object properties.</li>
+	<li>The central interface package <a href="https://gitlab.com/soongetl/soong">soong/soong</a> ideally should not depend on anything other than <a href="https://www.php-fig.org/psr/">PSR interfaces</a>. It should be approached as if it were a PSR itself - a completely general interface for ETL functionality not dependent on any non-standard interfaces.</li>
+</ol><h2>Conclusion</h2>
+
+<p>Again, I know I am getting way ahead of myself here by imagining an active open-source community will quickly spring up here. I have talked to Drupal people about my ideas on occasion, and I expect there will be some interest there, but I very much hope other open-source developers can join this effort and provide different perspectives. I do believe strongly that a standard ETL library with a core of simple standard interfaces (making a simple move-my-stuff-from-here-to-there application a breeze) plus the flexibility to build complex systems to handle many types of data will be extremely valuable across many domains.</p>
+
+<p>If I may try your patience a bit longer - I've spent a substantial portion of my time since my last contract pulling these thoughts together, and I am now in need of paid work (<a href="../../contact.html">contact me</a> if you need some data migration done!). I may fantasize about being sponsored to work fulltime on Soong, or be hopeful there's someone with a project that they think will benefit from Soong and thus I can make progress here in the course of solving their migration problem. Realistically, my next contract (or employment) most likely will not involve Soong development, so once I'm working I won't have as much time to manage this project - let's hope plenty of people join in to pick up my slack!</p>
+
+<p>If you've made it this far, thank you for your time and I look forward to your merge requests!</p>
+</div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div><div class="field__item field__item--planet-drupal">
+        <span class="field__item-wrapper"><a href="../../tags/planet-drupal.html" property="schema:about" hreflang="en">Planet Drupal</a></span>
+      </div><div class="field__item field__item--php">
+        <span class="field__item-wrapper"><a href="../../tags/php.html" property="schema:about" hreflang="en">PHP</a></span>
+      </div><div class="field__item field__item--migration">
+        <span class="field__item-wrapper"><a href="../../tags/migration.html" property="schema:about" hreflang="en">Migration</a></span>
+      </div><div class="field__item field__item--soong">
+        <span class="field__item-wrapper"><a href="../../tags/soong.html" property="schema:about" hreflang="en">Soong</a></span>
+      </div></div>
+</div>
+<div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"><h3 class="field__label">Use the Twitter thread below to comment on this post:</h3><div class="field__items"><div class="field__item"><div data-oembed-url="https://twitter.com/VirtPerformance/status/1087805171621679104">
+<div style="max-width:480px;margin:auto;"><!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. -->
+<blockquote align="center" class="twitter-tweet" data-dnt="true">
+<p dir="ltr" lang="und" xml:lang="und"><a href="https://t.co/0uVJ13t8md">https://t.co/0uVJ13t8md</a></p>
+— Virtuoso Performance (@VirtPerformance) <a href="https://twitter.com/VirtPerformance/status/1087805171621679104?ref_src=twsrc%5Etfw">January 22, 2019</a></blockquote>
+<script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script></div>
+</div>
+</div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/150","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../../sites/default/files/js/js_IXXM0JyuKXLkx6vQcq8R_JR95o07Mkzej4e-E9tCYsg.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/announcing-soong-project-developing-general-purpose-etl-framework by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:20:59 GMT -->
+</html>

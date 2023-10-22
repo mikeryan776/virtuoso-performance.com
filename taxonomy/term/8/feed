@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:schema="http://schema.org/" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" version="2.0" xml:base="https://virtuoso-performance.com/tags/business">
+  <channel>
+    <title>Business</title>
+    <link>https://virtuoso-performance.com/tags/business</link>
+    <description/>
+    <language>en</language>
+    
+    <item>
+  <title>Cyrve</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/cyrve</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Cyrve&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2008-02-26T04:34:42+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Monday, February 25, 2008 - 10:34pm&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;I'm pleased to announce that I am joining &lt;a href="http://www.tejasa.com/"&gt;Moshe Weitzman&lt;/a&gt; in &lt;a href="http://cyrve.com/"&gt;Cyrve&lt;/a&gt;. Our specialty is content migration and transformation - the grunge work of fitting old information into new holes.&lt;/p&gt;
+
+&lt;h2&gt;Past projects of mine&lt;br /&gt;
+ &lt;/h2&gt;
+
+&lt;h3&gt;XML -&gt; Mobile-compliant XHTML&lt;/h3&gt;
+
+&lt;p&gt;I produced a mobile-compatible website for delivering 2008 U.S. Presidential election results to hand-held devices. This involved modifying the &lt;a href="http://drupal.org/"&gt;Drupal&lt;/a&gt; &lt;a href="http://drupal.org/project/feedapi"&gt;FeedAPI module&lt;/a&gt; (at that time still in beta) to read custom fields in addition to standard RSS fields (patch submitted).&lt;/p&gt;
+
+&lt;p&gt;As a follow-up project, in two days I created a system to take XML feeds of raw election data and produce mobile-compatible XHTML pages to present the results, for live updates on Super Tuesday. This system included a templating system so the client could easily style it to their own needs (they reported it took half an hour with my delivered system to complete the theming and customization), and has remained in operation through subsequent primary elections.&lt;/p&gt;
+&lt;!--break--&gt;
+
+&lt;h3&gt;SQL -&gt; SQL (custom CMS to Drupal)&lt;/h3&gt;
+
+&lt;p&gt;Migrated an existing web site containing articles, interviews, and podcasts to Drupal. The primary challenge here was in determining the best way to map the various "sections" of the original site onto Drupal concepts - some were best converted into categories, some into custom node types, some into node relationships.&lt;/p&gt;
+
+&lt;h3&gt;SQL -&gt; SQL (ERP data)&lt;/h3&gt;
+
+&lt;p&gt;Two years ago I was involved in a major data migration project, moving a local teaching hospital from their old HR/Payroll system (ADP) to a new ERP (Lawson). Although not Web-related, the fundamental principles were the same - identifying the major points of divergence in organizational concepts, dealing with sometimes drastically different schema, analysis of the input data for self-consistency and exceptions to documented rules, etc.&lt;/p&gt;
+
+&lt;h2&gt;Cyrve's approach&lt;/h2&gt;
+
+&lt;p&gt;First and foremost, our experience in migration projects has shown us that just because we're holding hammers in our hands, not every problem is necessarily a nail. One of our tools will be the &lt;a href="http://drupal.org/project/feedapi"&gt;FeedAPI module&lt;/a&gt;, which provides a general framework for parsing data input and applying an array of processors to end up with Drupal content. We will be developing a toolbox of parsers and processors to deal with the diverse challenges brought to us, while remaining open to out-of-the-box solutions to unique problems.&lt;/p&gt;
+
+&lt;p&gt;I am looking forward very much to joining Moshe in meeting these challenges.&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--business"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/business" property="schema:about" hreflang="en"&gt;Business&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--migration"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migration" property="schema:about" hreflang="en"&gt;Migration&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Tue, 26 Feb 2008 04:34:42 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">107 at https://virtuoso-performance.com</guid>
+    </item>
+
+  </channel>
+</rss>

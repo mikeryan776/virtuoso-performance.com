@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/drupalcon-nola-migration-sprint-summary by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:22:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="DrupalCon NOLA migration sprint summary" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="drupalcon-nola-migration-sprint-summary.html" />
+<meta name="twitter:title" content="DrupalCon NOLA migration sprint summary" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="DrupalCon NOLA is over - perhaps too soon for those of us who love this great city, or perhaps just soon enough for those who have given Drupal and the city of New Orleans every last ounce of energy they had this past week.
+
+We had a very productive week sprinting for migration - it may not be reflected in the number of commits made by the end of the extended sprints, but we&#039;ll see the fruits over the coming weeks. Our focus was on triaging the issue queue, and on diving deeply into some of the more complex outstanding issues, rather than picking the low-hanging fruit." />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Planet Drupal, Drupal" />
+<meta name="twitter:url" content="drupalcon-nola-migration-sprint-summary.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="drupalcon-nola-migration-sprint-summary.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>DrupalCon NOLA migration sprint summary</title>
+    <link rel="stylesheet" href="../../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-mikeryan-drupalcon-nola-migration-sprint-summary page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="31" role="article" about="/blog/mikeryan/drupalcon-nola-migration-sprint-summary" typeof="schema:Article" class="node node--id-31 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">DrupalCon NOLA migration sprint summary</span>
+</h1>  <span property="schema:name" content="DrupalCon NOLA migration sprint summary" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:0" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2016-05-16T23:00:00+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Monday, May 16, 2016 - 06:00pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2016-05-16T23:00:00+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>DrupalCon NOLA is over - perhaps too soon for those of us who love this great city, or perhaps just soon enough for those who have given Drupal and the city of New Orleans every last ounce of energy they had this past week.</p>
+
+<p>We had a very productive week sprinting for migration - it may not be reflected in the number of commits made by the end of the extended sprints, but we'll see the fruits over the coming weeks. Our focus was on triaging the issue queue, and on diving deeply into some of the more complex outstanding issues, rather than picking the low-hanging fruit.</p>
+
+<h2>Triage</h2>
+
+<p>I <a href="drupalcon-nola-food-music-sprint-rinse-and-repeat.html">previously wrote</a> about the upfront triage the first Sunday - I prepped a <a href="https://docs.google.com/spreadsheets/d/16SwQsp7nF1UKrZQCNdPYML_wi53ZjM1egwuLoPDwzUY/edit#gid=0">Google sheet</a> with various breakdowns of outstanding core migration system issues, and with <a href="https://www.drupal.org/u/xjm">xjm</a> and <a href="https://www.drupal.org/u/alexpott">alexpott</a> leading the way we got about halfway through the <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status[]=Open&amp;version[]=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Migrate+critical">"Migrate critical" issues</a>. We picked up with the other half on Friday, with a few more people attending - <a href="https://www.drupal.org/u/ryan-weal">Ryan Weal</a>, <a href="https://www.drupal.org/u/ultimike">ultimike</a>, <a href="https://www.drupal.org/u/penyaskito">penyaskito</a>, <a href="https://www.drupal.org/u/vasi">vasi</a>, and a few more gathered around the table. Because we were working through from the oldest created issues to newest, the first round caught most of the hardest issues and the Friday session went quicker. As of Sunday morning, we were down to 18 open migrate-criticals, of which 14 were touched in the past week (11 in the previous 48 hours), so we've got momentum going.</p>
+
+<h2>Specific issues addressed at NOLA</h2>
+
+<p>I had meant to cover <strong>everything</strong> worked on this week - but I had to cut it off, for space and time. This represents fewer than half the migration issues that saw work during DrupalCon.</p>
+
+<h3><a href="https://www.drupal.org/node/2225775">Migrate D6 i18n nodes</a></h3>
+
+<p>This is the biggest outstanding issue at the moment. The problem here is quite complex - the representation of translated content has completely changed in Drupal 8. In particular, translations of a node are no longer separate nodes - all translations of a specific piece of content are represented by a single node, so merging the revision histories of multiple nodes into one is... challenging. vasi has come up with a clever solution here - my current project needs this, so I had real-world data to test against. This week:</p>
+
+<ol><li>vasi got the tests green</li>
+	<li>I rerolled the patch against 8.1.x (the issue is targeting 8.2.x, but my client is on 8.1.x at the moment).</li>
+	<li><a href="https://www.drupal.org/u/bwinett">bwinett</a> performed a manual test - migrating from D6 to 8.1.1 (using my reroll) using the core upgrade UI - and successfully validated that the right translations and revision history were in the right place.</li>
+	<li>I performed a manual test with my client's data, with less successful results. Our scenario is a custom migration into a site containing manually-entered data, so we cannot preserve node and revision IDs. It turns out that the patch is assuming source revision IDs match the destination, when it attempts to consolidate multiple translations into a single revision.</li>
+	<li>For the patch to do that, it needs to perform a lookup in the migration map table given just a revision ID. The revision map table has a two-column key - revision ID and language - and the API (MigrateIdMapInterface) doesn't currently support partial lookups.</li>
+	<li>So, vasi <a href="https://www.drupal.org/node/2724941">opened an issue to extend the API</a> and implemented a solution there, which is has now been committed.</li>
+</ol><p>At this writing, vasi is working on the next version of the node i18n patch using the idmap extension, and I'll be testing it against my client's data.</p>
+
+<h3><a href="https://www.drupal.org/node/2225271">Migrate content type language settings from Drupal 6 &amp; 7</a></h3>
+
+<p>Speaking of i18n, penyaskito, <a href="https://www.drupal.org/u/quietone">quietone</a> (remotely), and vasi have moved this issue forward, rerolling the previous 8.0.x patch for 8.2.x and continuing to refine it. Next step (per penyaskito): Add an assertion that language_alterable is TRUE when there's no i18n_lock_node_TYPE.</p>
+
+<h3><a href="https://www.drupal.org/node/2598038">Invalid passwords after D7 to D8 migration</a></h3>
+
+<p>alexpott took this one on and produced a patch which quietone has now manually verified - next step is complete code review.</p>
+
+<h3><a href="https://www.drupal.org/node/2724871">Random failure in \Drupal\migrate_drupal_ui\Tests\d7\MigrateUpgrade7Test</a></h3>
+
+<p>A major annoyance with testing on drupal.org, this test has started randomly failing. This tests the upgrade UI, which is batched, and what happens per batch is non-deterministic (affected by timing/load), so it's difficult to track down. We had some discussion about this at the closing weekend Saturday extended sprint, and alexpott has been actively pursuing it.</p>
+
+<h3><a href="https://www.drupal.org/node/2695297">Refactor EntityFile and use process plugins instead</a></h3>
+
+<p>I created a patch for this, which vasi and quietone have helped refine, and benjifisher applied CodeSniffer. Next step is for me to respond to <a href="https://www.drupal.org/u/benjy">benjy</a>'s review.</p>
+
+<h3><a href="https://www.drupal.org/node/2700581">Destination bundle set in destination plugin, not in process</a></h3>
+
+<p>I've created a first draft of this patch, which the testbot tells me still needs work.</p>
+
+<h3><a href="https://www.drupal.org/node/2543568">Reduce/remove tight coupling of migration destination plugins</a></h3>
+
+<p>quietone provided a suggested draft for the change record, and I tweaked the patch to deprecate rather than entirely remove md_entity:field_storage_config.</p>
+
+<h3><a href="https://www.drupal.org/node/2631736">Cckfield Plugins must distinguish core versions</a></h3>
+
+<p><a href="https://www.drupal.org/u/jmuzz">jmuzz</a> has continued refining this patch.</p>
+
+<h2>Mentored sprint</h2>
+
+<p>The <a href="https://events.drupal.org/neworleans2016/mentored-core-sprint">mentored core sprint</a> (with mentors including <a href="https://www.drupal.org/u/heddn">heddn</a>, <a href="https://www.drupal.org/u/vegantriathlete">vegantriathlete</a>, and <a href="https://www.drupal.org/u/willwh">willwh</a>) on Friday also contributed. </p>
+
+<h3><a href="https://www.drupal.org/node/2624640">Fixes to docs and code style for migrate/src/*.php files</a></h3>
+
+<p>A few sprinters participated in rerolling the existing patch for 8.1.x (with some guidance from <a href="https://www.drupal.org/u/hussainweb">hussainweb</a>): <a href="https://www.drupal.org/u/jeffreyvargas">jeffrey.vargas</a>, <a href="https://www.drupal.org/u/kurthill4">kurthill4</a>, <a href="https://www.drupal.org/u/njim">nJim</a>, and <a href="https://www.drupal.org/u/the-sean">The Sean</a>.</p>
+
+<h3><a href="https://www.drupal.org/node/2682585">Rename MigrationCreationTrait as it no longer creates migrations - it configures them</a></h3>
+
+<p>Participants in this patch include <a href="https://www.drupal.org/u/barbarae">barbarae</a>, hussainweb, <a href="https://www.drupal.org/u/douggreen">douggreen</a>, and <a href="https://www.drupal.org/u/hanoii">hanoii</a>.</p>
+
+<h3><a href="https://www.drupal.org/node/2692373">Value should be null when is produced skip process</a></h3>
+
+<p><a href="https://www.drupal.org/u/rakeshgectcr">rakesh.gectcr</a> submitted a reroll of this patch, <a href="https://www.drupal.org/u/cmanalansan">cmanalansan</a> also worked on it. This one is committed!</p>
+
+<h3><a href="https://www.drupal.org/node/2698083">D6-&gt;D8: Migrating links without leading slash leads to fatal error</a></h3>
+
+<p><a href="https://www.drupal.org/u/ancapaaron">ancapaaron</a> and <a href="https://www.drupal.org/u/bsnodgrass">bsnodgrass</a> did manual testing on D6 and D7 respectively - looks like this is something we only need to worry about on D6.</p>
+
+<h2>Non-NOLA progress</h2>
+
+<p>Not everyone gets to go to every DrupalCon - while we fortunate ones were sprinting on-site, work progressed around the world...</p>
+
+<h3><a href="https://www.drupal.org/node/2603124">Sql::getRowBySource doesn't adhere to MigrateIdMapInterface::getRowBySource</a></h3>
+
+<p>On the BC-breakers list but the NOLA sprinters didn't get to this - quietone working remotely rerolled the 7-month-old patch that was there, it's now ready for review.</p>
+
+<h3><a href="https://www.drupal.org/node/2724903">Migrated custom block body field is hidden on form and display</a></h3>
+
+<p><a href="https://www.drupal.org/u/rocketeerbkw">rocketerrbkw</a> identified this problem and has provided a patch - ready for review.</p>
+
+<h3><a href="https://www.drupal.org/node/2723123">Last imported timestamps not set in map tables</a></h3>
+
+<p><a href="https://www.drupal.org/u/milesw">milesw</a> found a nasty "oops!" in a recent patch - looks good, just needs tests.</p>
+
+<h3><a href="https://www.drupal.org/node/2409453">Variable to config: statistics.settings [d7]</a></h3>
+
+<p><a href="https://www.drupal.org/u/vprocessor">vprocessor</a> rerolled the existing patch and quietone reviewed.</p>
+
+<h2 id="next_steps">Next steps</h2>
+
+<p>A lot of the work done at DrupalCon (not to mention a lot of work done previous to DrupalCon as well) needs review - let's get in there and see what we can move forward to RTBC.</p>
+
+<p>I feel like we have a lot of momentum going now - but in my experience that DrupalCon momentum can dissipate pretty quickly. Let's keep it going - I'd like to propose ongoing migration sprints on a regular basis. Specifically:</p>
+
+<ol><li>Each sprint lasts a calendar day - during that day (according to your local calendar), those interested in pushing D8 migration forward try to find at least one chunk of time to work on migration issues, coordinating on IRC in #drupal-migrate.</li>
+	<li>For now, the theme will be <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status[]=Open&amp;version[]=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Migrate+critical">Migrate-critical issues</a>. Once we trim that list down to just a couple, we can pick different themes.</li>
+	<li>Since not every day of the week is equally open for everyone, let's rotate it - I suggest doing it every 8 days. So, Monday May 23 (8 days after the last DrupalCon extended sprint), Tuesday May 31, Wednesday June 8, etc...</li>
+	<li>I'll try to put out a blog post the day before each sprint day going over the status of key migrate-criticals.</li>
+</ol><h2>Obligatory travelogue</h2>
+
+<p>I just couldn't keep up the daily blogging pace from mid-week on... Most of the meals have faded from my memory (and frankly I was finding better food earlier in the week than I was later), but I will leave you with my musical memories.</p>
+
+<p>Wednesday night, sleep-deprived, I was heading back to my hotel on Esplanade when I ran into a couple of former <a href="http://www.acquia.com/">Acquia</a> colleagues on Royal. With very little arm-twisting, they convinced me to lead them to Frenchmen Street, where we picked a club pretty much at random (<a href="http://www.3090-nola.com/">30°/-90°</a>). It was shortly after 9pm and the band started up right after we got there, so I figured I'd stay for one set and still get a good night's sleep. It turned out they only played one set - and it lasted almost to 1am. And that band (<a href="https://www.facebook.com/Soul-Company-1523006721352735/">Soul Company</a>, with a somewhat different lineup than you see there) was simply awesome - high-energy jazz-funk (or funk-jazz?), very tight as they ran through covers of Herbie Hancock, Stevie Wonder, CCR/Ike &amp; Tina, and many more. They closed with a medley of Kiss and Purple Rain, with a guest singer whose falsetto would have made Prince (R.I.P.) himself jealous. The late night pretty much wiped out my Thursday, but it was well worth it.</p>
+
+<p>Saturday night I closed out the week with an actual plan - local legend <a href="http://www.johnboutte.com/">John Boutté</a>, (yes, I only knew him from Treme) was at <a href="http://www.dbaneworleans.com/">d.b.a.</a>, so I made sure to get there good and early. This show was, unfortunately, a mixed bag - people gabbing loudly in the back of the room made it difficult to enjoy the performance, especially on the quieter tunes.</p>
+
+<p>&lt;rant&gt;Who are these idiots who pay a cover for a show and then pay absolutely no attention to the artist!? WHY ARE YOU EVEN HERE!!!?&lt;/rant&gt;</p>
+
+<p>Sigh... Anyway, Boutté and his band (3+ piece horn section, guitar, and bass) did a fine job despite the distractions. Highlights were gentle takes on Time After Time and Hallelujah, with the emotional center being a combination of a nearly-a-cappella You've Got to Be Carefully Taught followed by a funky Southern Man.</p>
+
+<p>And so, as my train departed Sunday, I left satisfied - a great week in and out of the convention center, can't wait until DrupalCon comes back here (hint, hint...)!</p></div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--planet-drupal">
+        <span class="field__item-wrapper"><a href="../../tags/planet-drupal.html" property="schema:about" hreflang="en">Planet Drupal</a></span>
+      </div><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/31","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../../sites/default/files/js/js_IXXM0JyuKXLkx6vQcq8R_JR95o07Mkzej4e-E9tCYsg.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/drupalcon-nola-migration-sprint-summary by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:22:41 GMT -->
+</html>

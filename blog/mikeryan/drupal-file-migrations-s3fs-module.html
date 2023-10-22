@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/drupal-file-migrations-s3fs-module by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:20:59 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="Drupal file migrations: The s3fs module" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="drupal-file-migrations-s3fs-module.html" />
+<meta name="twitter:description" content="Drupal file migration and the S3FS module" />
+<meta name="twitter:title" content="Drupal file migrations: The s3fs module" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="A recent project gave me the opportunity to familiarize myself with the Drupal 8 version of the S3 File System (s3fs) module (having used the D7 version briefly in the distant past). This module provides an s3:// stream wrapper for files stored in an S3 bucket, allowing them to be used as seamlessly as locally stored public and private files. First we present the migrations and some of the plugins implemented to support import of files stored on S3 - below we will go into some of the challenges we faced." />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Migration, Drupal, Planet Drupal, PHP" />
+<meta name="twitter:url" content="drupal-file-migrations-s3fs-module.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="drupal-file-migrations-s3fs-module.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>Drupal file migrations: The s3fs module</title>
+    <link rel="stylesheet" href="../../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-mikeryan-drupal-file-migrations-s3fs-module page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="149" role="article" about="/blog/mikeryan/drupal-file-migrations-s3fs-module" typeof="schema:Article" class="node node--id-149 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">Drupal file migrations: The s3fs module</span>
+</h1>  <span property="schema:name" content="Drupal file migrations: The s3fs module" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:0" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2019-01-09T19:56:19+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Wednesday, January 9, 2019 - 01:56pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2019-01-09T19:56:19+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>A recent project gave me the opportunity to familiarize myself with the Drupal 8 version of the <a href="https://www.drupal.org/project/s3fs">S3 File System (s3fs) module</a> (having used the D7 version briefly in the distant past). This module provides an <code>s3://</code> stream wrapper for files stored in an S3 bucket, allowing them to be used as seamlessly as locally stored public and private files. First we present the migrations and some of the plugins implemented to support import of files stored on S3 - below we will go into some of the challenges we faced.</p>
+
+<p>Our client was already storing video files in an S3 bucket, and it was decided that for the Drupal site we would also store image files there. The client handled bulk uploading of images to an "<code>image</code>" folder within the bucket, using the same (relative) paths as those stored for the images in the legacy database. Thus, for migration we did not need to physically copy files around (the bane of many a media migration!) - we "merely" needed to create the appropriate entities in Drupal pointing at the S3 location of the files.</p>
+
+<p>The following examples are modified from the committed code - to obfuscate the client/project, and to simplify so we focus on the subject at hand.</p>
+
+<h2>Image migrations</h2>
+
+<h3>Gallery images</h3>
+
+<p>In the legacy database all gallery images were stored in a table named <code>asset_metadata</code>, which is structured very much like Drupal's <code>file_managed</code> table, with the file paths in an <code>asset_path</code> column. The file migration looked like this:</p>
+
+<pre>
+id: acme_image
+source:
+  plugin: acme
+process:
+  filename:
+    plugin: callback
+    callable: basename
+    source: asset_path
+  uri:
+    # Construct the S3 URI - see implementation below.
+    plugin: acme_s3_uri
+    source: asset_path
+  # Source data created/last_modified fields are YYYY-MM-DD HH:MM:SS - convert
+  # them to the classic UNIX timestamps Drupal loves. Oh, and they're optional,
+  # so when empty leave them empty and let Drupal set them to the current time.
+  created:
+    -
+      plugin: skip_on_empty
+      source: created
+      method: process
+    -
+      plugin: callback
+      callable: strtotime
+  changed:
+    -
+      plugin: skip_on_empty
+      source: last_modified
+      method: process
+    -
+      plugin: callback
+      callable: strtotime
+destination:
+  plugin: entity:file
+</pre>
+
+<p>Because we also needed to construct the S3 uris in places besides the <code>acme_s3_uri</code> process plugin, we implemented the construction in a trait which cleans up some inconsistencies and prepends the image location:</p>
+
+<pre>
+trait AcmeMakeS3Uri {
+  /**
+   * Turn a legacy image path into an S3 URI.
+   *
+   * @param string $value
+   *
+   * @return string
+   */
+  protected function makeS3Uri($value) {
+     // Some have leading tabs.
+     $value = trim($value);
+     // Path fields are inconsistent about leading slashes.
+     $value = ltrim($value, '/');
+     // Sometimes they contain doubled-up slashes.
+     $value = str_replace('//', '/', $value);
+     return 's3://image/' . $value;
+  }
+}
+</pre>
+
+<p>So, the process plugin in the image migration above uses the trait to construct the URI, and verifies that the file is actually in S3 - if not, we skip it. See the Challenges and Contributions section below for more on the <code>s3fs_file</code> table.</p>
+
+<pre>
+/**
+ * Turn a legacy image path into an S3 URI.
+ *
+ * @MigrateProcessPlugin(
+ *   id = "acme_s3_uri"
+ * )
+ */
+class AcmeS3Uri extends ProcessPluginBase {
+  use AcmeMakeS3Uri;
+ 
+  /**
+   * {@inheritdoc}
+   */
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+    $uri = $this-&gt;makeS3Uri($value);
+  // For now, skip any images not cached by s3fs.
+  $s3_uri = \Drupal::database()-&gt;select('s3fs_file', 's3')
+    -&gt;fields('s3', ['uri'])
+    -&gt;condition('uri', $uri)
+    -&gt;execute()
+    -&gt;fetchField();
+    if (!$s3_uri) {
+      throw new MigrateSkipRowException("$uri missing from s3fs_file table");
+    }
+    return $uri;
+  }
+}
+</pre>
+
+<p>The above creates the file entities - next, we need to create the media entities that reference the files above via entity reference fields (and add other fields). These media entities are then referenced from content entities.</p>
+
+<pre>
+id: acme_image_media
+source:
+  plugin: acme
+process:
+  # For the media "name" property - displayed at /admin/content/media - our
+  # first choice is the image caption, followed by the "event_name" field in
+  # our source table. If necessary, we fall back to the original image path.
+  name:
+    -
+      # Produces an array containing only the non-empty values.
+      plugin: callback
+      callable: array_filter
+      source:
+        - caption
+        - event_name
+        - asset_path
+    -
+      # From the array, pass on the first value as a scalar.
+      plugin: callback
+      callable: current
+    -
+      # Some captions are longer than the name property length.
+      plugin: substr
+      length: 255
+  # Entity reference to the image - convert the source ID to Drupal's file ID.
+  field_media_image/target_id:
+    plugin: migration_lookup
+    migration: acme_image
+    source: id
+  # Use the name we computed above as the alt text.
+  field_media_image/alt: '@name'
+  # We need to explicitly set the image dimensions in the field's width/height
+  # subfields (more on this below under Challenges and Contributions). Note that in
+  # the process pipeline you can effectively create temporary fields which can be
+  # used later in the pipeline - just be sure they won't conflict with
+  # anything that might be used within the Drupal entity.
+  _uri:
+    plugin: acme_s3_uri
+    source: asset_path
+  _image_dimensions:
+    plugin: acme_image_dimensions
+    source: '@_uri'
+  field_media_image/width: '@_image_dimensions/width'
+  field_media_image/height: '@_image_dimensions/height'
+  caption: caption
+destination:
+  plugin: entity:media
+  default_bundle: image
+migration_dependencies:
+  required:
+    - acme_image
+</pre>
+
+<h3>Other images</h3>
+
+<p>The gallery images have their own metadata table - but, there are many other images which are simply stored as paths in content tables (in some cases, there are multiple such path fields in a single table). One might be tempted to deal with these in process plugins in the content migrations - creating the file and media entities on the fly - but that would be, well, ugly. Instead we implemented a drush command, run before our migration tasks, to canonicalize and gather those paths into a single table, which then feeds the <code>acme_image_consolidated</code> and <code>acme_image_media_consolidated</code> migrations (which end up being simpler versions of <code>acme_image</code> and <code>acme_image_media</code>, since "<code>path</code>" is the only available source field).</p>
+
+<pre>
+function drush_acme_migrate_gather_images() {
+  // Key is legacy table name, value is list of image path columns to migrate.
+  $table_fields = [
+    'person' =&gt; [
+      'profile_picture_path',
+      'left_standing_path',
+      'right_standing_path',
+    ],
+    'event' =&gt; [
+      'feature_image',
+      'secondary_feature_image',
+    ],
+    'subevent' =&gt; [
+      'generated_medium_thumbnail',
+    ],
+    'news_article' =&gt; [
+      'thumbnail',
+    ]
+  ];
+  $legacy_db = Database::getConnection('default', 'migrate');
+  // Create the table if necessary.
+  if (!$legacy_db-&gt;schema()-&gt;tableExists('consolidated_image_paths')) {
+    $table = [
+      'fields' =&gt; [
+         'path' =&gt; [
+          'type' =&gt; 'varchar',
+          'length' =&gt; 191,    // Longest known path is 170.
+          'not null' =&gt; TRUE,
+         ]
+      ],
+      'primary key' =&gt; ['path'],
+    ];
+    $legacy_db-&gt;schema()-&gt;createTable('consolidated_image_paths', $table);
+    drush_print('Created consolidated_image_paths table');
+  }
+  $max = 0;
+  foreach ($table_fields as $table =&gt; $field_list) {
+    drush_print("Gathering paths from $table");
+    $count = 0;
+    $query = $legacy_db-&gt;select($table, 't')
+      -&gt;fields('t', $field_list);
+    foreach ($query-&gt;execute() as $row) {
+      // Iterate the image path columns returned in the row.
+      foreach ($row as $path) {
+        if ($path) {
+          $len = strlen($path);
+          if ($len &gt; $max) $max = $len;
+          $path = str_replace('//', '/', $path);
+          $count++;
+          $legacy_db-&gt;merge('consolidated_image_paths')
+            -&gt;key('path', $path)
+            -&gt;execute();
+        }
+      }
+    }
+    // Note we will end up with far fewer rows in the table due to duplication.
+    drush_print("$count paths added from $table");
+  }
+  drush_print("Maximum path length is $max");
+}
+</pre>
+
+<h2>Video migrations</h2>
+
+<p>The legacy database contained a <code>media</code> table referencing videos tagged with three different types - internal, external, and embedded. "Internal" videos were those stored in S3 with a relative path in the <code>internal_url</code> column; "external" videos (most on client-specific domains, but with some Youtube domains as well) had a full URL in the <code>external_url</code> column; and "embedded" videos were with a very few exceptions Youtube videos with the Youtube ID in the <code>embedded_id</code> column. It was decided that we would migrate the internal and Youtube videos, ignoring the rest of the external/embedded videos. Here we focus on the internal (S3-based) videos.</p>
+
+<pre>
+id: acme_video
+source:
+  plugin: acme_internal_video
+  constants:
+    s3_prefix: s3://
+process:
+  _trimmed_url:
+    # Since the callback process plugin only permits a single source value to be
+    # passed to the specified PHP function, we have a custom plugin which enables us
+    # to pass a character list to be trimmed.
+    plugin: acme_trim
+    source: internal_url
+    trim_type: left
+    charlist: /
+  uri:
+    -
+      plugin: concat
+      source:
+        - constants/s3_prefix
+        - '@_trimmed_url'
+    -
+      # Make sure the referenced file actually exists in S3 (does a simple query on
+      # the s3fs_file table, throwing MigrateSkipRowException if missing).
+      plugin: acme_skip_missing_file
+  fid:
+    # This operates much like migrate_plus's entity_lookup, to return an existing
+    # entity ID based on arbitrary properties. The purpose here is if the file URI
+    # is already in file_managed, point the migrate map table to the existing file
+    # entity - otherwise, a new file entity will be created.
+    plugin: acme_load_by_properties
+    entity_type: file
+    properties: uri
+    source: '@uri'
+    default_value: NULL
+  filename:
+    plugin: callback
+    callable: basename
+    source: '@uri'
+destination:
+  plugin: entity:file
+</pre>
+
+<p>The media entity migration is pretty straightforward:</p>
+
+<pre>
+id: acme_video_media
+source:
+  plugin: acme_internal_video
+  constants:
+    true: 1
+process:
+  status: published
+  name: title
+  caption: caption
+  # The source column media_date is YYYY-MM-DD HH:DD:SS format - the Drupal field is
+  # configured as date-only, so the source value must be truncated to YYYY-MM-DD.
+  date:
+    -
+      plugin: skip_on_empty
+      source: media_date
+      method: process
+    -
+      plugin: substr
+      length: 10
+  field_media_video/0/target_id:
+    -
+      plugin: migration_lookup
+      migration: acme_video
+      source: id
+      no_stub: true
+    -
+      # If we haven't migrated a file entity, skip this media entity.
+      plugin: skip_on_empty
+      method: row
+  field_media_video/0/display: constants/true
+  field_media_video/0/description: caption
+destination:
+  plugin: entity:media
+  default_bundle: video
+migration_dependencies:
+  required:
+    - acme_video
+</pre>
+
+<p>Did I mention that we needed to create a node for each video, linking to related content of other types? Here we go:</p>
+
+<pre>
+id: acme_video_node
+source:
+  plugin: acme_internal_video
+  constants:
+    text_format: formatted
+    url_prefix: http://www.acme.com/media/
+    s3_prefix: s3://image/
+process:
+  title: title
+  status: published
+  teaser/value: caption
+  teaser/format: constants/text_format
+  length:
+    # Converts HH:MM:SS to integer seconds. Left as an exercise to the reader.
+    plugin: acme_video_length
+    source: duration
+  video:
+    plugin: migration_lookup
+    migration: acme_video_media
+    source: id
+    no_stub: true
+  # Field to preserve the original URL.
+  old_url:
+    plugin: concat
+    source:
+      - constants/url_prefix
+      - url_name
+  _trimmed_thumbnail:
+    plugin: acme_trim
+    trim_type: left
+    charlist: '/'
+    source: thumbnail
+  teaser_image:
+    -
+      plugin: skip_on_empty
+      source: '@_trimmed_thumbnail'
+      method: process
+    -
+      # Form the URI as stored in file_managed.
+      plugin: concat
+      source:
+        - constants/s3_prefix
+        - '@_trimmed_thumbnail'
+    -
+      # Look up the fid.
+      plugin: acme_load_by_properties
+      entity_type: file
+      properties: uri
+    -
+      # Find the media entity referencing that fid.
+      plugin: acme_load_by_properties
+      entity_type: media
+      properties: field_media_image
+  # Note that for each of these entity reference fields, we skipped some content,
+  # so need to make sure stubs aren't created for the missing content. Also note
+  # that the source fields here are populated in a PREPARE_ROW event.
+  related_people:
+    plugin: migration_lookup
+    migration: acme_people
+    source: related_people
+    no_stub: true
+  related_events:
+    plugin: migration_lookup
+    migration: acme_event
+    source: related_events
+    no_stub: true
+  tag_keyword:
+    plugin: migration_lookup
+    migration: acme_keyword
+    source: keyword_ids
+    no_stub: true
+destination:
+  plugin: entity:node
+  default_bundle: video
+migration_dependencies:
+  required:
+    - acme_image_media
+    - acme_video_media
+    - acme_people
+    - acme_event
+    - acme_keyword
+</pre>
+
+<h2>Auditing missing files</h2>
+
+<p>A useful thing to know (particularly with the client incrementally populating the S3 bucket with image files) is what files are referenced in the legacy tables but not actually in the bucket. Below is a drush command we threw together to answer that question - it will query each legacy image or video path field we're using, construct the <code>s3://</code> version of the path, and look it up in the <code>s3fs_file</code> table to see if it exists in S3.</p>
+
+<pre>
+/**
+ * Find files missing from S3.
+ */
+function drush_acme_migrate_missing_files() {
+  $legacy_db = Database::getConnection('default', 'migrate');
+  $drupal_db = Database::getConnection();
+  $table_fields = [
+    [
+      'table_name' =&gt; 'asset_metadata',
+      'url_column' =&gt; 'asset_path',
+      'date_column' =&gt; 'created',
+    ],
+    [
+      'table_name' =&gt; 'media',
+      'url_column' =&gt; 'internal_url',
+      'date_column' =&gt; 'media_date',
+    ],
+    [
+      'table_name' =&gt; 'person',
+      'url_column' =&gt; 'profile_picture_path',
+      'date_column' =&gt; 'created',
+    ],
+    // … on to 9 more columns among three more tables...
+  ];
+ 
+  $header = 'uri,legacy_table,legacy_column,date';
+  drush_print($header);
+  foreach ($table_fields as $table_info) {
+    $missing_count = 0;
+    $total_count = 0;
+    $table_name = $table_info['table_name'];
+    $url_column = $table_info['url_column'];
+    $date_column = $table_info['date_column'];
+    $query = $legacy_db-&gt;select($table_name, 't')
+      -&gt;fields('t', [$url_column])
+      -&gt;isNotNull($url_column)
+      -&gt;condition($url_column, '', '&lt;&gt;');
+    if ($table_name == 'media') {
+      $query-&gt;condition('type', 'INTERNALVIDEO');
+    }
+    if ($table_name == 'people') {
+      // This table functions much like Drupal's node table.
+      $query-&gt;innerJoin('publishable_entity', 'pe', 't.id=pe.id');
+      $query-&gt;fields('pe', [$date_column]);
+    }
+    else {
+      $query-&gt;fields('t', [$date_column]);
+    }
+    $query-&gt;distinct();
+    foreach ($query-&gt;execute() as $row) {
+      $path = trim($row-&gt;$url_column);
+      if ($path) {
+        $total_count++;
+        // Paths are inconsistent about leading slashes.
+        $path = ltrim($path, '/');
+        // Sometimes they have doubled-up slashes.
+        $path = str_replace('//', '/', $path);
+        if ($table_name == 'media') {
+          $s3_path = 's3://' . $path;
+        }
+        else {
+          $s3_path = 's3://image/' . $path;
+        }
+        $s3 = $drupal_db-&gt;select('s3fs_file', 's3')
+          -&gt;fields('s3', ['uri'])
+          -&gt;condition('uri', $s3_path)
+          -&gt;execute()
+            -&gt;fetchField();
+        if (!$s3) {
+          $output_row = "$s3_path,$table_name,$url_column,{$row-&gt;$date_column}";
+          drush_print($output_row);
+          $missing_count++;
+        }
+      }
+    }
+    drush_log("$missing_count of $total_count files missing in $table_name column $url_column", 'ok');
+  }
+}
+</pre>
+
+<h2>Challenges and contributions</h2>
+
+<p>The s3fs module's primary use case is where the configured S3 bucket is used only by the Drupal site, and populated directly by file uploads through Drupal - our project was an outlier in terms of having all files in the S3 bucket first, and in sheer volume. A critical piece of the implementation is the <code>s3fs_file</code> table, which caches metadata for all files in the bucket so Drupal rarely needs to access the bucket itself other than on file upload (since file URIs are converted to direct S3 URLs when rendering, web clients go directly to S3 to fetch files, not through Drupal). In our case, the client had an existing S3 bucket which contained all the video files (and more) used by their legacy site, and to which they bulk uploaded image files directly so we did not need to do this during migration. The module does have an <code>s3fs-refresh-cache</code> command to populate the <code>s3fs_file</code> table from the current bucket contents, but we did have to deal with some issues around the cache table.</p>
+
+<h3>Restriction on URI lengths</h3>
+
+<p>As soon as we started trying to use <code>drush s3fs-refresh-cache</code>, we ran into the existing issue <a href="https://www.drupal.org/project/s3fs/issues/2823409"><u>Getting Exception 'PDOException'SQLSTATE[22001] When Running drush s3fs-refresh-cache</u></a> - URIs in the bucket longer than the 255-character length of <code>s3fs_file</code>'s <code>uri</code> column. The exception aborted the refresh entirely, and because the refresh operation generates a temporary version of the table from scratch, then swaps it for the "live" table, the exception prevented <strong>any</strong> file metadata from being refreshed if there was one overflowing URI. I submitted a <a href="https://www.drupal.org/project/s3fs/issues/2823409#comment-12666192"><u>patch implementing the simplest workaround</u></a> - just generating a message and ignoring overly-long URIs. Discussion continues around an alternate approach, but we used my patch in our project.</p>
+
+<h3>Lost primary key</h3>
+
+<p>So, once we got the cache refresh to work, we found serious performance problems. We had stumbled on an existing issue, <a href="https://www.drupal.org/project/s3fs/issues/2972251"><u>"s3fs_file" table has no primary key</u></a>. I tracked down the cause - because the uri column is 255 characters long, with InnoDB it cannot be indexed when using a multibyte collation such as utf8_general_ci. And Drupal core has a bug, <a href="https://www.drupal.org/project/drupal/issues/2193059"><u>DatabaseSchema_mysql::createTableSql() can't set table collation</u></a>, preventing the setting of the utf8_bin collation directly in the table schema. The s3fs module works around that bug when creating the s3fs_file table at install time by altering the collation after table creation - but the cache refresh created a new cache table using only the schema definition and did not pick up the altered collation. Thus, only people like us who used cache refresh would lose the index, and those with more modest bucket sizes might never even notice. My patch to apply the collation (later refined by <a href="https://www.drupal.org/u/jansete"><u>jansete</u></a>) was committed to the s3fs module.</p>
+
+<h3>Scalability of cache refresh</h3>
+
+<p>As the client loaded more and more images into the bucket, <code>drush s3fs-refresh-cache</code> started running out of memory. Our bucket was quite large (1.7 million files at last count), and the refresh function gathered <strong>all</strong> file metadata in memory before writing it to the database. I <a href="https://www.drupal.org/project/s3fs/issues/2986407"><u>submitted a patch</u></a> to chunk the metadata to the db within the loop, which has been committed to the module.</p>
+
+<h3>Image dimensions</h3>
+
+<p>Once there were lots of images in S3 to migrate, the image media migrations were running excruciatingly slowly. I quickly guessed and confirmed that they were accessing the files directly from S3, and then (less quickly) stepped through the debugger to find the reason - the image fields needed the image width and height, and since this data wasn't available from the source database to be directly mapped in the migration, it went out and fetched the S3 image to get the dimensions itself. This was, of course, necessary - but given that migrations were being repeatedly run for testing on various environments, there was no reason to do it repeatedly. Thus, we introduced an image dimension cache table to capture the width and height the first time we imported an image, and any subsequent imports of that image only needed to get the cached dimensions.</p>
+
+<p>In the <code>acme_image_media</code> migration above, we use this process plugin which takes the image URI and returns an array with width and height keys populated with the cached values if present, and NULL if the dimensions are not yet cached:</p>
+
+<pre>
+/**
+ * Fetch cached dimensions for an image path (purportedly) in S3.
+ *
+ * @MigrateProcessPlugin(
+ *   id = "acme_image_dimensions"
+ * )
+ */
+class AcmeImageDimensions extends ProcessPluginBase {
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+    $dimensions = Database::getConnection('default', 'migrate')
+      -&gt;select('s3fs_image_cache', 's3')
+      -&gt;fields('s3', ['width', 'height'])
+      -&gt;condition('uri', $value)
+      -&gt;execute()
+      -&gt;fetchAssoc();
+    if (empty($dimensions)) {
+      return ['width' =&gt; NULL, 'height' =&gt; NULL];
+    }
+    return $dimensions;
+  }
+}
+</pre>
+
+<p>If the dimensions were empty, when the media entity was saved Drupal core fetched the image from S3 and the width and height were saved to the image field table. We then caught the migration <code>POST_ROW_SAVE</code> event to cache the dimensions:</p>
+
+<pre>
+class AcmeMigrateSubscriber implements EventSubscriberInterface {
+  public static function getSubscribedEvents() {
+    $events[MigrateEvents::POST_ROW_SAVE] = 'import';
+    return $events;
+  }
+ 
+  public function import(MigratePostRowSaveEvent $event) {
+    $row = $event-&gt;getRow();
+    // For image media, if width/height have been freshly obtained, cache them.
+    if (strpos($event-&gt;getMigration()-&gt;id(), 'image_media') &gt; 0) {
+      // Note that this "temporary variable" was populated in the migration as a
+      // width/height array, using the acme_image_dimensions process plugin.
+      $original_dimensions = $row-&gt;getDestinationProperty('_image_dimensions');
+      // If the dimensions are populated, everything's find and all of this is skipped.
+      if (empty($original_dimensions['width'])) {
+        // Find the media entity ID.
+        $destination_id_values = $event-&gt;getDestinationIdValues();
+        if (is_array($destination_id_values)) {
+          $destination_id = reset($destination_id_values);
+          // For performance, cheat and look directly at the table instead of doing
+          // an entity query.
+          $dimensions = Database::getConnection()
+            -&gt;select('media__field_media_image', 'msi')
+            -&gt;fields('msi', ['field_media_image_width', 'field_media_image_height'])
+            -&gt;condition('entity_id', $destination_id)
+            -&gt;execute()
+            -&gt;fetchAssoc();
+          // If we have dimensions, cache them.
+          if ($dimensions &amp;&amp; !empty($dimensions['field_media_image_width'])) {
+            $uri = $row-&gt;getDestinationProperty('_uri');
+            Database::getConnection('default', 'migrate')
+              -&gt;merge('s3fs_image_cache')
+              -&gt;key('uri', $uri)
+              -&gt;fields([
+                'width' =&gt; $dimensions['field_media_image_width'],
+                'height' =&gt; $dimensions['field_media_image_height'],
+              ])
+              -&gt;execute();
+          }
+        }
+      }
+    }
+  }
+}
+</pre>
+
+<h3>Safely testing with the bucket</h3>
+
+<p>Another problem with the size of our bucket was that it was too large to economically make and maintain a separate copy to use for development and testing. So, we needed to use the single bucket - but of course, the videos in it were being used in the live site, so it was critical not to mess with them. We decided to use the live bucket with credentials allowing us to read and add files to the bucket, but not delete them - this would permit us to test uploading files through the admin interface, and most importantly from a migration standpoint access the files, but not do any damage. Worst-case scenario would be the inability to clean out test files, but writing a cleanup tool after the fact to clear any extra files out would be simple enough. Between this, and the fact that images were in a separate folder in the bucket (and we weren't doing any uploads of videos, simply migrating references to them), the risk of using the live bucket was felt to be acceptable. At first, though, the client was having trouble finding credentials that worked as we needed. As a short-term workaround, I implemented <a href="https://www.drupal.org/project/s3fs/issues/2984268">a configuration option for the s3fs module to disable deletion in the stream wrapper</a>.</p>
+
+<p>Investigating the permissions issues with my own test bucket, trying to add the bare minimum permissions needed for reading and writing objects, I arrived at a point where migration worked as desired, and deletion was prevented - but uploading files to the bucket through Drupal silently failed. There was an <a href="https://www.drupal.org/project/s3fs/issues/2987225"><u>existing issue</u></a> in the s3fs queue but it had not been diagnosed. I finally figured out the cause (Slack comment - "God, the layers of middleware I had to step through to find the precise point of death…") - by default, objects are private when uploaded to S3, and you need to explicitly set <code>public-read</code> in the ACL. Which the s3fs module does - but, to do this requires the PutObjectAcl policy, which I had not set (I've suggested the s3fs validator could <a href="https://www.drupal.org/project/s3fs/issues/2987225#comment-12716111"><u>detect and warn of this situation</u></a>). Adding that policy enabled everything to work; once the client applied the necessary policies we were in business…</p>
+
+<p>… for a while. The use of a single bucket became a problem once front-end developers began actively testing with image styles, and we were close enough to launch to enable deletion so image styles could be flushed when changed. The derivatives for S3 images are themselves stored in S3 - and with people generating derivatives in different environments, the <code>s3fs_file</code> table in any given environment (in particular the "live" environment on Pantheon, where the eventual production site was taking shape) became out of sync with the actual contents of S3. In particular, if styles were generated in the live environment then flushed in another environment, the live cache table would still contain entries for the derived styles (thus the site would generate URLs to them) even though they didn't actually exist in S3 - thus, no derived images would render. To address this, we had each environment set the s3fs <code>root_folder</code> option so they would each have their own sandbox - developers could then work on image styles at least with files they uploaded locally for testing, although their environments would not then see the "real" files in the bucket.</p>
+
+<p>We discussed more permanent alternatives and <a href="https://www.drupal.org/u/seanb"><u>Sean Blommaert</u></a> put forth <a href="https://www.drupal.org/project/s3fs/issues/3005501"><u>some suggestions in the s3fs issue queue</u></a> - ultimately (after site launch) we found there is <a href="https://www.drupal.org/project/s3fs_file_proxy_to_s3"><u>an existing (if minimally maintained) module extending stage_file_proxy</u></a>. I will most certainly work with this module on any future projects using s3fs.</p>
+
+<h2>The tl;dr - lessons learned</h2>
+
+<p>To summarize the things to keep in mind if planning on using s3fs in your Drupal project:</p>
+
+<ol><li>Install the <a href="https://www.drupal.org/project/s3fs_file_proxy_to_s3"><u>s3fs_file_proxy_to_s3 module</u></a> first thing, and make sure all environments have it enabled and configured.</li>
+	<li>Make sure the credentials you use for your S3 bucket have the PutObjectAcl permission - this is non-obvious but essential if you are to publicly serve files from S3.</li>
+	<li>Watch your URI lengths - if the <code>s3://…</code> form of the URI is &gt; 255 characters, it won't work (Drupal's file_managed table has a 255-character limit). When using image styles, the effective limit is significantly lower due to folders added to the path.</li>
+	<li>With image fields which reference images stored in S3, if you don't have width and height to set on the field at entity creation time, you'll want to implement a caching solution similar to the above.</li>
+</ol><h2>Acknowledgements</h2>
+
+<p>Apart from the image style issues, most of the direct development detailed above was mine, but as on any project thoughts were bounced off the team, project managers handled communication with the client, testers provided feedback, etc. Thanks to the whole team, particularly <a href="https://www.drupal.org/u/seanb"><u>Sean Blommaert</u></a> (image styles, post feedback), <a href="https://www.drupal.org/u/kgthompson"><u>Kevin Thompson</u></a> (client communications), and <a href="https://tag1consulting.com/blog/access-control"><u>Karoly Negyesi</u></a> (post feedback).</p>
+</div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--migration">
+        <span class="field__item-wrapper"><a href="../../tags/migration.html" property="schema:about" hreflang="en">Migration</a></span>
+      </div><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div><div class="field__item field__item--planet-drupal">
+        <span class="field__item-wrapper"><a href="../../tags/planet-drupal.html" property="schema:about" hreflang="en">Planet Drupal</a></span>
+      </div><div class="field__item field__item--php">
+        <span class="field__item-wrapper"><a href="../../tags/php.html" property="schema:about" hreflang="en">PHP</a></span>
+      </div></div>
+</div>
+<div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"><h3 class="field__label">Use the Twitter thread below to comment on this post:</h3><div class="field__items"><div class="field__item"><div data-oembed-url="https://twitter.com/VirtPerformance/status/1083090522158387200">
+<div style="max-width:320px;margin:auto;"><!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. -->
+<blockquote align="center" class="twitter-tweet" data-dnt="true">
+<p dir="ltr" lang="und" xml:lang="und"><a href="https://t.co/erY3Gvhd97">https://t.co/erY3Gvhd97</a></p>
+— Virtuoso Performance (@VirtPerformance) <a href="https://twitter.com/VirtPerformance/status/1083090522158387200?ref_src=twsrc%5Etfw">January 9, 2019</a></blockquote>
+<script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script></div>
+</div>
+
+<p> </p>
+</div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/149","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../../sites/default/files/js/js_IXXM0JyuKXLkx6vQcq8R_JR95o07Mkzej4e-E9tCYsg.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/drupal-file-migrations-s3fs-module by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:21:00 GMT -->
+</html>

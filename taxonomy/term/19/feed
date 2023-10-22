@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:schema="http://schema.org/" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" version="2.0" xml:base="https://virtuoso-performance.com/tags/migrate">
+  <channel>
+    <title>Migrate</title>
+    <link>https://virtuoso-performance.com/tags/migrate</link>
+    <description/>
+    <language>en</language>
+    
+    <item>
+  <title>Drupal 8 migration - all the modules</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/drupal-8-migration-all-modules</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Drupal 8 migration - all the modules&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2015-11-20T22:53:42+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Friday, November 20, 2015 - 04:53pm&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Now that &lt;a href="https://www.drupal.org/8"&gt;Drupal 8.0.0&lt;/a&gt; is released, let's take a look at all the components of the Drupal migration ecosystem and where they stand now. To provide context to those familiar with migration under Drupal 7, I will show where the pieces came from. First, general migration support:&lt;/p&gt;
+
+&lt;table border="1"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Feature&lt;/strong&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;strong&gt;D7&lt;/strong&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;strong&gt;D8&lt;/strong&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;strong&gt;D8 status&lt;/strong&gt;&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Basic migration framework&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate"&gt;migrate&lt;/a&gt; (contrib)&lt;/td&gt;
+			&lt;td&gt;migrate (core), plus destination plugins in core modules&lt;/td&gt;
+			&lt;td&gt;Experimental&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;General-purpose drush commands&lt;/td&gt;
+			&lt;td&gt;migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate_tools"&gt;migrate_tools&lt;/a&gt; (contrib)&lt;/td&gt;
+			&lt;td&gt;The most common commands (ms, mi, mr, etc.) are working&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;General-purpose UI&lt;/td&gt;
+			&lt;td&gt;migrate_ui submodule of migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;migrate_tools (contrib)&lt;/td&gt;
+			&lt;td&gt;Just basic display of migrations and their status so far&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;CSV source plugin&lt;/td&gt;
+			&lt;td&gt;migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate_source_csv"&gt;migrate_source_csv&lt;/a&gt; (contrib)&lt;/td&gt;
+			&lt;td&gt;Working&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;XML source plugins&lt;/td&gt;
+			&lt;td&gt;migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate_source_xml"&gt;migrate_source_xml&lt;/a&gt; (contrib)&lt;/td&gt;
+			&lt;td&gt;A basic initial implementation exists, still needs work&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;JSON source plugin&lt;/td&gt;
+			&lt;td&gt;migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate_source_json"&gt;migrate_source_json&lt;/a&gt; (contrib)&lt;/td&gt;
+			&lt;td&gt;A basic initial implementation exists, still needs work&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;List source plugin&lt;/td&gt;
+			&lt;td&gt;migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate_plus"&gt;migrate_plus&lt;/a&gt; (contrib)?&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/node/2608610"&gt;Currently assessing&lt;/a&gt; how to architect this in D8 - most likely will be helper classes or traits in migrate_plus&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Other source plugins&lt;/td&gt;
+			&lt;td&gt;migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;Contrib&lt;/td&gt;
+			&lt;td&gt;To be implemented as needed, by the people who need them&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Migration groups&lt;/td&gt;
+			&lt;td&gt;migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;migrate_plus (contrib)&lt;/td&gt;
+			&lt;td&gt;Hopefully we'll finally &lt;a href="https://www.drupal.org/node/2302307"&gt;get this into core&lt;/a&gt; for 8.1&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Basic programming examples&lt;/td&gt;
+			&lt;td&gt;migrate_example submodule of migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;migrate_example submodule of migrate_plus (contrib)&lt;/td&gt;
+			&lt;td&gt;Working but needs an &lt;a href="https://www.drupal.org/node/2609280"&gt;image migration example&lt;/a&gt;&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Advanced programming examples&lt;/td&gt;
+			&lt;td&gt;migrate_example submodule of migrate (contrib)&lt;/td&gt;
+			&lt;td&gt;migrate_example_advanced submodule of migrate_plus (contrib)&lt;/td&gt;
+			&lt;td&gt;Skeletal at the moment&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Migration support for contrib modules&lt;/td&gt;
+			&lt;td&gt;Ideally in the contrib modules themselves - some legacy handlers are still in &lt;a href="https://www.drupal.org/project/migrate_extras"&gt;migrate_extras&lt;/a&gt;&lt;/td&gt;
+			&lt;td&gt;Contrib&lt;/td&gt;
+			&lt;td&gt;Each contrib module is responsible for implementing its own destination plugins (for general migrations), plus migrations and source plugins for migrations/upgrades from another Drupal site&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Migration from manifest files (lists of migrations with configuration overrides)&lt;/td&gt;
+			&lt;td&gt;N/A&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate_manifest"&gt;migrate_manifest&lt;/a&gt; (contrib)&lt;/td&gt;
+			&lt;td&gt;Only supports template-based migrations from SQL sources&lt;/td&gt;
+		&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;And then, features specific to migrating from another Drupal site:&lt;/p&gt;
+
+&lt;table border="1"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Feature&lt;/strong&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;strong&gt;D7&lt;/strong&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;strong&gt;D8&lt;/strong&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;strong&gt;D8 status&lt;/strong&gt;&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Major Drupal version upgrade (drush command)&lt;/td&gt;
+			&lt;td&gt;pm-update (in Drush itself)&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate_upgrade"&gt;migrate_upgrade&lt;/a&gt; (contrib)&lt;/td&gt;
+			&lt;td&gt;Working - to be moved to Drush itself (hopefully by Drupal 8.1.0)&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Major Drupal version upgrade (UI)&lt;/td&gt;
+			&lt;td&gt;/update.php&lt;/td&gt;
+			&lt;td&gt;migrate_upgrade (contrib)&lt;/td&gt;
+			&lt;td&gt;Working - to be &lt;a href="https://www.drupal.org/node/2281691"&gt;moved to Drupal core&lt;/a&gt; (hopefully by Drupal 8.1.0)&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Framework for migration from Drupal 6 and 7.&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate_d2d"&gt;migrate_d2d&lt;/a&gt; (contrib)&lt;/td&gt;
+			&lt;td&gt;migrate_drupal (core), plus migrations and source/process plugins in core modules&lt;/td&gt;
+			&lt;td&gt;Experimental. The D6 support is essentially complete; D7 is &lt;a href="https://www.drupal.org/node/2456259"&gt;lacking support for some secondary core modules, file/image fields, etc.&lt;/a&gt;&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Framework for migration from Drupal 5.&lt;/td&gt;
+			&lt;td&gt;migrate_d2d (contrib)&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/project/migrate_drupal_d5"&gt;migrate_drupal_d5&lt;/a&gt; (contrib)&lt;/td&gt;
+			&lt;td&gt;Very basic support for key core data (taxonomy, users, nodes). Not updated in a few months and probably needs rerolling for 8.0.0.&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Framework for migration from Drupal 8&lt;/td&gt;
+			&lt;td&gt;N/A&lt;/td&gt;
+			&lt;td&gt;migrate_drupal_d8? (not yet created)&lt;/td&gt;
+			&lt;td&gt;&lt;a href="https://www.drupal.org/node/2607524"&gt;Planned&lt;/a&gt;. Most likely will be initially implemented in contrib, to be submitted to core in a later minor release.&lt;/td&gt;
+		&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Support for custom migrations from Drupal&lt;/td&gt;
+			&lt;td&gt;migrate_d2d (contrib)&lt;/td&gt;
+			&lt;td&gt;migrate_d2d (contrib)&lt;/td&gt;
+			&lt;td&gt;Not yet begun&lt;/td&gt;
+		&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;Notes on the statuses above:&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;The migration support in core is currently marked "Experimental". This means there are still some holes to fill (particularly for upgrading from Drupal 7), and still some leeway to make backwards-compatibility-breaking changes for Drupal 8.1.&lt;/li&gt;
+	&lt;li&gt;I say "Working" rather than "Supported" for a few things above because A. All of these components are dependent on the core framework which is still subject to change, and B. To this point none of this has had substantial real-world testing, so there are likely significant issues still to be addressed.&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;So, you may be asking yourself "what can I do today, and what modules do I need to do it?"&lt;/p&gt;
+
+&lt;h2&gt;I want to upgrade from Drupal 6 or 7 to Drupal 8&lt;/h2&gt;
+
+&lt;p&gt;You can &lt;a href="https://www.drupal.org/upgrade/migrate"&gt;do this today&lt;/a&gt; with &lt;a href="https://www.drupal.org/project/migrate_upgrade"&gt;migrate_upgrade&lt;/a&gt;. As stated above, the Drupal 6 migration path for core modules is pretty much complete. If you're looking at upgrading from Drupal 7, review the &lt;a href="https://www.drupal.org/node/2456259"&gt;meta issue for Drupal 7 migrations&lt;/a&gt; to see if any of the missing pieces are important to your site. See my previous blog posts for detailed run-throughs of performing the upgrade &lt;a href="https://virtuoso-performance.com/blog/mikeryan/upgrading-to-drupal-8-using-ui"&gt;through the UI&lt;/a&gt; or &lt;a href="http://mikeryan.name/blog/mikeryan/upgrading-to-drupal-8-using-drush"&gt;with drush&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;I want to implement an upgrade path for my contributed or custom module&lt;/h2&gt;
+
+&lt;p&gt;Unfortunately, &lt;a href="https://www.drupal.org/node/2610062"&gt;documentation is lacking&lt;/a&gt; at the moment to help module authors implement upgrade paths from previous Drupal versions - I hope to work with others on this (and also post to my blog) in the coming weeks. For today, the tl;dr is:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;Contributed modules are no different from core modules when it comes to the upgrade path (with one small caveat below), so&lt;/li&gt;
+	&lt;li&gt;Find the core module most similar to your module in terms of the kind of configuration and data it manages, and see how its upgrade path is implemented (specifically, look in its &lt;code&gt;migration_templates&lt;/code&gt; and &lt;code&gt;src/Plugin/migrate directories&lt;/code&gt;).&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;The one caveat is that for non-core modules, running the upgrade process through the UI will &lt;a href="https://www.drupal.org/node/2568523"&gt;incorrectly report that no migration path is found for your module&lt;/a&gt;. This is due to the fact that currently there is &lt;a href="https://www.drupal.org/node/2569805"&gt;no automated way to identify the source module for a migration&lt;/a&gt;, thus the UI is working from a hard-coded table of core migrations. This is a cosmetic issue only - your module's migration will still be run. I will also note that in terms of debugging your upgrade path, the &lt;code&gt;drush migrate-upgrade&lt;/code&gt; command has a very handy &lt;code&gt;--configure-only&lt;/code&gt; option, which runs the configuration portion of the upgrade (turning migration templates into migration configuration entities) without actually running the imports. When debugging a specific upgrade migration, I will use this option, then (with &lt;a href="https://www.drupal.org/project/migrate_tools"&gt;migrate_tools&lt;/a&gt; installed) import all the migrations previous to the one I'm testing. At this point I can do &lt;code&gt;drush sql-dump &gt;/tmp/backup.sql&lt;/code&gt;. It's much faster to test the migration, tweak it, and restore the backup for another try than it is to go all the way back to the beginning.&lt;/p&gt;
+
+&lt;h2&gt;I want to perform a custom migration from Drupal&lt;/h2&gt;
+
+&lt;p&gt;Ultimately, there should be tools like the migrate_d2d UI in Drupal 7 to enable you to customize what you're importing and how it's mapped into your Drupal 8 installation - but that's going to take some time. At this point, the simplest approach is to run the &lt;code&gt;drush migrate-upgrade --configure-only&lt;/code&gt; command to generate the migration configuration for a straight upgrade, export that configuration to &lt;code&gt;config/install&lt;/code&gt; in a custom module, and edit the migration .yml files to suit your needs.&lt;/p&gt;
+
+&lt;h2&gt;I want to perform a custom migration from not-Drupal&lt;/h2&gt;
+
+&lt;p&gt;You'll need the &lt;a href="https://www.drupal.org/project/migrate_tools"&gt;migrate_tools&lt;/a&gt; (drush commands and basic UI for running and managing migrations) and &lt;a href="https://www.drupal.org/project/migrate_plus"&gt;migrate_plus&lt;/a&gt; (provides group functionality migrate_tools needs, plus examples) modules. In migrate_plus, open up &lt;code&gt;migrate_example/README.txt&lt;/code&gt; and it will guide you through the basics of implementing SQL-based migrations. It's simpler than you think! If you're importing from source data not in an SQL database, there are &lt;a href="https://www.drupal.org/project/migrate_source_csv"&gt;CSV&lt;/a&gt;, &lt;a href="https://www.drupal.org/project/migrate_source_xml"&gt;XML&lt;/a&gt;, and &lt;a href="https://www.drupal.org/project/migrate_source_json"&gt;JSON&lt;/a&gt; source plugins available. It's still well worth going through migrate_example to understand the general structure of migrations - it's just that the configuration (and potential extension) of the source plugin will differ.&lt;/p&gt;
+
+&lt;h2&gt;I want to help&lt;/h2&gt;
+
+&lt;p&gt;Obviously, there's a lot left to do here, both in the core framework and in the contrib tools. Please, by all means, report any issues you find in the relevant issue queues, and feel free to submit patches to fix bugs or add additional features. At this stage, the best thing you can do (especially if you're not a developer) is test the upgrade path for your Drupal 6 or Drupal 7 site and report what you find. The diversity of Drupal sites in the wild is staggering - to get the upgrade path nailed down and fully supported in Drupal 8.1, we need a wide variety of sites to go through it.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--migrate"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migrate" property="schema:about" hreflang="en"&gt;Migrate&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Fri, 20 Nov 2015 22:53:42 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">137 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Upgrading to Drupal 8 using Drush</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/upgrading-drupal-8-using-drush</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Upgrading to Drupal 8 using Drush&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2015-10-21T23:37:00+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Wednesday, October 21, 2015 - 06:37pm&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;So, perhaps you've been reading &lt;a href="https://virtuoso-performance.com/blog/mikeryan/upgrading-to-drupal-8-using-ui"&gt;Upgrading to Drupal 8 using the UI&lt;/a&gt; and thinking "hey, what about us cool kids who use Drush for everything?". Or, maybe you just know &lt;a href="https://www.drupal.org/node/1806824"&gt;drush is better than a UI&lt;/a&gt; for running long processes like migrations. Well, this blog post is for you... We do have drush commands for running and rolling back upgrades, currently in the &lt;a href="https://www.drupal.org/project/migrate_upgrade"&gt;migrate_upgrade module&lt;/a&gt; (but which should land in Drush itself by Drupal's 8.1 release at the latest). &lt;!--break--&gt; First off, for preparing a D8 site to run the upgrade process, we're just going to give the tl;dr version here - see the UI post for more context. &lt;code&gt; ~/Sites/d8$ # Install Drupal using the minimal profile ~/Sites/d8$ drush si minimal --account-name=admin --account-pass=admin --db-url=mysql://user:pass@127.0.0.1/d8 -y You are about to DROP all tables in your 'd8' database. Do you want to continue? (y/n): y Starting Drupal installation. This takes a while. Consider using the --notify global option. Installation complete. User name: admin User password: admin Congratulations, you installed Drupal! &lt;/code&gt; &lt;code&gt; ~/Sites/d8$ # Enable the D8 modules corresponding to each source module you want upgraded. ~/Sites/d8$ drush en -y book,comment,block_content,menu_link_content,menu_ui,path,search,taxonomy The following extensions will be enabled: book, comment, block_content, menu_link_content, menu_ui, path, search, taxonomy, link Do you really want to continue? (y/n): y ... ~/Sites/d8$ # Don't forget the rest of the field types. ~/Sites/d8$ drush en -y datetime,image,options The following extensions will be enabled: datetime, image, options Do you really want to continue? (y/n): y ... &lt;/code&gt; &lt;code&gt; ~/Sites/d8$ # Get the Drupal Upgrade (machine name migrate_upgrade, for historical reasons) module. ~/Sites/d8$ drush dl migrate_upgrade Project migrate_upgrade (8.x-1.x) downloaded to /Users/mryan/Sites/d8//modules/contrib/migrate_upgrade. ~/Sites/d8$ # Enable it! ~/Sites/d8$ drush en -y migrate_upgrade The following extensions will be enabled: migrate_upgrade, migrate_drupal, migrate Do you really want to continue? (y/n): y migrate was enabled successfully. migrate_drupal was enabled successfully. migrate_upgrade was enabled successfully. The Drupal Upgrade module has been enabled. Proceed to the upgrade form. &lt;/code&gt; &lt;code&gt; ~/Sites/d8$ # Make sure it'll look nice when we're done. ~/Sites/d8/modules/contrib/migrate_upgrade$ drush en -y bartik The following extensions will be enabled: bartik Do you really want to continue? (y/n): y bartik was enabled successfully. &lt;/code&gt; &lt;code&gt; ~/Sites/d8$ # Back up your database first! ~/Sites/d8$ drush sql-dump &gt;/tmp/d8-pre-upgrade.sql &lt;/code&gt;&lt;/p&gt;
+
+&lt;h2&gt;Running the upgrade&lt;/h2&gt;
+
+&lt;p&gt;OK, you've now got a vanilla Drupal 8 site ready to accept your Drupal 6 or Drupal 7 site data. It's now simply a matter of running the drush migrate-upgrade command, pointing it at your legacy database (or a copy thereof - it is not recommended to run directly against your production database) and at the source for your files (which may be scraped from your live website, or copied from a local directory): &lt;code&gt; ~/Sites/d8$ drush migrate-upgrade --legacy-db-url=mysql://user:pass@127.0.0.1/d6_site_db --legacy-root=http://mikeryan.name Upgrading d6_book_settings Upgrading d6_date_formats Upgrading d6_dblog_settings Upgrading d6_file_settings Upgrading d6_imagecache_presets Upgrading d6_search_settings Upgrading d6_system_cron Upgrading d6_system_date Upgrading d6_system_file Upgrading d6_system_image ... Upgrading d6_node_revision__story Upgrading d6_node_revision__todo Upgrading d6_node_setting_promote Upgrading d6_node_setting_status Upgrading d6_node_setting_sticky Upgrading d6_taxonomy_vocabulary Upgrading d6_taxonomy_term Upgrading d6_vocabulary_field Upgrading d6_vocabulary_field_instance Upgrading d6_vocabulary_entity_display Upgrading d6_vocabulary_entity_form_display Upgrading d6_term_node__1 Upgrading d6_term_node__2 Upgrading d6_term_node_revision__1 Upgrading d6_term_node_revision__2 Upgrading d6_user_contact_settings &lt;/code&gt; Now, wasn't that easier than clicking through a bunch of forms? One other option to the migrate-upgrade command worth mentioning is --configure-only. The upgrade process has two distinct stages:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;Configuration: the database credentials are used to read and analyze the source database. Given the modules enabled on the source side and on the destination side, the relevant migration templates are configured and saved as runnable migration configuration entities.&lt;/li&gt;
+	&lt;li&gt;Import: The import() operation is run for the migration entities configured in the first stage.&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;So, if you pass the &lt;code&gt;--configure-only&lt;/code&gt; option, only the configuration is performed and you're left with all the migrations you need, ready to run. The advantage of that is that you can use the migrate_tools module (part of the migrate_plus project, about which more in a future blog post) to selectively run the migrations: &lt;code&gt; ~/Sites/d8$ drush migrate-status Group: default                Status Total Imported Unprocessed Last imported block_content_type            Idle   1     0        0 d6_book_settings              Idle   1     0        0 d6_date_formats               Idle   3     0        0 ... d6_upload                     Idle   2     0        0 d6_upload_entity_display      Idle   5     0        0 d6_upload_entity_form_display Idle   5     0        0 d6_user_contact_settings      Idle   683   0        0 ~/Sites/d8$ drush migrate-import d6_date_formats Processed 3 items (3 created, 0 updated, 0 failed, 0 ignored) - done with 'd6_upload' &lt;/code&gt; Finally, if you choose to go back and try the upgrade again from scratch, you can rollback the full upgrade (as explained in the &lt;a href="https://virtuoso-performance.com/blog/mikeryan/upgrading-to-drupal-8-using-ui"&gt;UI post&lt;/a&gt;, simple configuration changes will not be restored): &lt;code&gt; ~/Sites/d8$ drush migrate-upgrade-rollback All migrations tagged as 'Drupal' will be rolled back. Are you sure? (y/n): y Rolling back d6_user_contact_settings Rolling back d6_upload_entity_form_display Rolling back d6_upload_entity_display Rolling back d6_upload ... Rolling back d6_file_settings Rolling back d6_dblog_settings Rolling back d6_date_formats Rolling back d6_book_settings Rolling back block_content_type &lt;/code&gt; Alternatively, to be sure you are returning completely to square one, you can restore your backup: &lt;code&gt; ~/Sites/d8$ mysql -u user -p d8 &lt;/tmp/d8-pre-upgrade.sql &lt;/code&gt;&lt;/p&gt;
+
+&lt;h2&gt;How'd it go?&lt;/h2&gt;
+
+&lt;p&gt;This is one part of the &lt;a href="https://virtuoso-performance.com/blog/mikeryan/upgrading-to-drupal-8-using-ui"&gt;UI post&lt;/a&gt; worth repeating - the upgrade path in Drupal core for 8.0 is experimental, and we need your feedback to tighten it up and make it fully supported for 8.1. If you ran into any problems in upgrading your site, or have suggestions for improving the process, please share them:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;If your problem or suggestion is specifically about the drush commands, please open an issue in the &lt;a hef="https://www.drupal.org/project/issues/migrate_upgrade"&gt;Drupal Upgrade issue queue&lt;/a&gt; (being sure to check if it's already been reported, of course).&lt;/li&gt;
+	&lt;li&gt;If you had error messages while the upgrade process was running, or something was not imported correctly into your site, please open an issue with the "migration system" component in the &lt;a href="https://www.drupal.org/project/issues/drupal?component=migration+system"&gt;Drupal core issue queue&lt;/a&gt; (again, checking for previous reports).&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;If you're not sure where to report the issue, just pick one and don't sweat it - we'll move it if necessary. Thanks!&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--migrate"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migrate" property="schema:about" hreflang="en"&gt;Migrate&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;
+    &lt;h2 class="comment-field__title h3"&gt;Comments&lt;/h2&gt;
+    &lt;a id="comment-87"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/87" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/87#comment-87" class="permalink" rel="bookmark" hreflang="en"&gt;I followed the above process&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1463948532"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Anonymous (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Sunday, May 22, 2016 - 03:22pm  &lt;span property="schema:dateCreated" content="2016-05-22T20:22:12+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;I followed the above process and it appeared to work, but some of my site layout and content were not migrated from my Drupal 7.43 DB to my {empty-except for base d8 install} D8 DB.&lt;br /&gt;&lt;a href="mailto:dforeman@stny.rr.com"&gt;dforeman@stny.rr.com&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=87&amp;1=default&amp;2=en&amp;3=" token="Hic7uc9cyGcu8Emgc0pmLRpfxlu285eDB1WO9UqzIwY"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;div class="indented"&gt;&lt;a id="comment-90"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/90" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/90#comment-90" class="permalink" rel="bookmark" hreflang="en"&gt;There are still a few holes&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1464010399"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Monday, May 23, 2016 - 08:33am  &lt;span property="schema:dateCreated" content="2016-05-23T13:33:19+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;There are still a few holes in Drupal 7 migration - see &lt;a href="https://www.drupal.org/node/2456259"&gt;https://www.drupal.org/node/2456259&lt;/a&gt;. If you have a problem which is not covered there, and you can't &lt;a href="&lt;a href="https://www.drupal.org/project/issues/drupal?text=&amp;status=Open&amp;priorities=All&amp;categories=All&amp;version=All&amp;component=migration+system"&gt;find"&gt;https://www.drupal.org/project/issues/drupal?text=&amp;status=Open&amp;prioriti…&lt;/a&gt; an existing issue covering your problem&lt;/a&gt;, please &lt;a href="&lt;a href="https://www.drupal.org/node/add/project-issue/drupal"&gt;open"&gt;https://www.drupal.org/node/add/project-issue/drupal"&gt;open&lt;/a&gt; a new issue&lt;/a&gt; for your problem.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=90&amp;1=default&amp;2=en&amp;3=" token="L5w7YaH867IatdhD94XUquimyOPMjg8nkRTGCG-VrAE"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;/div&gt;&lt;a id="comment-92"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/92" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/92#comment-92" class="permalink" rel="bookmark" hreflang="en"&gt;thanks for this had to remove&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1464966866"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Anonymous (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Friday, June 3, 2016 - 10:14am  &lt;span property="schema:dateCreated" content="2016-06-03T15:14:26+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;thanks for this had to remove all my extra user_roles for it to work no biggie can read these in &lt;/p&gt;
+&lt;p&gt;one question though if your happy with the migration can the migrate tables be deleted ?&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=92&amp;1=default&amp;2=en&amp;3=" token="e-0hVHMaDUMQVMQcXGArf60QGHuDwa-4R-Wqb322i4c"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;div class="indented"&gt;&lt;a id="comment-93"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/93" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/93#comment-93" class="permalink" rel="bookmark" hreflang="en"&gt;When done, you can uninstall&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1464989557"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Friday, June 3, 2016 - 04:32pm  &lt;span property="schema:dateCreated" content="2016-06-03T21:32:37+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;When done, you can uninstall the migrate* modules - the migrate_map and migrate_message tables aren't currently automatically dropped (see &lt;a href="https://www.drupal.org/node/2713327"&gt;https://www.drupal.org/node/2713327&lt;/a&gt;), but you can drop them manually.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=93&amp;1=default&amp;2=en&amp;3=" token="jSSJZA9F2si5kqcFfY_811OYMZeobxOKsObObe_ACHM"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;/div&gt;&lt;a id="comment-94"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/94" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/94#comment-94" class="permalink" rel="bookmark" hreflang="en"&gt;Hey Mike, 
+Hoping for a&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1465855542"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Anonymous (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Monday, June 13, 2016 - 05:05pm  &lt;span property="schema:dateCreated" content="2016-06-13T22:05:42+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Hey Mike, &lt;/p&gt;
+&lt;p&gt;Hoping for a little direction or advice. I have to perform an upgrade from D6 to D8. The source site cranks out a lot of content, so I need to be able to go back and import updated content into the D8 site before taking it live. I had started this process back with Drupal 8.0, but it has now dragged on to this point.&lt;br /&gt;
+Problem I'm seeing is that Drupal 8.1.2 no longer supports the UI, migrate_tools, or migrate_plus. I installed  migrate_upgrade 8.x-2.0-beta1 so that at least gives me the ability to run an initial migration.&lt;/p&gt;
+&lt;p&gt;Even if I start over with a fresh install of D8, and rebuild my views etc, I'll need to import newer content before I can push it to production.  If I simply run migrate-upgrade --update will that allow me to perform an update without wiping out what I already have migrated? Or do I need to come up with a different plan?&lt;/p&gt;
+&lt;p&gt;Thanks&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=94&amp;1=default&amp;2=en&amp;3=" token="ol1xzV6aqwLVHhjNWHhqXfrwgOyPTLPi6CWI9X3RYVE"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;div class="indented"&gt;&lt;a id="comment-96"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/96" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/96#comment-96" class="permalink" rel="bookmark" hreflang="en"&gt;Comments on an old blog post&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1465913768"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Tuesday, June 14, 2016 - 09:16am  &lt;span property="schema:dateCreated" content="2016-06-14T14:16:08+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Comments on an old blog post aren't a great avenue for support questions - &lt;a href="http://drupal.stackexchange.com/"&gt;http://drupal.stackexchange.com/&lt;/a&gt; will get you more visibility (I'm not the only one in the Drupalverse who knows something about migration, after all).&lt;/p&gt;
+&lt;p&gt;&lt;blockquote&gt;Problem I'm seeing is that Drupal 8.1.2 no longer supports the UI, migrate_tools, or migrate_plus. I installed migrate_upgrade 8.x-2.0-beta1 so that at least gives me the ability to run an initial migration.&lt;/blockquote&gt;&lt;br /&gt;
+Where are you seeing that? The UI is in core now, and migrate_tools and migrate_plus (at least the -dev releases) work fine. See &lt;a href="http://mikeryan.name/blog/mikeryan/migration-update-for-drupal-8-1"&gt;http://mikeryan.name/blog/mikeryan/migration-update-for-drupal-8-1&lt;/a&gt; for the 8.1.x status of the migration ecosystem (as of a couple months ago).&lt;/p&gt;
+&lt;p&gt;&lt;blockquote&gt;If I simply run migrate-upgrade --update will that allow me to perform an update without wiping out what I already have migrated&lt;/blockquote&gt;&lt;br /&gt;
+There is no --update flag on migrate-upgrade - if there were one that worked like migrate-import, it would completely update all the previously-imported content from the latest source data. Simply running migrate-upgrade again will import any new content.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=96&amp;1=default&amp;2=en&amp;3=" token="uioC_j2NrmmUdDySdm89lsoQVT5yCJBDLQ5-nwiV8ko"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;div class="indented"&gt;&lt;a id="comment-98"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/98" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/98#comment-98" class="permalink" rel="bookmark" hreflang="en"&gt;Comments on an old blog post&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1466527949"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Anonymous (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Tuesday, June 21, 2016 - 11:52am  &lt;span property="schema:dateCreated" content="2016-06-21T16:52:29+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;&lt;blockquote&gt;Comments on an old blog post aren't a great avenue for support questions &lt;/blockquote&gt;&lt;br /&gt;
+Perhaps not - but you did respond quickly and gave me a kick in the right direction. So thank you for that.&lt;/p&gt;
+&lt;p&gt;I'm trying to migrate into a fresh Drupal 8 site, and am having some serious issues - most likely due to the way the Drupal 6 site was built. But I'll save those posts for the issue queue or stackexchange.&lt;/p&gt;
+&lt;p&gt;Thanks again&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=98&amp;1=default&amp;2=en&amp;3=" token="swYO7dteDh18zWE4wAABwqRp2R2yJICyw-LNa40T76s"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;</description>
+  <pubDate>Wed, 21 Oct 2015 23:37:00 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">135 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Upgrading to Drupal 8 using the UI</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/upgrading-drupal-8-using-ui</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Upgrading to Drupal 8 using the UI&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2015-10-21T23:36:00+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Wednesday, October 21, 2015 - 06:36pm&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Now that &lt;a href="https://www.drupal.org/drupal-8.0"&gt;the second Drupal 8 release candidate (RC2) is available (with a &lt;/a&gt;&lt;a href="https://www.drupal.org/node/2588547"&gt;significant&lt;/a&gt; fix for those upgrading from Drupal 6), it's time to start planning for your upgrade from Drupal 6 or Drupal 7. As &lt;a href="https://virtuoso-performance.com/blog/mikeryan/update-on-migration-in-drupal-8"&gt;I previously wrote&lt;/a&gt;, the migration system is "experimental" in 8.0, and at this time (mid-October 2015) the tools for upgrading are in a contributed module, &lt;a href="https://www.drupal.org/project/migrate_upgrade"&gt;Drupal Upgrade&lt;/a&gt;. The plan is that the upgrade path will be fully supported in core for Drupal 8.1 - to reach that goal, however, we need the path to be tested on a wide variety of sites in the meantime. So, we encourage everyone with a Drupal 6 or Drupal 7 site to start testing the upgrade path today - you don't want Drupal 8.1 to come out and only then discover your site has some quirk that's not fully accounted for. Even better, you might fight the upgrade path works just fine for your site and you can upgrade in the Drupal 8.0 timeframe! The current &lt;a href="https://www.drupal.org/upgrade/migrate"&gt;documentation for performing your upgrade from Drupal 6 or 7 to Drupal 8&lt;/a&gt; is on drupal.org - I'll walk through the process as it exists today, but should you be referring to this blog post after October 2015, be sure to review the official documentation for any changes. This post explains running the upgrade process through the Drupal 8 web interface - if you'd prefer to use Drush, please see &lt;a href="https://virtuoso-performance.com/blog/mikeryan/upgrading-to-drupal-8-using-drush"&gt;Upgrading to Drupal 8 using Drush&lt;/a&gt;. &lt;!--break--&gt;&lt;/p&gt;
+
+&lt;h2&gt;Preparing your site for the upgrade&lt;/h2&gt;
+
+&lt;p&gt;The first thing you need is a fresh Drupal 8 site. Installing the code base is too environment-specific to go through here, but it is recommended that you use the Minimal install profile to give yourself the most flexibility in your configuration (and the blankest slate on which to write your legacy data). Note that the Minimal profile installs the Stark theme by default - your first stop after installation will probably be Administration-&gt;Appearance to pick a more substantial theme (the screenshots below reflect Bartik). And speaking of screenshots, a reminder - the migration support in core is "experimental", but this UI is at an earlier stage of experimentation and is still undergoing significant UX work, so what you see below may not be exactly what you see when you try the process yourself. Now, it's important to understand that the upgrade process does not automatically enable modules on your Drupal 8 site - it will only perform upgrade operations for modules enabled on your source site when the destination module for that data is enabled in Drupal 8. So, at this point, be sure to enable all modules in Drupal 8 that you were using in your legacy site (plus any other Drupal 8 modules you're planning on using): &lt;img src="https://virtuoso-performance.com/sites/default/files/enable_needed_modules.jpg" /&gt; The contributed Drupal Upgrade module also needs to be installed and enabled on the Drupal 8 site. At Adminstration-&gt;Extend, click "Install new module": &lt;img src="https://virtuoso-performance.com/sites/default/files/Install_new_module.jpg" /&gt; Back to the Extend page, enable this module as well as the Migrate and Migrate Drupal modules it requires: &lt;img src="https://virtuoso-performance.com/sites/default/files/enable_drupal_upgrade.jpg" /&gt;&lt;img src="https://virtuoso-performance.com/sites/default/files/proceed.jpg" /&gt;&lt;/p&gt;
+
+&lt;h2&gt;Configuring and reviewing the upgrade&lt;/h2&gt;
+
+&lt;p&gt;Have you proceeded? You should now see the following page: &lt;img src="https://virtuoso-performance.com/sites/default/files/upgrade_page_1.jpg" /&gt; Now is an excellent time to backup your Drupal 8 database - as we've said, the upgrade support is experimental, and the quickest way to return to square one if anything goes wrong is to restore your backup. If you've just created the Drupal 8 site and are working alone on it, there's no need for maintenance mode, which is a purely cautionary step. Continuing: &lt;img src="https://virtuoso-performance.com/sites/default/files/upgrade_page_2.jpg" /&gt; The new Drupal 8 site needs to have access to a copy of your existing site's database, as well as access to your files. If you have only a public files directory on your site, the upgrade process can pull them directly over the web; however, if you have a large volume of file data it will be more efficient to make a copy of the files directory directly on your D8 server (and this is necessary for private files). Note that Drupal 7 allows you to have separate public and private file directories - the ability to specify both of these through the UI has not been implemented as of this writing. Once you've entered the information for your existing site and clicked &lt;strong&gt;Review upgrade&lt;/strong&gt;, the source database is analyzed and enabled modules with upgrade paths are aligned with the corresponding modules that are enabled in Drupal 8 (note this page is the most likely one to be redesigned in the very near future): &lt;img src="https://virtuoso-performance.com/sites/default/files/upgrade_page_3a.jpg" /&gt; First, this page lists modules enabled on the source site which have no defined upgrade path. There are various reasons for a source module to be listed here:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;The module simply has no content or configuration that needs to be individually migrated. For example, the Drupal 6 blog module simply defined a node (content) type of 'blog', and those blog nodes are being migrated via the node module's migrations, so the blog module does not need its own migration path.&lt;/li&gt;
+	&lt;li&gt;A migration path exists, but the destination module is not enabled (and perhaps, for contributed modules, not even present). For example, if I had not enabled 'book' in Drupal 8, it would have been listed here.&lt;/li&gt;
+	&lt;li&gt;There is configuration or content for the module that can and should be upgraded, the module is enabled, but the module has not implemented an upgrade path (you are most likely to see this situation with contributed modules still being ported to Drupal 8).&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;For now, you can simply proceed - the upgrade process is repeatable, so if you enable a destination module, or an existing module adds an upgrade path, returning to /upgrade and running the upgrade process again will pick up the new data. Lower on the page, the modules being upgraded are reported: &lt;img src="https://virtuoso-performance.com/sites/default/files/upgrade_page_3b.jpg" /&gt; As you can see, there is not necessarily a one-to-one correspondence between the modules in your Drupal 6 or Drupal 7 site and the Drupal 8 modules that manage the same data. For example, custom blocks have been moved out of the &lt;strong&gt;block&lt;/strong&gt; module into a new &lt;strong&gt;block_content&lt;/strong&gt; module. At this point, clicking Perform upgrade will - surprise! - perform the upgrade: &lt;img src="https://virtuoso-performance.com/sites/default/files/batch_page.jpg" /&gt; At this point it's worth mentioning that internally the individual tasks that are run to perform the upgrade are called "migrations", and there may be multiple migrations involved in a given module's upgrade path, to handle different kinds of content and configuration managed by that module. The feedback is thus per-migration, not per-module. If all goes well, you are delivered to your home page: &lt;img src="https://virtuoso-performance.com/sites/default/files/new_home_page.jpg" /&gt; which hopefully (allowing for theming) shows the same content as your old home page: &lt;img src="https://virtuoso-performance.com/sites/default/files/old_home_page.jpg" /&gt; Details on the upgrade process are logged to the watchdog: &lt;img src="https://virtuoso-performance.com/sites/default/files/upgrade_log.jpg" /&gt;&lt;/p&gt;
+
+&lt;h2&gt;Starting over&lt;/h2&gt;
+
+&lt;p&gt;If everything you wanted to upgrade came over perfectly and there are no lagging modules to worry about, congratulations! If there's still more to do - a newly-installed contrib module with an upgrade path, a core module you skipped the first time, or for that matter new content added on your existing site which you want to pull over - you can rerun the upgrade process to pull over only things which were not previously imported. Or, if you're not happy with the results, you can start from scratch. First, return to the upgrade page (example.com/upgrade): &lt;img src="https://virtuoso-performance.com/sites/default/files/return_to_upgrade.jpg" /&gt; As you can see, you have two options. The &lt;strong&gt;Rerun&lt;/strong&gt; option will run through much the same process as you did originally (skipping the prompt for credentials and file location, because it remembers that from the first time), and if any new content was added for modules you previously upgraded, or new upgrade paths are now available, those will be imported now. &lt;strong&gt;Rollback&lt;/strong&gt; allows you to return to square one - mostly. It will delete all content that was imported, and it will also delete all the configuration entities that were created, but will not restore simple configuration. The distinction is:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;Configuration entities are structured sets of configuration which may have multiple instances - for example, a field's configuration or a content type's configuration is a configuration entity. Because these are created by the upgrade process, they can be deleted by the rollback process.&lt;/li&gt;
+	&lt;li&gt;Simple configuration is singleton settings such as the site name - there is a single value without internal structure. For simple configuration, there is already a default value (or a custom value, if you have manually configured the site) before the upgrade is executed. Because the pre-upgrade values are not preserved (there is no revisioning of configuration), they cannot be restored when rolling back the upgrade.&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;If you want to be absolutely sure you're returning to a vanilla installation, you're best off restoring the backup you took before upgrading (you did do that backup, right?). If you had a lot of content processed by the upgrade process, you'll also find it much faster to restore that backup. That being said, when experimenting with the upgrade process with a modestly-sized site, you may find the rollback functionality helpful: &lt;img src="https://virtuoso-performance.com/sites/default/files/rollback_confirm.jpg" /&gt;&lt;img src="https://virtuoso-performance.com/sites/default/files/batch_rollback.jpg" /&gt;&lt;/p&gt;
+
+&lt;h2&gt;How'd it go?&lt;/h2&gt;
+
+&lt;p&gt;So, once again, the upgrade path in Drupal core for 8.0 is experimental, and the UI more so - we need your feedback to tighten them up and make them fully supported for 8.1. If you ran into any problems in upgrading your site, or have suggestions for improving the process, please share them:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;If your problem or suggestion is specifically about the UI - the forms, the workflow, the messaging - then please open an issue in the &lt;a href="https://www.drupal.org/project/issues/migrate_upgrade"&gt;Drupal Upgrade issue queue&lt;/a&gt; (being sure to check if it's already been reported, of course).&lt;/li&gt;
+	&lt;li&gt;If you had error messages while the upgrade process was running, or something was not imported correctly into your site, please open an issue with the "migration system" component in the &lt;a href="https://www.drupal.org/project/issues/drupal?component=migration+system"&gt;Drupal core issue queue&lt;/a&gt; (again, checking for previous reports).&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;If you're not sure where to report the issue, just pick one and don't sweat it - we'll move it if necessary. Thanks!&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--migrate"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migrate" property="schema:about" hreflang="en"&gt;Migrate&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;
+    &lt;h2 class="comment-field__title h3"&gt;Comments&lt;/h2&gt;
+    &lt;a id="comment-84"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/84" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/84#comment-84" class="permalink" rel="bookmark" hreflang="en"&gt;Additional upgrades no longer&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1462884000"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Anonymous (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Tuesday, May 10, 2016 - 07:40am  &lt;span property="schema:dateCreated" content="2016-05-10T12:40:00+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Additional upgrades no longer supported in Drupal 8.1.1.&lt;/p&gt;
+&lt;p&gt;Drupal Upgrade&lt;br /&gt;
+An upgrade has already been performed on this site. To perform a new migration, create a clean and empty new install of Drupal 8. Rollbacks and incremental migrations are not yet supported through the user interface. For more information, see the upgrading handbook.&lt;br /&gt;
+Last upgrade: May 9, 2016 - 20:27&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=84&amp;1=default&amp;2=en&amp;3=" token="-txB2sA_sjMw6RzmUufBVmJQlcNCE0a1ATMbCF7Blvs"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;div class="indented"&gt;&lt;a id="comment-85"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/85" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/85#comment-85" class="permalink" rel="bookmark" hreflang="en"&gt;See&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1462884561"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Tuesday, May 10, 2016 - 07:49am  &lt;span property="schema:dateCreated" content="2016-05-10T12:49:21+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;See &lt;a href="https://www.drupal.org/node/2687843"&gt;https://www.drupal.org/node/2687843&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=85&amp;1=default&amp;2=en&amp;3=" token="8mbyhWdAEhNiyr2naE1e8GX3FIzdgJsXIpkzA-5e5MQ"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;/div&gt;&lt;a id="comment-88"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/88" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/88#comment-88" class="permalink" rel="bookmark" hreflang="en"&gt;migration of books and book&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1463990647"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Anonymous (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Monday, May 23, 2016 - 03:04am  &lt;span property="schema:dateCreated" content="2016-05-23T08:04:07+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;migration of books and book pages&lt;/p&gt;
+&lt;p&gt;Hello,&lt;br /&gt;
+when will it be possible to migrate books and book pages, please.&lt;/p&gt;
+&lt;p&gt;Thank you in advance for your kind answer&lt;br /&gt;
+Michael&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=88&amp;1=default&amp;2=en&amp;3=" token="yNROpDxHetycA7X96bZ0aaei_TH6OlLk12xsiZxQxwI"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;div class="indented"&gt;&lt;a id="comment-89"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/89" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/89#comment-89" class="permalink" rel="bookmark" hreflang="en"&gt;You don't mention if you're&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1464010181"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Monday, May 23, 2016 - 08:29am  &lt;span property="schema:dateCreated" content="2016-05-23T13:29:41+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;You don't mention if you're migrating from Drupal 6 or Drupal 7. Book hierarchies should work for Drupal 6 - for Drupal 7, while the book pages (which are simply normal nodes) should migrate, the book hierarchy is not yet done - see &lt;a href="https://www.drupal.org/node/2409435"&gt;https://www.drupal.org/node/2409435&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=89&amp;1=default&amp;2=en&amp;3=" token="SwWSCyDRrp2IXwN_Ly_JZPoLEWRa4JERvaXDAtZzbGU"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;div class="indented"&gt;&lt;a id="comment-91"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="0" about="https://virtuoso-performance.com/comment/91" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/91#comment-91" class="permalink" rel="bookmark" hreflang="en"&gt;Sorry, I noticed only after&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1464182364"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;Anonymous (not verified)&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Wednesday, May 25, 2016 - 08:19am  &lt;span property="schema:dateCreated" content="2016-05-25T13:19:24+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Sorry, I noticed only after it was sent. I meant from 7 to 8.&lt;br /&gt;
+Thanks for the answer and the link. I will stay tuned...&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=91&amp;1=default&amp;2=en&amp;3=" token="6W6JJI7CbOFKfe2jD4MJ5Hf3dywwYzm9p1DzC2RvxRU"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;</description>
+  <pubDate>Wed, 21 Oct 2015 23:36:00 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">134 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Update on migration in Drupal 7</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/update-migration-drupal-7</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Update on migration in Drupal 7&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2015-07-30T15:38:33+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Thursday, July 30, 2015 - 10:38am&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;A quick update on where the migration-related modules I maintain on Drupal 7 (&lt;a href="https://www.drupal.org/project/migrate"&gt;migrate&lt;/a&gt;, &lt;a href="https://www.drupal.org/project/migrate_d2d"&gt;migrate_d2d&lt;/a&gt;, and &lt;a href="https://www.drupal.org/project/wordpress_migrate"&gt;wordpress_migrate&lt;/a&gt;) stand now, to help set people's expectations of the level of support they can expect in the issue queues. There are two main points:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;I am now officially working full-time on migration in Drupal 8, for the time being (I'll have a blog post with details on that work shortly).&lt;/li&gt;
+	&lt;li&gt;I feel that the Drupal 7 migration modules are pretty much functionally complete.&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;The first means I don't have much time available for Drupal 7 work - I do try to have a weekly session to catch up on the issue queues (ideally Friday) but can't guarantee that will happen every week, or that I'll get all the way through the recent issues when it does. The second means that feature requests have a high bar to reach to be considered for acceptance. I've previously stated this for Migrate itself, but it applies to all three modules - feature requests are unlikely to get in without:&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;A justification that the feature is generally useful (and not just addressing a very narrow use case),&lt;/li&gt;
+	&lt;li&gt;Demonstration that the desired outcome is not achievable (at least without considerable effort) using existing functionality, and&lt;/li&gt;
+	&lt;li&gt;A patch (ideally reviewed &amp; tested by the community).&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;I will continue to do my best to address bug reports and support requests on a weekly basis. Of course, we are part of an open-source community here - other people knowledgeable in Drupal migration are more than welcome to help with incoming questions. Thanks for your understanding.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--migrate"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migrate" property="schema:about" hreflang="en"&gt;Migrate&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;&lt;/section&gt;</description>
+  <pubDate>Thu, 30 Jul 2015 15:38:33 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">133 at https://virtuoso-performance.com</guid>
+    </item>
+<item>
+  <title>Migration contribution catch-up plan</title>
+  <link>https://virtuoso-performance.com/blog/mikeryan/migration-contribution-catch-plan</link>
+  <description>&lt;span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden"&gt;Migration contribution catch-up plan&lt;/span&gt;
+&lt;span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;span property="schema:dateCreated" content="2014-10-03T22:08:42+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden"&gt;Friday, October 3, 2014 - 05:08pm&lt;/span&gt;
+&lt;div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;Well, what with an increase in client work and a move halfway across the country (Somerville Mass to Murphysboro Illinois), I'm afraid I've fallen further behind on the issue queues for &lt;a href="https://www.drupal.org/project/migrate"&gt;migrate&lt;/a&gt;, &lt;a href="https://www.drupal.org/project/migrate_d2d"&gt;migrate_d2d&lt;/a&gt;, and &lt;a href="https://www.drupal.org/project/wordpress_migrate"&gt;wordpress_migrate&lt;/a&gt;. It's been a bit of struggle to triage the queues, so to somewhat automate the which-issue-to-work-on-next process, I'm reducing it to an algorithm (each step of which will be applied to migrate, migrate_d2d, and wordpress_migrate in that order).&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;Bug reports with patches (needs review, rtbc), oldest to newest&lt;/li&gt;
+	&lt;li&gt;Other bug reports, oldest to newest&lt;/li&gt;
+	&lt;li&gt;Other issues with patches (needs review, rtbc), oldest to newest&lt;/li&gt;
+	&lt;li&gt;Triage of support requests to make sure no bugs are lurking there&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;At that point, I plan on cutting release candidates for all three modules. Hopefully at that point I'll be able to start doing a better job of responding to new issues as they come in. Hard to say when I'll have a chance to review and respond to older support and feature requests, though, it'll depend on my workload (but of course I'm not the only one in the community capable of helping out with support requests - hint hint). Thank you. Edit: Let's keep track of where I am... I'll also note that not all issues will necessarily get committed/closed, there will be some triage as I go along and not everything will make the cut for Migrate 2.6 and the corresponding migrate_d2d/wordpress_migrate releases.&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;&lt;strike&gt;Bug reports with patches, &lt;a href="https://www.drupal.org/project/issues/search/migrate?project_issue_followers=&amp;status[0]=8&amp;status[1]=14&amp;categories[0]=1&amp;version[0]=7.x&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;&amp;&amp;issue_tags=&amp;order=created&amp;sort=asc"&gt;migrate&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Bug reports with patches, &lt;a href="https://www.drupal.org/project/issues/search/migrate_d2d?project_issue_followers=&amp;status[0]=8&amp;status[1]=14&amp;categories[0]=1&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;&amp;order=created&amp;sort=asc"&gt;migrate_d2d&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Bug reports with patches, &lt;a href="https://www.drupal.org/project/issues/search/wordpress_migrate?project_issue_followers=&amp;status[0]=8&amp;status[1]=14&amp;categories[0]=1&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;&amp;&amp;&amp;issue_tags=&amp;order=created&amp;sort=asc"&gt;wordpress_migrate&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Other active bug reports, &lt;a href="https://www.drupal.org/project/issues/search/migrate?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;categories[0]=1&amp;version[0]=7.x&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;order=created&amp;sort=asc"&gt;migrate&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Other active bug reports, &lt;a href="https://www.drupal.org/project/issues/search/migrate_d2d?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;categories[0]=1&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;&amp;order=created&amp;sort=asc"&gt;migrate_d2d&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Other active bug reports, &lt;a href="https://www.drupal.org/project/issues/search/wordpress_migrate?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;categories[0]=1&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;&amp;order=created&amp;sort=asc"&gt;wordpress_migrate&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Other issues with patches, &lt;a href="https://www.drupal.org/project/issues/search/migrate?project_issue_followers=&amp;status[0]=8&amp;status[1]=14&amp;categories[0]=2&amp;categories[1]=3&amp;categories[2]=4&amp;version[0]=7.x&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;order=created&amp;sort=asc"&gt;migrate&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Other issues with patches, &lt;a href="https://www.drupal.org/project/issues/search/migrate_d2d?project_issue_followers=&amp;status[0]=8&amp;status[1]=14&amp;categories[0]=2&amp;categories[1]=3&amp;categories[2]=4&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;&amp;order=created&amp;sort=asc"&gt;migrate_d2d&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Other issues with patches, &lt;a href="https://www.drupal.org/project/issues/search/wordpress_migrate?project_issue_followers=&amp;status[0]=8&amp;status[1]=14&amp;categories[0]=2&amp;categories[1]=3&amp;categories[2]=4&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;&amp;order=created&amp;sort=asc"&gt;wordpress_migrate&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Triage of support requests, &lt;a href="https://www.drupal.org/project/issues/search/migrate?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;categories[0]=4&amp;version[0]=7.x&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;order=created&amp;sort=asc"&gt;migrate&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Triage of support requests, &lt;a href="https://www.drupal.org/project/issues/search/migrate_d2d?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;categories[0]=4&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;&amp;order=created&amp;sort=asc"&gt;migrate_d2d&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;strike&gt;Triage of support requests, &lt;a href="https://www.drupal.org/project/issues/search/wordpress_migrate?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;categories[0]=4&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;&amp;&amp;order=created&amp;sort=asc"&gt;wordpress_migrate&lt;/a&gt;&lt;/strike&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"&gt;&lt;h3 class="field__label"&gt;Tags&lt;/h3&gt;&lt;div class="field__items"&gt;&lt;div class="field__item field__item--migrate"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/migrate" property="schema:about" hreflang="en"&gt;Migrate&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;div class="field__item field__item--drupal"&gt;
+        &lt;span class="field__item-wrapper"&gt;&lt;a href="https://virtuoso-performance.com/tags/drupal" property="schema:about" hreflang="en"&gt;Drupal&lt;/a&gt;&lt;/span&gt;
+      &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper"&gt;&lt;a name="comments" id="comments"&gt;&lt;/a&gt;
+    &lt;h2 class="comment-field__title h3"&gt;Comments&lt;/h2&gt;
+    &lt;a id="comment-66"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/66" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/66#comment-66" class="permalink" rel="bookmark" hreflang="en"&gt;You'll see all the steps&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1416497008"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Thursday, November 20, 2014 - 09:23am  &lt;span property="schema:dateCreated" content="2014-11-20T15:23:28+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;You'll see all the steps above are crossed out - we're oh so close now! I'm going to make one last full pass through each module in turn before releasing RCs of migrate and migrate_d2d, and a beta of wordpress_migrate (which has had significant refactoring that hasn't had a good shakeout in the community).&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=66&amp;1=default&amp;2=en&amp;3=" token="-reuLPzFrCYR131QwvzO4I_xlgTefZ-wM7tTzNM9EwE"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;a id="comment-67"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/67" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/67#comment-67" class="permalink" rel="bookmark" hreflang="en"&gt;Migrate 2.6 RC2 is out!&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1416852348"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Monday, November 24, 2014 - 12:05pm  &lt;span property="schema:dateCreated" content="2014-11-24T18:05:48+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;&lt;a href="&lt;a href="https://www.drupal.org/node/2381259"&gt;Migrate"&gt;https://www.drupal.org/node/2381259"&gt;Migrate&lt;/a&gt; 2.6 RC2&lt;/a&gt; is out!&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=67&amp;1=default&amp;2=en&amp;3=" token="BaOxXQsDOVBts2j6tsOERUcl5rmDKrXbYiTy9M9I_8Y"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;a id="comment-68"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/68" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/68#comment-68" class="permalink" rel="bookmark" hreflang="en"&gt;Migrate_d2d 2.1 RC1 is now&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1418665560"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Monday, December 15, 2014 - 11:46am  &lt;span property="schema:dateCreated" content="2014-12-15T17:46:00+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;&lt;a href="&lt;a href="https://www.drupal.org/node/2393633"&gt;Migrate_d2d"&gt;https://www.drupal.org/node/2393633"&gt;Migrate_d2d&lt;/a&gt; 2.1 RC1&lt;/a&gt; is now available.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=68&amp;1=default&amp;2=en&amp;3=" token="EZBb8pDPktd4uDbY4LlN16FcjZREYzrwLhCUnR4ntfo"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;a id="comment-69"&gt;&lt;/a&gt;
+&lt;article role="article" data-comment-user-id="6" about="https://virtuoso-performance.com/comment/69" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix"&gt;&lt;div class="comment__container"&gt;&lt;h3 property="schema:name" datatype="" class="comment__title h4"&gt;
+        &lt;a href="https://virtuoso-performance.com/comment/69#comment-69" class="permalink" rel="bookmark" hreflang="en"&gt;wordpress_migrate beta2 is&lt;/a&gt;        &lt;mark class="comment__new marker marker--success hidden" data-comment-timestamp="1418747969"&gt;&lt;/mark&gt;&lt;/h3&gt;
+      &lt;div class="comment__meta"&gt;
+      
+      &lt;div class="comment__submitted"&gt;
+        &lt;span class="comment__author"&gt;&lt;span rel="schema:author"&gt;&lt;span lang="" about="https://virtuoso-performance.com/user/6" typeof="schema:Person" property="schema:name" datatype="" xml:lang=""&gt;mikeryan&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+        &lt;span class="comment__pubdate"&gt;Tuesday, December 16, 2014 - 10:39am  &lt;span property="schema:dateCreated" content="2014-12-16T16:39:29+00:00" class="rdf-meta hidden"&gt;&lt;/span&gt;
+&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="comment__content"&gt;
+      &lt;div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"&gt;&lt;div class="field__items"&gt;&lt;div property="schema:text" class="field__item"&gt;&lt;p&gt;&lt;a href="&lt;a href="https://www.drupal.org/node/2394251"&gt;wordpress_migrate"&gt;https://www.drupal.org/node/2394251"&gt;wordpress_migrate&lt;/a&gt; beta2&lt;/a&gt; is now available. I released this as a beta rather than a release candidate because of the significant refactoring since beta1, it needs more of a shake-out.&lt;/p&gt;
+&lt;p&gt;So, barring any major issues arising, Migrate 2.6 should be released by the end of the week. I had hoped to get migrate_d2d 2.1 out by Christmas, but I'm not sure that's enough time from the RC release. Per above, wordpress_migrate will take a little more time - hopefully an RC early in the new year and 2.3 release within a few weeks of that.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;drupal-render-placeholder callback="comment.lazy_builders:renderLinks" arguments="0=69&amp;1=default&amp;2=en&amp;3=" token="o1zFYy9KxIR8Stf0aEbqpiHwVXE8TEr8fe8zsdrWLhw"&gt;&lt;/drupal-render-placeholder&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/article&gt;&lt;/section&gt;</description>
+  <pubDate>Fri, 03 Oct 2014 22:08:42 +0000</pubDate>
+    <dc:creator>mikeryan</dc:creator>
+    <guid isPermaLink="false">131 at https://virtuoso-performance.com</guid>
+    </item>
+
+  </channel>
+</rss>

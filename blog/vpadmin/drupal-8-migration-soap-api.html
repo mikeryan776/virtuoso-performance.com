@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/blog/vpadmin/drupal-8-migration-soap-api by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:21:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="Drupal 8 migration from a SOAP API" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="drupal-8-migration-soap-api.html" />
+<meta name="twitter:description" content="Mike gives an example of migrating from a SOAP API" />
+<meta name="twitter:title" content="Drupal 8 migration from a SOAP API" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="Returning from my sabbatical, as promised I’m catching up on blogging about previous projects. For one such project, I was contracted by Acquia to provide migration assistance to a client of theirs [redacted, but let’s call them Acme]." />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Drupal, Planet Drupal, Migration, PHP" />
+<meta name="twitter:url" content="drupal-8-migration-soap-api.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="drupal-8-migration-soap-api.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>Drupal 8 migration from a SOAP API</title>
+    <link rel="stylesheet" href="../../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-vpadmin-drupal-8-migration-soap-api page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="144" role="article" about="/blog/vpadmin/drupal-8-migration-soap-api" typeof="schema:Article" class="node node--id-144 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">Drupal 8 migration from a SOAP API</span>
+</h1>  <span property="schema:name" content="Drupal 8 migration from a SOAP API" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:0" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2018-05-15T15:12:00+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Tuesday, May 15, 2018 - 10:12am</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2018-05-15T15:12:00+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p><a href="../mikeryan/back-saddle-again-drupalcon-nashville.html">Returning from my sabbatical</a>, as promised I’m catching up on blogging about previous projects. For one such project, I was contracted by <a href="https://www.acquia.com/">Acquia</a> to provide migration assistance to a client of theirs [redacted, but let’s call them <a href="https://www.youtube.com/watch?v=QHDO78QfLbEr9yA9Dcvga9u6F9pnY8bA">Acme</a>]. This project involved some straightforward node migrations from CSV files, but more interestingly required implementing two ongoing feeds to synchronize external data periodically - one a SOAP feed, and the other a JSON feed protected by OAuth-based authentication. There were a number of other interesting techniques employed on this project which I think may be broadly useful and haven’t previously blogged about - all-in-all, there was enough to write about on this project that rather than compose one big epic post, I’m going to break things down in a series of posts, spread out over several days so as not to spam <a href="https://www.drupal.org/planet">Planet Drupal</a>. In this first post of the sequence, I’ll cover migration from <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a>. The full custom migration module for this project is on <a href="https://gitlab.com/mikeryan/d8-migrate-example-002">Gitlab</a>.</p>
+
+<p>A key requirement of the Acme project was to implement an ongoing feed, representing classes (the kind people attend in person, not the PHP kind), from a SOAP API to “event” nodes in Drupal. The first step, of course, was to develop (in migrate_plus) a parser plugin to handle SOAP feeds, based on PHP’s <a href="http://php.net/manual/en/class.soapclient.php">SoapClient class</a>. This class exposes functions of the web service as class methods which may be directly invoked. In <a href="https://en.wikipedia.org/wiki/Web_Services_Description_Language">WSDL</a> mode (the default, and the only mode this plugin currently supports), it can also report the signatures of the methods it supports (via <a href="http://php.net/manual/en/soapclient.getfunctions.php">__getFunctions()</a>) and the data structures passed as parameters and returned as results (via <a href="http://php.net/manual/en/soapclient.gettypes.php">__getTypes()</a>). WSDL allows our plugin to do introspection and saves the need for some explicit configuration (in particular, it can automatically determine the property to be returned from within the response).</p>
+
+<p>migrate_example_advanced (a submodule of <a href="https://www.drupal.org/project/migrate_plus">migrate_plus</a>) demonstrates a simple example of how to use the SOAP parser plugin - the .yml is well-documented, so please <a href="http://cgit.drupalcode.org/migrate_plus/tree/migrate_example_advanced/config/install/migrate_plus.migration.weather_soap.yml">review that</a> for a general introduction to the configuration. Here’s the <a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/config/install/migrate_plus.migration.event.yml">basic source configuration</a> for this specific project:</p>
+
+<pre dir="ltr">
+source:
+  plugin: url
+  # To remigrate any changed events.
+  track_changes: true 
+  data_fetcher_plugin: http # Ignored - SoapClient does the fetching itself.
+  data_parser_plugin: soap
+  # The method to invoke via the SOAP API.
+  function: GetClientSessionsByClientId
+  # Within the response, the object property containing the list of events.
+  item_selector: SessionBOLExternal
+  # Indicates that the response will be in the form of a PHP object.
+  response_type: object
+  # You won’t find ‘urls’ and ‘parameters’ in the source .yml file (they are inserted
+  # by a web UI - the subject of a future post), but for demonstration purposes
+  # this is what they might look like.
+  urls: <a href="http://services.example.com/CFService.asmx?wsdl">http://services.example.com/CFService.asmx?wsdl</a>
+  parameters:
+    clientId: 1234
+    clientCredential:
+      ClientID: 1234
+      Password: service_password
+    startDate: 08-31-2016
+  # Unique identifier for each event (section) to be imported, composed of 3 columns.
+  ids:
+    ClassID:
+      type: integer
+    SessionID:
+      type: integer
+    SectionID:
+      type: integer
+  fields:
+    -
+      name: ClientSessionID
+      label: Session ID for the client
+      selector: ClientSessionID
+    ...</pre>
+
+<p>Of particular note is the three-part source ID defined here. The way this data is structured, a “class” contains multiple “sessions”, which each have multiple “sections” - the sections are the instances that have specific dates and times, which we need to import into event nodes, and we need all three IDs to uniquely identify each unique section.</p>
+
+<p>Not all of the data we need for our event nodes is in the session feed, unfortunately - we want to capture some of the class-level data as well. So, while, the base migration uses the SOAP parser plugin to get the session rows to migrate, we need to fetch the related data at run time by making direct SOAP calls ourselves. We do this in our subscriber to the PREPARE_ROW event - this event is dispatched after the source plugin has obtained the basic data per its configuration, and gives us an opportunity to retrieve further data to add to the canonical source row before it enters the processing pipeline. I won’t go into detail on how that data is retrieved since it isn’t relevant to general migration principles, but the idea is since all the class data is not prohibitively large, and multiple sessions may reference the same class data, we fetch it all on the first source row processed and cache it for reference by subsequent rows.</p>
+
+<h2>Community contributions</h2>
+
+<p><a href="https://www.drupal.org/node/2726443">SOAP Source plugin</a> - Despite the title (from the original feature request), it was implemented as a parser plugin.</p>
+
+<h2>Altering migration configuration at import time - the PRE_IMPORT event</h2>
+
+<p>Our event feed permits filtering by the event start date - by passing a ‘startDate’ parameter in the format 12-31-2016 to the SOAP method, the feed will only return events starting on or after that date. At any given point in time we are only interested in future events, and don’t want to waste time retrieving and processing past events. To optimize this, we want the startDate parameter in our source configuration to be today’s date each time we run the migration. We can do this by subscribing to the PRE_IMPORT event.</p>
+
+<p>In <a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/acme_migrate.services.yml">acme_migrate.services.yml</a>:</p>
+
+<pre dir="ltr">
+services:
+ ...
+ acme_migrate.update_event_filter:
+   class: Drupal\acme_migrate\EventSubscriber\UpdateEventFilter
+   tags:
+     - { name: event_subscriber }</pre>
+
+<p>In <a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/src/EventSubscriber/UpdateEventFilter.php">UpdateEventFilter.php</a>:</p>
+
+<pre dir="ltr">
+class UpdateEventFilter implements EventSubscriberInterface {
+
+ /**
+  * {@inheritdoc}
+  */
+ public static function getSubscribedEvents() {
+    $events[MigrateEvents::PRE_IMPORT] = 'onMigrationPreImport';
+    return $events;
+ }</pre>
+
+<p>The migration system dispatches the PRE_IMPORT event before the actual import begins executing. At that point, we can insert the desired date filter into the migration configuration entity and save it:</p>
+
+<pre dir="ltr">
+ /**
+  * Set the event start date filter to today.
+  *
+  * @param \Drupal\migrate\Event\MigrateImportEvent $event
+  * The import event.
+  */
+ public function onMigrationPreImport(MigrateImportEvent $event) {
+   // $event-&gt;getMigration() returns the migration *plugin*.
+   if ($event-&gt;getMigration()-&gt;id() == 'event') {
+     // Migration::load() returns the migration *entity*.
+     $event_migration = Migration::load('event');
+     $source = $event_migration-&gt;get('source');
+     $source['parameters']['startDate'] = date('m-d-Y');
+     $event_migration-&gt;set('source', $source);
+     $event_migration-&gt;save();
+   }
+ }</pre>
+
+<p>Note that the entity get() and set() functions only operate directly on top-level configuration properties - we can’t get and set, for example ‘source.parameters.startDate’ directly. We need to retrieve the entire source configuration, modify our one value within it, and set the entire source configuration back on the migration.</p>
+</div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div><div class="field__item field__item--planet-drupal">
+        <span class="field__item-wrapper"><a href="../../tags/planet-drupal.html" property="schema:about" hreflang="en">Planet Drupal</a></span>
+      </div><div class="field__item field__item--migration">
+        <span class="field__item-wrapper"><a href="../../tags/migration.html" property="schema:about" hreflang="en">Migration</a></span>
+      </div><div class="field__item field__item--php">
+        <span class="field__item-wrapper"><a href="../../tags/php.html" property="schema:about" hreflang="en">PHP</a></span>
+      </div></div>
+</div>
+<div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"><h3 class="field__label">Use the Twitter thread below to comment on this post:</h3><div class="field__items"><div class="field__item"><div data-oembed-url="https://twitter.com/VirtPerformance/status/996408039086481408">
+<div style="max-width:320px;margin:auto;"><!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. -->
+<blockquote align="center" class="twitter-tweet">
+<p dir="ltr" lang="en" xml:lang="en">Drupal 8 migration from a SOAP API <a href="https://t.co/hf8LGiATsh">https://t.co/hf8LGiATsh</a></p>
+— Virtuoso Performance (@VirtPerformance) <a href="https://twitter.com/VirtPerformance/status/996408039086481408?ref_src=twsrc%5Etfw">May 15, 2018</a></blockquote>
+<script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script></div>
+</div>
+</div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/144","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../../sites/default/files/js/js_IXXM0JyuKXLkx6vQcq8R_JR95o07Mkzej4e-E9tCYsg.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/blog/vpadmin/drupal-8-migration-soap-api by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:21:12 GMT -->
+</html>

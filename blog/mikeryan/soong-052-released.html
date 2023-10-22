@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/soong-052-released by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:20:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="Soong 0.5.2 released" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="soong-052-released.html" />
+<meta name="twitter:description" content="The 0.5.2 release of the Soong ETL library is now available on Packagist - come see what&#039;s happening!" />
+<meta name="twitter:title" content="Soong 0.5.2 released" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="The 0.5.2 release of the Soong ETL library is now available on Packagist. tl;dr:
+
+It&#039;s still too early to use in real-world applications - APIs continue to evolve.
+	It&#039;s an excellent time to get involved in development, and help determine the direction we take!
+Key changes include:" />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="twitter:url" content="soong-052-released.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="soong-052-released.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>Soong 0.5.2 released</title>
+    <link rel="stylesheet" href="../../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-mikeryan-soong-052-released page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="152" role="article" about="/blog/mikeryan/soong-052-released" typeof="schema:Article" class="node node--id-152 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">Soong 0.5.2 released</span>
+</h1>  <span property="schema:name" content="Soong 0.5.2 released" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:0" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2019-04-08T18:49:43+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Monday, April 8, 2019 - 01:49pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2019-04-08T18:49:43+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>The 0.5.2 release of the <a href="https://gitlab.com/soongetl/soong">Soong ETL library</a> is now available on <a href="https://packagist.org/packages/soong/soong">Packagist</a>. tl;dr:</p>
+
+<ul><li>It's still too early to use in real-world applications - APIs continue to evolve.</li>
+	<li>It's an excellent time to get involved in development, and help determine the direction we take!</li>
+</ul><p><a href="https://soong-etl.readthedocs.io/en/stable/CHANGELOG/#052-2019-04-05">Key changes</a> include:</p>
+
+<ol><li>Tests have been fleshed out - pretty much everything (other than the console commands) has unit tests, plus there's a smoke test that runs all the provided examples to make sure they work. There are base test classes associated with the major interfaces that will be a big help when you implement components.</li>
+	<li>Implementing the tests exposed the smell (stench?) of static methods (primarily factory methods), so those have been eliminated. For now, we're using straight-up public function __construct(array $configuration) for our key components - we'll address later how best to factoryize them (probably when integrating into other frameworks).</li>
+	<li>The console commands now use <a href="https://github.com/hassankhan/config">hassankhan/config</a> to read configuration from disk - this means any format supported by the Config library (YAML, JSON, XML, …) can be used for Soong configuration. The primary format for the examples remains YAML, since that's the most human-readable, but there are JSON and XML samples as well.</li>
+	<li>All our configurable component interfaces (i.e., all except the Data components and TaskPipeline) now inherit from ConfigurableComponent. The default implementations provided extend a base class which uses <a href="https://symfony.com/doc/current/components/options_resolver.html">Symfony OptionsResolver</a> to define and validate the configuration options they support.</li>
+</ol><p>So, where are we now and where are we going?</p>
+
+<p>I have been envisioning a very pure architecture where the interfaces (and abstract base classes expected to be used by most implementations) were totally free of external dependencies, every distinct area of functionality in its own interface, etc. I'm seeing now that I may be guilty of premature optimization of architecture - I've been spending too much time trying to purify the architecture and not enough building useful tools.</p>
+
+<p>So, I'd like to turn attention now to basic applications, and let them drive where to put work in on the architecture. We have basic console commands now - let's build those out to where they're really useful for most than just the most basic real-world scenarios. The other thing is my motivation for making this all configuration-driven - an interactive application for creating and modifying ETL processes, supporting a process like:</p>
+
+<ol><li>Present the user with the supported types of data sources for extraction (i.e., let them select an Extractor class, such as Csv or DBAL).</li>
+	<li>Present the configuration options exposed by the Extractor. Let the user provide the specific source data (enter database credentials, upload a CSV file, etc.) and set any other appropriate options.</li>
+	<li>Present the supported types of destination (i.e., let them select a Loader class) and configure it.</li>
+	<li>Present the properties offered by the destination and allow a sequence of Transformers (with supported properties from the Extractor available as inputs) to be configured for each.</li>
+	<li>Generate the full task configuration.</li>
+	<li>Tasks can then be managed/run either with the command-line tools or through the UI.</li>
+</ol><p>Thus, I want to define the MVP (Minimal Viable Product) for those two applications, and implementing their MVP (probably at just a POC level for the UI at first) will define the MVP of the underlying framework. Ambitiously, I had wanted to get everything I want in an ETL framework (everything I had in Drupal plus more) into Soong V1.0 - but more realistically, I'm thinking let's get an MVP for V1.0 and flesh it out in V2.0.</p>
+
+<p>But I can't do it all alone! While I've had some feedback from fellow Drupal developers (including at the recent <a href="https://www.midcamp.org/2019">MidCamp</a>), I'm looking for more eyes on this work - especially from non-Drupal PHP developers who can challenge the assumptions we have from several years of working with the Drupal migration architecture. Now that we have a test suite, there are just <a href="https://gitlab.com/soongetl/soong/issues?label_name%5B%5D=DX">a couple more DX issues to address</a> - I think you'll find it quite easy to jump in, understand the architecture, and contribute.</p>
+
+<p>Obligatory self-promotion - <a href="../../contact.html">I'm available for data migration projects</a>.</p>
+
+<p>Thanks!</p></div></div>
+</div>
+<div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"><h3 class="field__label">Use the Twitter thread below to comment on this post:</h3><div class="field__items"><div class="field__item"><div data-oembed-url="https://twitter.com/VirtPerformance/status/1115327748837388288">
+<div style="max-width:480px;margin:auto;"><!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. -->
+<blockquote align="center" class="twitter-tweet" data-dnt="true">
+<p dir="ltr" lang="und" xml:lang="und"><a href="https://t.co/0uVJ13t8md">https://t.co/0uVJ13t8md</a></p>
+— Virtuoso Performance (@VirtPerformance) <a href="https://twitter.com/VirtPerformance/status/1115327748837388288">April 8, 2019</a></blockquote>
+<script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script></div>
+</div>
+</div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/152","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../../sites/default/files/js/js_IXXM0JyuKXLkx6vQcq8R_JR95o07Mkzej4e-E9tCYsg.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/blog/mikeryan/soong-052-released by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:20:54 GMT -->
+</html>

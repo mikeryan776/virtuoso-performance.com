@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/comment/98 by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:23:56 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="Upgrading to Drupal 8 using Drush" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="../blog/mikeryan/upgrading-drupal-8-using-drush.html" />
+<meta name="twitter:title" content="Upgrading to Drupal 8 using Drush" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="So, perhaps you&#039;ve been reading Upgrading to Drupal 8 using the UI and thinking &quot;hey, what about us cool kids who use Drush for everything?&quot;. Or, maybe you just know drush is better than a UI for running long processes like migrations. Well, this blog post is for you... We do have drush commands for running and rolling back upgrades, currently in the migrate_upgrade module (but which should land in Drush itself by Drupal&#039;s 8.1 release at the latest)." />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Migrate, Drupal" />
+<meta name="twitter:url" content="../blog/mikeryan/upgrading-drupal-8-using-drush.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="../blog/mikeryan/upgrading-drupal-8-using-drush.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>Upgrading to Drupal 8 using Drush</title>
+    <link rel="stylesheet" href="../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-mikeryan-upgrading-drupal-8-using-drush page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="135" role="article" about="/blog/mikeryan/upgrading-drupal-8-using-drush" typeof="schema:Article" class="node node--id-135 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">Upgrading to Drupal 8 using Drush</span>
+</h1>  <span property="schema:name" content="Upgrading to Drupal 8 using Drush" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:7" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2015-10-21T23:37:00+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Wednesday, October 21, 2015 - 06:37pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2015-10-21T23:37:00+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>So, perhaps you've been reading <a href="../blog/mikeryan/upgrading-to-drupal-8-using-ui.html">Upgrading to Drupal 8 using the UI</a> and thinking "hey, what about us cool kids who use Drush for everything?". Or, maybe you just know <a href="https://www.drupal.org/node/1806824">drush is better than a UI</a> for running long processes like migrations. Well, this blog post is for you... We do have drush commands for running and rolling back upgrades, currently in the <a href="https://www.drupal.org/project/migrate_upgrade">migrate_upgrade module</a> (but which should land in Drush itself by Drupal's 8.1 release at the latest). <!--break--> First off, for preparing a D8 site to run the upgrade process, we're just going to give the tl;dr version here - see the UI post for more context. <code> ~/Sites/d8$ # Install Drupal using the minimal profile ~/Sites/d8$ drush si minimal --account-name=admin --account-pass=admin --db-url=mysql://user:pass@127.0.0.1/d8 -y You are about to DROP all tables in your 'd8' database. Do you want to continue? (y/n): y Starting Drupal installation. This takes a while. Consider using the --notify global option. Installation complete. User name: admin User password: admin Congratulations, you installed Drupal! </code> <code> ~/Sites/d8$ # Enable the D8 modules corresponding to each source module you want upgraded. ~/Sites/d8$ drush en -y book,comment,block_content,menu_link_content,menu_ui,path,search,taxonomy The following extensions will be enabled: book, comment, block_content, menu_link_content, menu_ui, path, search, taxonomy, link Do you really want to continue? (y/n): y ... ~/Sites/d8$ # Don't forget the rest of the field types. ~/Sites/d8$ drush en -y datetime,image,options The following extensions will be enabled: datetime, image, options Do you really want to continue? (y/n): y ... </code> <code> ~/Sites/d8$ # Get the Drupal Upgrade (machine name migrate_upgrade, for historical reasons) module. ~/Sites/d8$ drush dl migrate_upgrade Project migrate_upgrade (8.x-1.x) downloaded to /Users/mryan/Sites/d8//modules/contrib/migrate_upgrade. ~/Sites/d8$ # Enable it! ~/Sites/d8$ drush en -y migrate_upgrade The following extensions will be enabled: migrate_upgrade, migrate_drupal, migrate Do you really want to continue? (y/n): y migrate was enabled successfully. migrate_drupal was enabled successfully. migrate_upgrade was enabled successfully. The Drupal Upgrade module has been enabled. Proceed to the upgrade form. </code> <code> ~/Sites/d8$ # Make sure it'll look nice when we're done. ~/Sites/d8/modules/contrib/migrate_upgrade$ drush en -y bartik The following extensions will be enabled: bartik Do you really want to continue? (y/n): y bartik was enabled successfully. </code> <code> ~/Sites/d8$ # Back up your database first! ~/Sites/d8$ drush sql-dump &gt;/tmp/d8-pre-upgrade.sql </code></p>
+
+<h2>Running the upgrade</h2>
+
+<p>OK, you've now got a vanilla Drupal 8 site ready to accept your Drupal 6 or Drupal 7 site data. It's now simply a matter of running the drush migrate-upgrade command, pointing it at your legacy database (or a copy thereof - it is not recommended to run directly against your production database) and at the source for your files (which may be scraped from your live website, or copied from a local directory): <code> ~/Sites/d8$ drush migrate-upgrade --legacy-db-url=mysql://user:pass@127.0.0.1/d6_site_db --legacy-root=http://mikeryan.name Upgrading d6_book_settings Upgrading d6_date_formats Upgrading d6_dblog_settings Upgrading d6_file_settings Upgrading d6_imagecache_presets Upgrading d6_search_settings Upgrading d6_system_cron Upgrading d6_system_date Upgrading d6_system_file Upgrading d6_system_image ... Upgrading d6_node_revision__story Upgrading d6_node_revision__todo Upgrading d6_node_setting_promote Upgrading d6_node_setting_status Upgrading d6_node_setting_sticky Upgrading d6_taxonomy_vocabulary Upgrading d6_taxonomy_term Upgrading d6_vocabulary_field Upgrading d6_vocabulary_field_instance Upgrading d6_vocabulary_entity_display Upgrading d6_vocabulary_entity_form_display Upgrading d6_term_node__1 Upgrading d6_term_node__2 Upgrading d6_term_node_revision__1 Upgrading d6_term_node_revision__2 Upgrading d6_user_contact_settings </code> Now, wasn't that easier than clicking through a bunch of forms? One other option to the migrate-upgrade command worth mentioning is --configure-only. The upgrade process has two distinct stages:</p>
+
+<ol><li>Configuration: the database credentials are used to read and analyze the source database. Given the modules enabled on the source side and on the destination side, the relevant migration templates are configured and saved as runnable migration configuration entities.</li>
+	<li>Import: The import() operation is run for the migration entities configured in the first stage.</li>
+</ol><p>So, if you pass the <code>--configure-only</code> option, only the configuration is performed and you're left with all the migrations you need, ready to run. The advantage of that is that you can use the migrate_tools module (part of the migrate_plus project, about which more in a future blog post) to selectively run the migrations: <code> ~/Sites/d8$ drush migrate-status Group: default                Status Total Imported Unprocessed Last imported block_content_type            Idle   1     0        0 d6_book_settings              Idle   1     0        0 d6_date_formats               Idle   3     0        0 ... d6_upload                     Idle   2     0        0 d6_upload_entity_display      Idle   5     0        0 d6_upload_entity_form_display Idle   5     0        0 d6_user_contact_settings      Idle   683   0        0 ~/Sites/d8$ drush migrate-import d6_date_formats Processed 3 items (3 created, 0 updated, 0 failed, 0 ignored) - done with 'd6_upload' </code> Finally, if you choose to go back and try the upgrade again from scratch, you can rollback the full upgrade (as explained in the <a href="../blog/mikeryan/upgrading-to-drupal-8-using-ui.html">UI post</a>, simple configuration changes will not be restored): <code> ~/Sites/d8$ drush migrate-upgrade-rollback All migrations tagged as 'Drupal' will be rolled back. Are you sure? (y/n): y Rolling back d6_user_contact_settings Rolling back d6_upload_entity_form_display Rolling back d6_upload_entity_display Rolling back d6_upload ... Rolling back d6_file_settings Rolling back d6_dblog_settings Rolling back d6_date_formats Rolling back d6_book_settings Rolling back block_content_type </code> Alternatively, to be sure you are returning completely to square one, you can restore your backup: <code> ~/Sites/d8$ mysql -u user -p d8 &lt;/tmp/d8-pre-upgrade.sql </code></p>
+
+<h2>How'd it go?</h2>
+
+<p>This is one part of the <a href="../blog/mikeryan/upgrading-to-drupal-8-using-ui.html">UI post</a> worth repeating - the upgrade path in Drupal core for 8.0 is experimental, and we need your feedback to tighten it up and make it fully supported for 8.1. If you ran into any problems in upgrading your site, or have suggestions for improving the process, please share them:</p>
+
+<ol><li>If your problem or suggestion is specifically about the drush commands, please open an issue in the <a hef="https://www.drupal.org/project/issues/migrate_upgrade">Drupal Upgrade issue queue</a> (being sure to check if it's already been reported, of course).</li>
+	<li>If you had error messages while the upgrade process was running, or something was not imported correctly into your site, please open an issue with the "migration system" component in the <a href="https://www.drupal.org/project/issues/drupal?component=migration+system">Drupal core issue queue</a> (again, checking for previous reports).</li>
+</ol><p>If you're not sure where to report the issue, just pick one and don't sweat it - we'll move it if necessary. Thanks!</p>
+</div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--migrate">
+        <span class="field__item-wrapper"><a href="../tags/migrate.html" property="schema:about" hreflang="en">Migrate</a></span>
+      </div><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a>
+    <h2 class="comment-field__title h3">Comments</h2>
+    <a id="comment-87"></a>
+<article role="article" data-comment-user-id="0" about="/comment/87" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="87.html#comment-87" class="permalink" rel="bookmark" hreflang="en">I followed the above process</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1463948532"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Sunday, May 22, 2016 - 03:22pm  <span property="schema:dateCreated" content="2016-05-22T20:22:12+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>I followed the above process and it appeared to work, but some of my site layout and content were not migrated from my Drupal 7.43 DB to my {empty-except for base d8 install} D8 DB.<br />
+<a href="mailto:dforeman@stny.rr.com">dforeman@stny.rr.com</a></p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+
+<div class="indented"><a id="comment-90"></a>
+<article role="article" data-comment-user-id="6" about="/comment/90" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="90.html#comment-90" class="permalink" rel="bookmark" hreflang="en">There are still a few holes</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1464010399"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+        <span class="comment__pubdate">Monday, May 23, 2016 - 08:33am  <span property="schema:dateCreated" content="2016-05-23T13:33:19+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>There are still a few holes in Drupal 7 migration - see <a href="https://www.drupal.org/node/2456259">https://www.drupal.org/node/2456259</a>. If you have a problem which is not covered there, and you can&#039;t &lt;a href=&quot;<a href="https://www.drupal.org/project/issues/drupal?text=&amp;status=Open&amp;priorities=All&amp;categories=All&amp;version=All&amp;component=migration+system%22>find">https://www.drupal.org/project/issues/drupal?text=&amp;status=Open&amp;prioriti…</a> an existing issue covering your problem&lt;/a&gt;, please &lt;a href=&quot;<a href="https://www.drupal.org/node/add/project-issue/drupal">open">https://www.drupal.org/node/add/project-issue/drupal&quot;&gt;open</a> a new issue&lt;/a&gt; for your problem.</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+</div><a id="comment-92"></a>
+<article role="article" data-comment-user-id="0" about="/comment/92" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="92.html#comment-92" class="permalink" rel="bookmark" hreflang="en">thanks for this had to remove</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1464966866"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Friday, June 3, 2016 - 10:14am  <span property="schema:dateCreated" content="2016-06-03T15:14:26+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>thanks for this had to remove all my extra user_roles for it to work no biggie can read these in </p>
+<p>one question though if your happy with the migration can the migrate tables be deleted ?</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+
+<div class="indented"><a id="comment-93"></a>
+<article role="article" data-comment-user-id="6" about="/comment/93" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="93.html#comment-93" class="permalink" rel="bookmark" hreflang="en">When done, you can uninstall</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1464989557"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+        <span class="comment__pubdate">Friday, June 3, 2016 - 04:32pm  <span property="schema:dateCreated" content="2016-06-03T21:32:37+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>When done, you can uninstall the migrate* modules - the migrate_map and migrate_message tables aren&#039;t currently automatically dropped (see <a href="https://www.drupal.org/node/2713327">https://www.drupal.org/node/2713327</a>), but you can drop them manually.</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+</div><a id="comment-94"></a>
+<article role="article" data-comment-user-id="0" about="/comment/94" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="94.html#comment-94" class="permalink" rel="bookmark" hreflang="en">Hey Mike, 
+Hoping for a</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1465855542"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Monday, June 13, 2016 - 05:05pm  <span property="schema:dateCreated" content="2016-06-13T22:05:42+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Hey Mike, </p>
+<p>Hoping for a little direction or advice. I have to perform an upgrade from D6 to D8. The source site cranks out a lot of content, so I need to be able to go back and import updated content into the D8 site before taking it live. I had started this process back with Drupal 8.0, but it has now dragged on to this point.<br />
+Problem I&#039;m seeing is that Drupal 8.1.2 no longer supports the UI, migrate_tools, or migrate_plus. I installed  migrate_upgrade 8.x-2.0-beta1 so that at least gives me the ability to run an initial migration.</p>
+<p>Even if I start over with a fresh install of D8, and rebuild my views etc, I&#039;ll need to import newer content before I can push it to production.  If I simply run migrate-upgrade --update will that allow me to perform an update without wiping out what I already have migrated? Or do I need to come up with a different plan?</p>
+<p>Thanks</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+
+<div class="indented"><a id="comment-96"></a>
+<article role="article" data-comment-user-id="6" about="/comment/96" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="96.html#comment-96" class="permalink" rel="bookmark" hreflang="en">Comments on an old blog post</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1465913768"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+        <span class="comment__pubdate">Tuesday, June 14, 2016 - 09:16am  <span property="schema:dateCreated" content="2016-06-14T14:16:08+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Comments on an old blog post aren&#039;t a great avenue for support questions - <a href="http://drupal.stackexchange.com/">http://drupal.stackexchange.com/</a> will get you more visibility (I&#039;m not the only one in the Drupalverse who knows something about migration, after all).</p>
+<p>&lt;blockquote&gt;Problem I&#039;m seeing is that Drupal 8.1.2 no longer supports the UI, migrate_tools, or migrate_plus. I installed migrate_upgrade 8.x-2.0-beta1 so that at least gives me the ability to run an initial migration.&lt;/blockquote&gt;<br />
+Where are you seeing that? The UI is in core now, and migrate_tools and migrate_plus (at least the -dev releases) work fine. See <a href="http://mikeryan.name/blog/mikeryan/migration-update-for-drupal-8-1">http://mikeryan.name/blog/mikeryan/migration-update-for-drupal-8-1</a> for the 8.1.x status of the migration ecosystem (as of a couple months ago).</p>
+<p>&lt;blockquote&gt;If I simply run migrate-upgrade --update will that allow me to perform an update without wiping out what I already have migrated&lt;/blockquote&gt;<br />
+There is no --update flag on migrate-upgrade - if there were one that worked like migrate-import, it would completely update all the previously-imported content from the latest source data. Simply running migrate-upgrade again will import any new content.</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+
+<div class="indented"><a id="comment-98"></a>
+<article role="article" data-comment-user-id="0" about="/comment/98" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="98.html#comment-98" class="permalink" rel="bookmark" hreflang="en">Comments on an old blog post</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1466527949"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Tuesday, June 21, 2016 - 11:52am  <span property="schema:dateCreated" content="2016-06-21T16:52:29+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>&lt;blockquote&gt;Comments on an old blog post aren&#039;t a great avenue for support questions &lt;/blockquote&gt;<br />
+Perhaps not - but you did respond quickly and gave me a kick in the right direction. So thank you for that.</p>
+<p>I&#039;m trying to migrate into a fresh Drupal 8 site, and am having some serious issues - most likely due to the way the Drupal 6 site was built. But I&#039;ll save those posts for the issue queue or stackexchange.</p>
+<p>Thanks again</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+</div></div></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,comment\/drupal.comment-by-viewer,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"comment\/98","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en","currentQuery":{"page":0}},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../sites/default/files/js/js_OFI5Q0ZQQ-MNF6vQYe6ofpnw-jlCie-pnVszk400ROQ.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/comment/98 by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:23:56 GMT -->
+</html>

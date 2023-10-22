@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/blog/vpadmin/configuring-migrations-form by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:21:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="Configuring migrations via a form" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="configuring-migrations-form.html" />
+<meta name="twitter:description" content="In which Mike shows examples of modifying migration configuration through admin forms." />
+<meta name="twitter:title" content="Configuring migrations via a form" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="Frequently, there may be parts of a migration configuration which shouldn’t be hard-coded into your YAML file - some configuration may need to be changed periodically, some may vary according to environment (for example, a dev environment may access a dev or test API endpoint, while prod needs to access a production endpoint), or you may need a password or other credentials to access a secure endpoint (or for a database source which you can’t put into settings.php). You may also need to upload a data file for input into your migration." />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Drupal, Planet Drupal, Migration, PHP" />
+<meta name="twitter:url" content="configuring-migrations-form.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="configuring-migrations-form.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>Configuring migrations via a form</title>
+    <link rel="stylesheet" href="../../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-vpadmin-configuring-migrations-form page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="146" role="article" about="/blog/vpadmin/configuring-migrations-form" typeof="schema:Article" class="node node--id-146 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">Configuring migrations via a form</span>
+</h1>  <span property="schema:name" content="Configuring migrations via a form" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:0" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2018-05-23T02:29:19+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Tuesday, May 22, 2018 - 09:29pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2018-05-23T02:29:19+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Frequently, there may be parts of a migration configuration which shouldn’t be hard-coded into your YAML file - some configuration may need to be changed periodically, some may vary according to environment (for example, a dev environment may access a dev or test API endpoint, while prod needs to access a production endpoint), or you may need a password or other credentials to access a secure endpoint (or for a database source which you can’t put into settings.php). You may also need to upload a data file for input into your migration. If you are implementing your migrations as configuration entities (a feature provided by the <a href="https://www.drupal.org/project/migrate_plus">migrate_plus module</a>), all this is fairly straightforward - migration configuration entities may easily be loaded, modified, and saved based on form input, <a href="https://gitlab.com/mikeryan/d8-migrate-example-002/blob/master/acme_migrate/src/Form/MigrationConfigurationForm.php">implemented in a standard form class</a>.</p>
+
+<h2>Uploading data files</h2>
+
+<p>For this project, while other CSV source files were static enough to go into the migration module itself, we needed to periodically update the blog data during the development and launch process. A file upload field is set up in the normal way:</p>
+
+<pre dir="ltr">
+$form['acme_blog_file'] = [
+ '#type' =&gt; 'file',
+ '#title' =&gt; $this-&gt;t('Blog data export file (CSV)'),
+ '#description' =&gt; $this-&gt;t('Select an exported CSV file of blog data. Maximum file size is @size.',
+   ['@size' =&gt; format_size(file_upload_max_size())]),
+];</pre>
+
+<p>And saved to the public file directory in the normal way:</p>
+
+<pre dir="ltr">
+$all_files = $this-&gt;getRequest()-&gt;files-&gt;get('files', []);
+if (!empty($all_files['acme_blog_file'])) {
+ $validators = ['file_validate_extensions' =&gt; ['csv']];
+ if ($file = file_save_upload('acme_blog_file', $validators, 'public://', 0)) {</pre>
+
+<p>So, once we’ve got the file in place, we need to point the migration at it. We load the blog migration, retrieve its source configuration, set the path to the uploaded file, and save it back to active configuration storage.</p>
+
+<pre dir="ltr">
+   $blog_migration = Migration::load('blog');
+   $source = $blog_migration-&gt;get('source');
+   $source['path'] = $file-&gt;getFileUri();
+   $blog_migration-&gt;set('source', $source);
+   $blog_migration-&gt;save();
+   drupal_set_message($this-&gt;t('File uploaded as @uri.', ['@uri' =&gt; $file-&gt;getFileUri()]));
+   }
+ else {
+   drupal_set_message($this-&gt;t('File upload failed.'));
+ }
+}</pre>
+
+<p>It’s important to understand that <code>get()</code> and <code>set()</code> only operate directly on top-level configuration keys - we can’t simply do something like <code>$blog_migration-&gt;set(‘source.path’, $file-&gt;getFileUri())</code>, so we need to retrieve the whole source configuration array, and set the whole array back on the entity.</p>
+
+<h2>Endpoints and credentials</h2>
+
+<p>The endpoint and credentials for our event service are configurable through the same webform. Note that we obtain the current values from the event migration configuration entity to prepopulate the form:</p>
+
+<pre dir="ltr">
+$event_migration = Migration::load('event');
+$source = $event_migration-&gt;get('source');
+if (!empty($source['urls'])) {
+ if (is_array($source['urls'])) {
+   $default_value = reset($source['urls']);
+ }
+ else {
+   $default_value = $source['urls'];
+ }
+}
+else {
+ $default_value = 'http://services.example.com/CFService.asmx?wsdl';
+}
+
+$form['acme_event'] = [
+ '#type' =&gt; 'details',
+ '#title' =&gt; $this-&gt;t('Event migration'),
+ '#open' =&gt; TRUE,
+];
+
+$form['acme_event']['event_endpoint'] = [
+ '#type' =&gt; 'textfield',
+ '#title' =&gt; $this-&gt;t('CF service endpoint for retrieving event data'),
+ '#default_value' =&gt; $default_value,
+];
+
+$form['acme_event']['event_clientid'] = [
+ '#type' =&gt; 'textfield',
+ '#title' =&gt; $this-&gt;t('Client ID for the CF service'),
+ '#default_value' =&gt; @$source['parameters']['clientId'] ?: 1234,
+];
+
+$form['acme_event']['event_password'] = [
+ '#type' =&gt; 'password',
+ '#title' =&gt; $this-&gt;t('Password for the CF service'),
+ '#default_value' =&gt; @$source['parameters']['clientCredential']['Password'] ?: '',
+];</pre>
+
+<p>In <code>submitForm()</code>, we again load the migration configuration, insert the form values, and save:</p>
+
+<pre dir="ltr">
+$event_migration = Migration::load('event');
+$source = $event_migration-&gt;get('source');
+$source['urls'] = $form_state-&gt;getValue('event_endpoint');
+$source['parameters'] = [
+ 'clientId' =&gt; $form_state-&gt;getValue('event_clientid'),
+ 'clientCredential' =&gt; [
+   'ClientID' =&gt; $form_state-&gt;getValue('event_clientid'),
+   'Password' =&gt; $form_state-&gt;getValue('event_password'),
+ ],
+ 'startDate' =&gt; date('m-d-Y'),
+];
+
+$event_migration-&gt;set('source', $source);
+$event_migration-&gt;save();
+drupal_set_message($this-&gt;t('Event migration configuration saved.'));</pre>
+
+<p>Note that we also reset the startDate value while we’re at it (see the previous <a href="drupal-8-migration-soap-api.html">SOAP blog post</a>).</p>
+</div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div><div class="field__item field__item--planet-drupal">
+        <span class="field__item-wrapper"><a href="../../tags/planet-drupal.html" property="schema:about" hreflang="en">Planet Drupal</a></span>
+      </div><div class="field__item field__item--migration">
+        <span class="field__item-wrapper"><a href="../../tags/migration.html" property="schema:about" hreflang="en">Migration</a></span>
+      </div><div class="field__item field__item--php">
+        <span class="field__item-wrapper"><a href="../../tags/php.html" property="schema:about" hreflang="en">PHP</a></span>
+      </div></div>
+</div>
+<div class="clearfix text-formatted field field-node--field-twitter-comments field-formatter-text-default field-name-field-twitter-comments field-type-text-long field-label-above has-single"><h3 class="field__label">Use the Twitter thread below to comment on this post:</h3><div class="field__items"><div class="field__item"><div data-oembed-url="https://twitter.com/VirtPerformance/status/998933771964600320">
+<div style="max-width:320px;margin:auto;"><!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. -->
+<blockquote align="center" class="twitter-tweet" data-dnt="true">
+<p dir="ltr" lang="en" xml:lang="en">Configuring migrations via a form <a href="https://t.co/EZTiUKBazX">https://t.co/EZTiUKBazX</a></p>
+— Virtuoso Performance (@VirtPerformance) <a href="https://twitter.com/VirtPerformance/status/998933771964600320?ref_src=twsrc%5Etfw">May 22, 2018</a></blockquote>
+<script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script></div>
+</div>
+
+<p> </p>
+</div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a></section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/146","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../../sites/default/files/js/js_IXXM0JyuKXLkx6vQcq8R_JR95o07Mkzej4e-E9tCYsg.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/blog/vpadmin/configuring-migrations-form by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:21:07 GMT -->
+</html>

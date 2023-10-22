@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="no-js adaptivetheme">
+  
+<!-- Mirrored from virtuoso-performance.com/comment/99 by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:23:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link href="../themes/custom/vp/images/touch-icons/Icon-60.png" rel="apple-touch-icon" sizes="60x60" /><link href="../themes/custom/vp/images/touch-icons/Icon-76.png" rel="apple-touch-icon" sizes="76x76" /><link href="../themes/custom/vp/images/touch-icons/Icon-60-2x.png" rel="apple-touch-icon" sizes="120x120" /><link href="../themes/custom/vp/images/touch-icons/Icon-76-2x.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta charset="utf-8" />
+<meta name="title" content="Migration update for Drupal 8.1" />
+<meta name="twitter:card" content="summary" />
+<link rel="canonical" href="../blog/mikeryan/migration-update-drupal-81.html" />
+<meta name="twitter:title" content="Migration update for Drupal 8.1" />
+<meta name="twitter:site" content="@VirtPerformance" />
+<meta name="description" content="For those of you using the migration system under Drupal 8.0.x, with Drupal 8.1 scheduled to release tomorrow, let’s take a look at where the migration ecosystem now stands. We’ll discuss the biggest core API change, then how moving to 8.1 affects various use cases.
+
+Migrations are now plugins" />
+<meta name="twitter:creator" content="@VirtPerformance" />
+<meta name="keywords" content="Drupal" />
+<meta name="twitter:url" content="../blog/mikeryan/migration-update-drupal-81.html" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="revision" href="../blog/mikeryan/migration-update-drupal-81.html" />
+
+    <link rel="dns-prefetch" href="http://cdnjs.cloudflare.com/"><title>Migration update for Drupal 8.1</title>
+    <link rel="stylesheet" href="../sites/default/files/css/css_SC_5E35h0di9BgJs-iLEPGiFCszkalUIDZXv9O6lfsk9117.css?pof1id" media="all" />
+<link rel="stylesheet" href="../sites/default/files/css/css_N_Dn43g6GJrIz6J4Ujda70Qe4Z95K2zTeAY18UB8wbs9117.css?pof1id" media="all" />
+
+    <script src="../core/assets/vendor/modernizr/modernizr.minacee.js?v=3.3.1"></script>
+
+  </head><body role="document" class="layout-type--site-builder user-logged-out path-not-frontpage path-node path-blog-mikeryan-migration-update-drupal-81 page-node-type--article site-name--virtuoso-performance-archived theme-name--vp">
+        <a href="#block-vp-content" class="visually-hidden focusable skip-link">Skip to main content</a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page js-layout">
+        <header class="l-pr page__row pr-header" role="banner" id="masthead">
+      <div class="l-rw regions container pr-header__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-header__header-first" id="rid-header-first"><div id="block-vp-branding" class="l-bl block block-branding block-config-provider--system block-plugin-id--system-branding-block has-name has-slogan" id="system-branding-block">
+  <div class="block__inner block-branding__inner">
+
+    <div class="block__content block-branding__content site-branding"><span class="site-branding__text"><strong class="site-branding__name"><a href="../index.html" title="Home" itemprop="url" rel="home" class="site-branding__name-link">Virtuoso Performance (archived)</a></strong><em class="site-branding__slogan">MIGRATE ALL THE THINGS!</em></span></div></div>
+</div>
+</div>
+        
+      </div>
+    </header>
+        <div class="l-pr page__row pr-navbar" id="navbar">
+      <div class="l-rw regions container pr-navbar__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-navbar__navbar" id="rid-navbar"><svg style="display:none;">
+    <symbol id="rm-toggle__icon--open" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/>
+  </symbol>
+    <symbol id="rm-toggle__icon--close" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet">
+    <path class="rm-toggle__icon__path" d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/>
+  </symbol>
+</svg>
+<nav role="navigation" aria-labelledby="block-vp-main-menu-menu" id="block-vp-main-menu" class="l-bl rm-block rm-config-provider--system rm-plugin-id--system-menu-block-main js-hide" id="system-menu-blockmain">
+  <div class="rm-block__inner">
+    <div class="rm-toggle">
+      <button href="#rm-content" class="rm-toggle__link un-button" role='button' aria-controls="rm-content" aria-expanded="false">
+                <svg class="rm-toggle__icon">
+          <use id="rm-toggle__icon--use" xlink:href="#rm-toggle__icon--open"></use>
+        </svg>
+                <span class="rm-toggle__label" id="block-vp-main-menu-menu">Main menu</span>
+      </button>
+    </div><div class="rm-block__content" id="rm-content">
+        <span id="rm-accordion-trigger" class="hidden">
+            <button class="rm-accordion-trigger un-button" role='button' aria-controls="child-menu" aria-expanded="false">
+              <svg class="rm-accordion-trigger__icon" viewBox="0 0 1792 1792" preserveAspectRatio="xMinYMid meet"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                            <span class="visually-hidden">Toggle sub-menu</span>
+            </button>
+          </span>
+    <ul class="menu odd menu-level-1 menu-name--main">      
+                          
+      
+            <li class="menu__item menu__item-title--news" id="menu-name--main__news">
+
+        <span class="menu__link--wrapper">
+          <a href="../index.html" class="menu__link" data-drupal-link-system-path="node">News</a>
+        </span>
+
+        
+      </li>      
+                          
+      
+            <li class="menu__item menu__item-title--about" id="menu-name--main__about">
+
+        <span class="menu__link--wrapper">
+          <a href="../about.html" title="About Virtuoso Performance and Mike Ryan" class="menu__link" data-drupal-link-system-path="node/51">About</a>
+        </span>
+
+        
+      </li></ul>
+  
+
+</div></div>
+</nav>
+</div>
+      </div>
+    </div>
+        <div class="l-pr page__row pr-highlighted" id="highlighted">
+      <div class="l-rw regions container pr-highlighted__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-highlighted__highlighted" id="rid-highlighted"><div class="l-bl block--messages" id="system-messages-block" data-drupal-messages></div></div>
+      </div>
+    </div>
+            <div class="l-pr page__row pr-main" id="main-content">
+      <div class="l-rw regions container pr-main__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="4" class="l-r region pr-main__content" id="rid-content"><main id="block-vp-content" class="l-bl block block-main-content" role="main" id="system-main-block">
+  
+  <article data-history-node-id="140" role="article" about="/blog/mikeryan/migration-update-drupal-81" typeof="schema:Article" class="node node--id-140 node--type-article node--promoted node--view-mode-full">
+  <div class="node__container">
+
+    <header class="node__header--has-meta node__header"><h1 class="node__title"><span property="schema:name" class="field field-name-title field-formatter-string field-type-string field-label-hidden">Migration update for Drupal 8.1</span>
+</h1>  <span property="schema:name" content="Migration update for Drupal 8.1" class="rdf-meta hidden"></span>
+  <span property="schema:interactionCount" content="UserComments:12" class="rdf-meta hidden"></span>
+<div class="node__meta"><div class="node__submitted">
+             <span class="node__author"><span rel="schema:author" class="field field-name-uid field-formatter-author field-type-entity-reference field-label-hidden"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+             <span class="node__pubdate"><span property="schema:dateCreated" content="2016-04-19T19:24:43+00:00" class="field field-name-created field-formatter-timestamp field-type-created field-label-hidden">Tuesday, April 19, 2016 - 02:24pm</span>
+</span>
+          </div>  <span property="schema:dateCreated" content="2016-04-19T19:24:43+00:00" class="rdf-meta hidden"></span>
+</div></header>
+
+    <div class="node__content"><div property="schema:text" class="clearfix text-formatted field field-node--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>For those of you using the migration system under Drupal 8.0.x, with Drupal 8.1 <a href="https://www.drupal.org/core/release-cycle-overview">scheduled to release tomorrow</a>, let’s take a look at where the migration ecosystem now stands. We’ll discuss the biggest core API change, then how moving to 8.1 affects various use cases.</p>
+
+<h2>Migrations are now plugins</h2>
+
+<p>You may recall that the migration support in core is <a href="https://www.drupal.org/core/experimental">experimental</a> - that is, it is still open to backwards-compatibility-breaking changes. There is a big one in 8.1 - migrations themselves are now <a href="https://www.drupal.org/node/2625696">plugins rather than configuration entities</a>. This reduces technical debt, in the form of migration-specific infrastructure that’s now being handled by standard core features. Specifically, the plugins themselves serve the function that migration templates did in 8.0.x - they provide default configuration for migrations which require additional configuration (in particular, a database connection) to become runnable. In addition, the migration system’s home-grown builder system (used to generate, say, bundle-specific migrations from one generic node template) is now replaced by <a href="https://www.drupal.org/node/1653226">standard plugin derivatives</a>. The lack of configuration entities, however, presents challenges for general-purpose migration tools. One is that there is now no direct core support for persisting configuration changes for the plugins - any configuration (such as a database connection) injected into a migration plugin is only applied at runtime, and without a standard method of persisting that configuration a general-purpose tool (such as the drush commands in <a href="https://www.drupal.org/project/migrate_tools">migrate_tools</a>) has no way of knowing what to inject or how. Likewise, we have the goal of developing tools for creating migrations from scratch through a UI, and the core migration approach of plugin configuration provided by YAML files within a module isn’t dynamic enough for this - again, we need a dynamic way to persist the configuration. <a href="https://www.drupal.org/node/2667368#comment-11045021">Another issue is discovery</a> - a tool like drush migrate-status wants to show you all “relevant” migrations (migrations which have been fully configured and are runnable), but with core full of migration plugins which aren’t relevant in most cases (and there’s virtually no case where they would all be relevant) simply discovering all the plugins and instantiating them doesn’t work. The irrelevant plugins throw a variety of exceptions, some during the initial discovery (making them difficult to handle) - perhaps worse, some give no indication at discovery or instantiation time so cannot be filtered out without hardcoded knowledge. At this point the cleanest answer I could come up with to the discovery problem was a registration process - an explicit way to mark a migration as eligible to be managed by the tools. And one means of “registering” a migration is to create a configuration entity for it, which (compared to a pure registration implementation like migration in Drupal 7 had) has the advantage of addressing the configuration persistence issues as well. So, <a href="https://www.drupal.org/node/2701277">that’s what I’ve done</a>. The <a href="https://www.drupal.org/project/migrate_plus">migrate_plus module</a> now defines a Migration configuration entity akin to that which was in core in 8.0.x - but cleaner. You’ll find that unlike 8.0.x Migration entities, which contained a huge amount of functionality, the migrate_plus 8.1.x Migration entity class consists of pretty much nothing but annotation and schema - a much cleaner use of the configuration entity system. The migration functionality is contained within the core Migration plugin class. So, how does the entity relate to the plugin? Let’s look first at how the core migration plugins are defined. The migrate module in core implements MigrationPluginManager (provided as the plugin.manager.migration service). This plugin manager uses the YamlDirectoryDiscovery class to provide the plugin configuration - basically, it tells the discovery class to look in each enabled modules’ migrations directory (preferred) or migration_templates directory (for backwards compatibility) to find YAML files defining migration plugins. Thus, if you ask that service for all plugins it manages, you get a list corresponding to each enabled module’s migrations/*.yml and migration_templates/*.yml files.<s> In migrate_plus, I’ve introduced an alternative MigrationConfigEntityPluginManager (provided as the plugin.manager.config_entity_migration service). This plugin manager uses a custom ConfigEntityDiscovery class, which will find all configuration entities of the specified entity type (this class is, by the way, fully general) and create migration plugins using that configuration.</s> [Edit: This plugin manager no longer exists, we switched from using a separate plugin manager to using the standard one with a deriver to wrap "standard" migration plugins in config entities.] These configuration entities may originate at a module’s installation time (from the config/install directory), or be generated by a UI or drush tool. So, it sounds like we’ve got two different kinds of migration plugins now, right? No, not really - what we have is two distinct means of providing migration plugins with their configuration. For comparison’s sake:</p>
+
+<h3><s>MigrationPluginManager</s> "migrations" directory</h3>
+
+<ol><li>Configuration comes from YAML files in a module’s migrations or migration_templates directory.</li>
+	<li>May be incomplete (requiring runtime injection of required configuration such as a database connection).</li>
+	<li><s>Cannot be managed by migrate_tools - needs a specialized runner (e.g., migrate_drupal_ui for the core upgrade process) to inject required configuration.</s> Edit: No longer true, migrate_tools can handle these now.</li>
+	<li>Appropriate for module-defined migrations which require further configuration to be run, or which are completely hard-coded (no need to edit the configuration with UI tools, for example).</li>
+</ol><h3><s>MigrationConfigEntityPluginManager</s> "config/install" directory</h3>
+
+<ol><li>Configuration comes from configuration entities in the site’s active configuration (which may originate from a module’s config/install, or be generated dynamically).</li>
+	<li>Is assumed to be complete - the plugin should be able to be instantiated and run without any runtime injection.</li>
+	<li>Can be managed by migrate_tools.</li>
+	<li>Appropriate for migrations generated by tools, or module-provided migrations which you want to have editable.</li>
+</ol><h3>Straight Drupal upgrades</h3>
+
+<p>If you’re looking to simply upgrade your Drupal 6 or Drupal 7 site to Drupal 8 as-is, the big news here is that the upgrade UI (formerly part of the <a href="https://www.drupal.org/project/migrate_upgrade">migrate_upgrade contrib module</a>) is now in core as the migrate_drupal_ui module. It works the same as it did previously - provide your database credentials and source of your public files and go. It should be noted that the previous support for rolling back or performing incremental migrations after an initial upgrade has been removed - the premise is that rather than doing a rollback, you should expect to reinstall Drupal 8 and rerun the upgrade from scratch. The contrib migrate_upgrade module still provides the migrate-upgrade drush command (as well as migrate-upgrade-rollback).</p>
+
+<h3>Custom Drupal migrations</h3>
+
+<p>While the plan is to eventually provide UI tools to make it easy to customize Drupal-to-Drupal migration paths (omit a content type here, map an old field to a differently-named new one there, etc.), in the meantime people have to use drush migrate-upgrade --configure-only to tweak their upgrade paths. More details on this workflow will follow - for the moment, the main thing to be aware of is that (after a period of absence) --configure-only is back and can be used to generated configuration entities which you can then edit to your specific needs.</p>
+
+<h3>Implementing upgrade paths for contrib modules</h3>
+
+<p>Because the new migration plugin manager reads the migration_templates directory for backward compatibility (and because the source/process/destination plugins have not changed), in most cases contrib modules implementing upgrade paths should not need to make any changes. The main issue would be in the rare case where you were using builder plugins, which are now gone and should be replaced by derivers instead. See the <a href="https://www.drupal.org/node/2668742">change record</a> for more details.</p>
+
+<h3>General custom migrations</h3>
+
+<p>If you are implementing other migration scenarios, you’ll need to make the following changes to your migration modules for 8.1:</p>
+
+<ol><li>If in 8.0.x you were implementing migrations by providing .yml files in config/install, you’ll need to rename those files from migrate.migration.* to migrate_plus.migration.* (because it is now the contrib migrate_plus module rather than the core migrate module which implements migration configuration entities).</li>
+	<li>If you were previously using migration groups, please note that they are now first-class properties of the migration entity. So, you can replace <code> third_party_settings:   migrate_plus:     migration_group: beer </code> with <code> migration_group: beer </code></li>
+	<li>Previously you could omit migration_dependencies in migrations with no dependencies, but the core plugin is now a stickler for seeing an empty array. So, in this case you’ll need to add <code> migration_dependencies: {} </code></li>
+</ol><h3>Going forward</h3>
+
+<p>There’s still a <a href="https://www.drupal.org/project/issues/drupal?component=migration+system">fair amount of work being done</a> to fill in the gaps in the core migration support (particularly for upgrades from D6/D7). Hopefully we can remove the experimental label from the migration system for Drupal 8.2. In the contrib space, migrate_upgrade 8.x-2.0.beta1 (or 8.x-2.x-dev) is the release to use with Drupal 8.1. I will be releasing beta versions of migrate_plus and migrate_tools shortly. Once those are out, the main foci of my community time will be:</p>
+
+<ul><li>Core issues (I haven’t been much involved on that side lately as I’ve been bringing the contrib side up-to-date with 8.1.x).</li>
+	<li>Finally getting started on the D8 version of migrate_d2d, so we have proper tools for general Drupal-to-Drupal migrations.</li>
+	<li><a href="https://www.drupal.org/node/2623012">Consolidated XML/JSON (and other file-based) source plugins</a>. I got these basically working a few months ago, but there’s still a fair amount of fleshing out to do.</li>
+</ul><h3>Acknowledgements</h3>
+
+<p>My recent work in the migration space has been sponsored by <a href="https://drupalize.me/blog/201604/community-update-migrate-and-drupal-documentation">Drupalize.Me</a>. In particular, <a href="https://www.drupal.org/u/willwh">Will Hetherington</a> has given a lot of great feedback.</p>
+</div></div>
+</div>
+<div class="field field-node-field-tags field-entity-reference-type-taxonomy-term field-formatter-entity-reference-label field-name-field-tags field-type-entity-reference field-label-above"><h3 class="field__label">Tags</h3><div class="field__items"><div class="field__item field__item--drupal">
+        <span class="field__item-wrapper"><a href="../tags/drupal.html" property="schema:about" hreflang="en">Drupal</a></span>
+      </div></div>
+</div>
+</div><section rel="schema:comment" class="field field-node--comment field-formatter-comment-default field-name-comment field-type-comment field-label-above display-mode-threaded comment-bundle-comment comment-wrapper">
+  <a name="comments"></a>
+    <h2 class="comment-field__title h3">Comments</h2>
+    <a id="comment-75"></a>
+<article role="article" data-comment-user-id="0" about="/comment/75" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="75.html#comment-75" class="permalink" rel="bookmark" hreflang="en">So why not a deriver? It was</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1461160980"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Wednesday, April 20, 2016 - 09:03am  <span property="schema:dateCreated" content="2016-04-20T14:03:00+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>So why not a deriver? It was written and ready to be plucked from the issue.</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+
+<div class="indented"><a id="comment-76"></a>
+<article role="article" data-comment-user-id="6" about="/comment/76" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="76.html#comment-76" class="permalink" rel="bookmark" hreflang="en">Found it at</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1461165319"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+        <span class="comment__pubdate">Wednesday, April 20, 2016 - 10:15am  <span property="schema:dateCreated" content="2016-04-20T15:15:19+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Found it at <a href="https://www.drupal.org/node/2625696#comment-10855674">https://www.drupal.org/node/2625696#comment-10855674</a> - frankly, I missed that. I&#039;m not clear on exactly how that would be used, and what the advantage is over configuration entities?</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+</div><a id="comment-77"></a>
+<article role="article" data-comment-user-id="0" about="/comment/77" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="77.html#comment-77" class="permalink" rel="bookmark" hreflang="en">Hi I need to migrate from</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1461247680"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Thursday, April 21, 2016 - 09:08am  <span property="schema:dateCreated" content="2016-04-21T14:08:00+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Hi I need to migrate from different tables in Drupal db to a specific entry or content type earlier in migration Drupal 7 it was possible .But there is no tutorial for Drupal 8 .it would be very thankfill if you can provide a tutorial for migrating from different tables to Drupal noes within same db.</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+
+<div class="indented"><a id="comment-78"></a>
+<article role="article" data-comment-user-id="6" about="/comment/78" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="78.html#comment-78" class="permalink" rel="bookmark" hreflang="en">Yes, there&#039;s a ways to go</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1461250515"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+        <span class="comment__pubdate">Thursday, April 21, 2016 - 09:55am  <span property="schema:dateCreated" content="2016-04-21T14:55:15+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Yes, there&#039;s a ways to go with documenting it - and frankly, we still need more real-world experience migrating to Drupal 8 to establish what the best practices are before we can definitively document them. All I can say is, stay tuned to &lt;a href=&quot;<a href="https://www.drupal.org/planet">Planet">https://www.drupal.org/planet&quot;&gt;Planet</a> Drupal&lt;/a&gt; - there are other people working in this space and blogging about their experiences.</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+</div><a id="comment-79"></a>
+<article role="article" data-comment-user-id="0" about="/comment/79" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="79.html#comment-79" class="permalink" rel="bookmark" hreflang="en">Thanks for the clear and</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1461257220"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Thursday, April 21, 2016 - 11:47am  <span property="schema:dateCreated" content="2016-04-21T16:47:00+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Thanks for the clear and somewhat easy to follow writeup of how Migrate and the Migration tools have evolved mikeryan. The migrations I&#039;ve accomplished have been of the garden variety and so far the experience has been a good one. The complexity of what goes on behind the scenes isn&#039;t lost on me and I know I couldn&#039;t have done it without the efforts of you and the rest of the migration team. Migrations from D6-&gt;D8 in my experience have been flexible and work very well. </p>
+<p>Cheers,<br />
+Andrew</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+<a id="comment-80"></a>
+<article role="article" data-comment-user-id="0" about="/comment/80" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="80.html#comment-80" class="permalink" rel="bookmark" hreflang="en">Great and thorough post! I&#039;m</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1461265260"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Thursday, April 21, 2016 - 02:01pm  <span property="schema:dateCreated" content="2016-04-21T19:01:00+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Great and thorough post! I&#039;m about to start work on a large D6-&gt;D8 migration. I&#039;ve done plenty of D7 migrations, but it seems like the D8 migration philosophy is quite different from D7. If you have the time, can you recommend any reading for writing your first D8 migration plugins?</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+<a id="comment-81"></a>
+<article role="article" data-comment-user-id="0" about="/comment/81" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="81.html#comment-81" class="permalink" rel="bookmark" hreflang="en">Thank you for saving custom</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1461527280"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Sunday, April 24, 2016 - 02:48pm  <span property="schema:dateCreated" content="2016-04-24T19:48:00+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Thank you for saving custom migrations<br />
+and thank you for this documentation !</p>
+<p>I tried rc1 and made it work for me, but I was desperate<br />
+if I would end up with 8.1 having to way in for CSVs ..<br />
+I have 20+ CSV migrations and a C++ preprocessor<br />
+(which translates internal links to the destination, ..).<br />
+I try to migrate my own Ning2 network to Drupal8<br />
+(and possibly some other networks who want to leave too)<br />
+I already had an emercency import Ning2&gt;D7,<br />
+which I published under GPL. Will do same for Ning2&gt;D8<br />
+(my network is non commercial, charity work ..,<br />
+as are the other networks).</p>
+<p><a href="https://www.drupal.org/u/jonasmuc">https://www.drupal.org/u/jonasmuc</a></p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+<a id="comment-82"></a>
+<article role="article" data-comment-user-id="6" about="/comment/82" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="82.html#comment-82" class="permalink" rel="bookmark" hreflang="en">See Will Hetherington&#039;s</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1461940692"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+        <span class="comment__pubdate">Friday, April 29, 2016 - 09:38am  <span property="schema:dateCreated" content="2016-04-29T14:38:12+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>See Will Hetherington&#039;s example on how to use --configure-only to customize your upgrade path at <a href="https://drupalize.me/blog/201604/custom-drupal-drupal-migrations-migrate-tools">https://drupalize.me/blog/201604/custom-drupal-drupal-migrations-migrat…</a></p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+<a id="comment-83"></a>
+<article role="article" data-comment-user-id="6" about="/comment/83" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="83.html#comment-83" class="permalink" rel="bookmark" hreflang="en">As an alternative to the</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1462474761"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+        <span class="comment__pubdate">Thursday, May 5, 2016 - 01:59pm  <span property="schema:dateCreated" content="2016-05-05T18:59:21+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>As an alternative to the migrate-upgrade --configure-only approach (applicable when you&#039;re migrating most of the site, so need a lot of migrations generated), Mike Anello demonstrates how to do custom Drupal-to-Drupal migration from scratch when you just need to migrate a small subset of your site: <a href="https://www.drupaleasy.com/blogs/ultimike/2016/04/drupal-6-drupal-81x-custom-content-migration">https://www.drupaleasy.com/blogs/ultimike/2016/04/drupal-6-drupal-81x-c…</a></p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+<a id="comment-95"></a>
+<article role="article" data-comment-user-id="0" about="/comment/95" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="95.html#comment-95" class="permalink" rel="bookmark" hreflang="en">Hi, thanks for this good</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1465893754"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Tuesday, June 14, 2016 - 03:42am  <span property="schema:dateCreated" content="2016-06-14T08:42:34+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Hi, thanks for this good article!</p>
+<p>How can one import multilingual contents?</p>
+<p>For example:</p>
+<p>id;language;title<br />
+123;en;English title<br />
+123;nl;Dutch title</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+
+<div class="indented"><a id="comment-97"></a>
+<article role="article" data-comment-user-id="6" about="/comment/97" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-node-author has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="97.html#comment-97" class="permalink" rel="bookmark" hreflang="en">Multilingual support is still</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1465913913"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" about="/user/6" typeof="schema:Person" property="schema:name" datatype="">mikeryan</span></span>
+</span>
+        <span class="comment__pubdate">Tuesday, June 14, 2016 - 09:18am  <span property="schema:dateCreated" content="2016-06-14T14:18:33+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Multilingual support is still in progress. A major step forward in this support is on the verge of being committed to core: <a href="https://www.drupal.org/node/2225775">https://www.drupal.org/node/2225775</a></p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+</div><a id="comment-99"></a>
+<article role="article" data-comment-user-id="0" about="/comment/99" typeof="schema:Comment" class="comment js-comment comment--type-comment comment--view-mode-default by-anonymous has-title clearfix">
+  <div class="comment__container"><h3 property="schema:name" datatype="" class="comment__title h4">
+        <a href="99.html#comment-99" class="permalink" rel="bookmark" hreflang="en">Hi Mike,
+I&#039;ve been following</a>        <mark class="comment__new marker marker--success hidden" data-comment-timestamp="1469123880"></mark>
+      </h3>
+      <div class="comment__meta">
+      
+      <div class="comment__submitted">
+        <span class="comment__author"><span rel="schema:author"><span lang="" typeof="schema:Person" property="schema:name" datatype="">Anonymous (not verified)</span></span>
+</span>
+        <span class="comment__pubdate">Thursday, July 21, 2016 - 12:58pm  <span property="schema:dateCreated" content="2016-07-21T17:58:00+00:00" class="rdf-meta hidden"></span>
+</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <div property="schema:text" class="clearfix text-formatted field field-comment--comment-body field-formatter-text-default field-name-comment-body field-type-text-long field-label-hidden has-single"><div class="field__items"><div property="schema:text" class="field__item"><p>Hi Mike,<br />
+I&#039;ve been following your work for a while and really appreciate the effort you (and the rest of the IMP group) have put into making migrations as flexible and attainable as possible. </p>
+<p>Cheers,<br />
+Andrew (awasson)</p>
+</div></div>
+</div>
+</div>
+
+  </div>
+</article>
+</section>
+</div>
+</article>
+
+  
+</main>
+</div>
+        
+        
+      </div>
+    </div>
+            <footer class="l-pr page__row pr-footer" role="contentinfo" id="footer">
+      <div class="l-rw regions container pr-footer__rw arc--1 hr--1" data-at-regions="">
+        <div  data-at-region="1" data-at-block-count="1" class="l-r region pr-footer__footer" id="rid-footer"><div id="block-patreon" class="l-bl block block-config-provider--block-content block-plugin-id--block-content-906340a2-c64e-4569-9f42-801a61149dca block--type-basic block--view-mode-full"id="block-content906340a2-c64e-4569-9f42-801a61149dca">
+  <div class="block__inner">
+
+    <div class="block__content"><div class="clearfix text-formatted field field-block-content--body field-formatter-text-default field-name-body field-type-text-with-summary field-label-hidden has-single"><div class="field__items"><div class="field__item"><p class="text-align-center">Support me on <a href="https://www.patreon.com/mikeryan776">Patreon</a>!</p>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+      </div>
+    </footer>
+    <div data-at-row="attribution" class="l-attribution l-row"><div class="l-pr attribution"><div class="l-rw"><a href="http://adaptivethemes.com/" class="attribution__link" target="_blank">Design by Adaptivethemes.com</a></div></div></div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"ajaxPageState":{"theme":"vp","libraries":"at_core\/at.accordion,at_core\/at.breakpoints,at_core\/at.responsivemenus,at_core\/at.settings,comment\/drupal.comment-by-viewer,system\/base,vp\/base,vp\/ckeditor,vp\/color,vp\/comment,vp\/contact,vp\/custom_css_file,vp\/fontfaceobserver,vp\/responsive_menus,vp\/responsive_menus_accordion,vp\/responsive_menus_dropmenu,vp\/responsive_menus_slidedown,vp\/responsive_tables,vp\/search,vp\/taxonomy,vp\/vp.layout.page"},"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"comment\/99","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en","currentQuery":{"page":0}},"pluralDelimiter":"\u0003","vp":{"at_responsivemenus":{"bp":"all and (min-width: 60.063em)","default":"ms-slidedown","responsive":"ms-dropmenu","acd":{"acd_load":true,"acd_default":true,"acd_responsive":false,"acd_both":false}},"at_breakpoints":{"at_core_simple_wide":{"breakpoint":"wide","mediaquery":"all and (min-width: 60.0625em)"},"at_core_simple_tablet-isolate":{"breakpoint":"tablet-isolate","mediaquery":"all and (min-width: 45.0625em) and (max-width: 60em)"},"at_core_simple_mobile":{"breakpoint":"mobile","mediaquery":"all and (max-width: 45em)"}}},"user":{"uid":0,"permissionsHash":"d1676cd6a30f8d5c087e9d0d23cfcbeda986d11af7779adea08af3e72fd262a1"}}</script>
+<script src="../sites/default/files/js/js_6AhUv0M_nYnBCea3ztI35uS5VY59-OfD6EtD8GzHDug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.8/fontfaceobserver.js"></script>
+<script src="../sites/default/files/js/js_8kvVQ0ZvjbRBa0ZWSLPSYB_FzYfTAidqNYHjgL9BOHw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.2/enquire.min.js"></script>
+<script src="../sites/default/files/js/js_OFI5Q0ZQQ-MNF6vQYe6ofpnw-jlCie-pnVszk400ROQ.js"></script>
+
+  </body>
+
+<!-- Mirrored from virtuoso-performance.com/comment/99 by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Oct 2023 17:23:53 GMT -->
+</html>
